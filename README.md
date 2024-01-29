@@ -16,6 +16,8 @@ Ai o workflow seria:
 # Estrutura de pastas 
 Eu sugiro uma pasta `src` para todos os arquivos `.c`, uma pasta `includes` para todos os arquivos `.h` e uma pasta `bin` para todos os binários (acredito que cada comando tipo `pwd`, `cd` etc vamos ter que fazer um binário pra ele).
 
+OBS: Adicionei minha libft no projeto ja, mas se preferir a sua n tem prob tb. Tenho na minha libft algumas estruturas de dados que fiz num tempo livre (linked list, fila, pilha, hashmap) mas seguem meu tipo de implementação que tem structs separadas pra Node e Fila/Pilha/Fila.
+
 # To-do
 - [ ] Prompt
 - [ ] History
