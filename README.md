@@ -1,6 +1,7 @@
 # minishell
 Oh shit, where we go. MiniHell do Rafael e do Drago.
 
+version: 7.1
 # Proposta de Colaboração
 Eu acho que a melhor forma de fazermos as coisas seria cada um trabalhar em uma Branch separada, e ambos fazerem Pull Request. Eu adicionei uma proteção na mainbranch que pra dar merge 1 pessoa que não for o autor do código precisa aprovar o PR, adicionei mais pra ir testando essas configs e ir aprendendo do que qualquer outra coisa, se você preferir da pra desligar de boa.
 
