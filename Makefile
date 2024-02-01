@@ -11,7 +11,7 @@ ENDCOLOR=\e[0m
 all: $(NAME)
 
 $(NAME): $(SRC) $(LIBFT)
-	$(CC) $(FLAGS) $(SRC) $(INCLUDES) -o $(NAME)
+	$(CC) $(FLAGS) $(SRC) $(LIBFT) $(INCLUDES) -o $(NAME)
 	@echo "$(GREEN)finished compiling minishell$(ENDCOLOR)"
 
 $(LIBFT):
