@@ -1,39 +1,39 @@
 # Functions
-- `readline(const char *prompt)`: Literalmente mostra o prompt e lê o que o usuario digita, e retorna isso como uma string. (tem que adicionar `-lreadline` na compilação)
-- `rl_clear_history()`: ?
-- `rl_on_new_line()`: ?
-- `rl_replace_line(const char *text, int clear_undo)`: ?
-- `rl_redisplay()`: ?
-- `add_history(const char *string)`: ?
-- `access(const char *name, int type)`: ?
-- `open(const char *file, int oflag, ...)`: ?
-- `fork()`: ?
-- `wait(int *stat_loc)`: ?
-- `wait3(int *stat_loc, int options, struct rusage *usage)`: ?
-- `wait4(__pid_t pid, int *stat_loc, int options, struct rusage *usage)`: ?
-- `waitpid(__pid_t pid, int *stat_loc, int options)`: ?
-- `sigemptyset(sigset_t *set)`: ?
-- `sigaddset(sigset_t *set, int signo)`: ?
-- `getcwd(char *buf, size_t size)`: Pega o path atual que o programa ta rodando, tipo rodar um `pwd`. A função guarda o path no `buffer` que tem tamanho `size`.Buff e size são argumentos semelhantes aos de `read()`.
-- `chdir(const char *path)`: Semelhante a um `cd`, na real é igual, a gente passa um path (absoluto ou relativo) e o programa passa a estar rodando nesse path.
-- `stat(const char *restrict file, struct stat *restrict buf)`: ?
-- `lstat(const char *restrict file, struct stat *restrict buf)`: ?
-- `fstat(int fd, struct stat *buf)`: ?
-- `unlink(const char *name)`: ?
-- `execve(const char *path, char *const *argv, char *const *envp)`: ?
-- `dup(int fd)`: ?
-- `dup2(int fd, int fd2)`: ?
-- `pipe(int *pipedes)`: ?
-- `isatty(int fd)`: ?
-- `ttyname(int fd)`: ?
-- `ttyslot()`: ?
-- `ioctl(int fd, unsigned long request, ...)`: ?
-- `getenv(const char *name)`: ?
-- `tcsetattr(int fd, int optional_actions, const struct termios *termios_p)`: ?
-- `tcgetattr(int fd, struct termios *termios_p)`: ?
-- `tgetent(char *bp, const char *name)`: ?
-- `tgetflag(const char *id)`: ?
-- `tgetnum(const char *id)`: ?
-- `tgetstr(const char *id, char **area)`: ?
-- `tgoto(const char *cap, int col, int row)`: ?
-- `tputs(const char *str, int affcnt, int (*putc)(int))`: ?
+- `readline(const char *prompt)`: [man](https://man7.org/linux/man-pages/man3/readline.3.html)
+- `rl_clear_history()`: Nao achei Manual
+- `rl_on_new_line()`: Nao achei Manual
+- `rl_replace_line(const char *text, int clear_undo)`: Nao achei Manual
+- `rl_redisplay()`: Nao achei Manual
+- `add_history(const char *string)`: Nao achei Manual
+- `access(const char *name, int type)`: [man](https://man7.org/linux/man-pages/man2/access.2.html)
+- `open(const char *file, int oflag, ...)`: [man](https://man7.org/linux/man-pages/man2/open.2.html)
+- `fork()`: [man](https://man7.org/linux/man-pages/man2/fork.2.html)
+- `wait(int *stat_loc)`: [man](https://man7.org/linux/man-pages/man2/wait.2.html)
+- `wait3(int *stat_loc, int options, struct rusage *usage)`: [man](https://man7.org/linux/man-pages/man2/wait4.2.html)
+- `wait4(__pid_t pid, int *stat_loc, int options, struct rusage *usage)`: [man](https://man7.org/linux/man-pages/man2/wait4.2.html)
+- `waitpid(__pid_t pid, int *stat_loc, int options)`: [man](https://man7.org/linux/man-pages/man2/waitpid.2.html)
+- `sigemptyset(sigset_t *set)`: [man](https://man7.org/linux/man-pages/man3/sigemptyset.3p.html)
+- `sigaddset(sigset_t *set, int signo)`: [man](https://man7.org/linux/man-pages/man3/sigaddset.3p.html)
+- `getcwd(char *buf, size_t size)`: [man](https://man7.org/linux/man-pages/man3/getcwd.3.html)
+- `chdir(const char *path)`: [man](https://man7.org/linux/man-pages/man2/chdir.2.html)
+- `stat(const char *restrict file, struct stat *restrict buf)`: [man](https://man7.org/linux/man-pages/man2/lstat.2.html)
+- `lstat(const char *restrict file, struct stat *restrict buf)`: [man](https://man7.org/linux/man-pages/man2/lstat.2.html)
+- `fstat(int fd, struct stat *buf)`: [man](https://man7.org/linux/man-pages/man2/lstat.2.html)
+- `unlink(const char *name)`: [man](https://man7.org/linux/man-pages/man2/unlink.2.html)
+- `execve(const char *path, char *const *argv, char *const *envp)`: [man](https://man7.org/linux/man-pages/man2/execve.2.html)
+- `dup(int fd)`: [man](https://man7.org/linux/man-pages/man2/dup.2.html)
+- `dup2(int fd, int fd2)`: [man](https://man7.org/linux/man-pages/man2/dup.2.html)
+- `pipe(int *pipedes)`: [man](https://man7.org/linux/man-pages/man2/pipe.2.html)
+- `isatty(int fd)`: [man](https://man7.org/linux/man-pages/man3/isatty.3.html)
+- `ttyname(int fd)`: [man](https://man7.org/linux/man-pages/man3/ttyname.3.html)
+- `ttyslot()`: Nao achei manual
+- `ioctl(int fd, unsigned long request, ...)`: [man](https://man7.org/linux/man-pages/man2/ioctl.2.html)
+- `getenv(const char *name)`: [man](https://man7.org/linux/man-pages/man3/getenv.3.html)
+- `tcsetattr(int fd, int optional_actions, const struct termios *termios_p)`: [man](https://man7.org/linux/man-pages/man3/tcsetattr.3p.html)
+- `tcgetattr(int fd, struct termios *termios_p)`: [man](https://man7.org/linux/man-pages/man3/tcgetattr.3p.html)
+- `tgetent(char *bp, const char *name)`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
+- `tgetflag(const char *id)`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
+- `tgetnum(const char *id)`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
+- `tgetstr(const char *id, char **area)`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
+- `tgoto(const char *cap, int col, int row)`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
+- `tputs(const char *str, int affcnt, int (*putc)(int))`: [man](https://man7.org/linux/man-pages/man3/curs_termcap.3x.html)
