@@ -1,7 +1,11 @@
 #include "../includes/minishell.h"
 
-int main(int argc, char *argv[])
+int main(void)
 {
-	(void) argc;
-	(void) argv;
+	char	*prompt;
+	while (TRUE)
+	{
+		prompt = readline("$ ");
+	}
+	(void) prompt;
 }
