@@ -3,6 +3,7 @@
 
 #include "macros.h"
 #include "structs.h"
+#include "../libft/libft.h"
 
 # include <dirent.h>
 # include <fcntl.h>
