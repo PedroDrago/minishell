@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   history.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/01 16:29:15 by pdrago            #+#    #+#             */
+/*   Updated: 2024/02/01 16:29:16 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*read_file(int fd)
@@ -21,17 +33,30 @@ char	*read_file(int fd)
 	return (str);
 }
 
+long	copy_final_line(char *str, char *tmp, int start)
+{
+	int	count;
+
+	count = 0;
+	while (str[++start])
+	{
+		tmp[count] = str[start];
+		count++;
+	}
+	tmp[count] = '\0';
+	return (ft_atoi(tmp));
+}
+
 long	get_history_count(int fd)
 {
-	int	start;
-	int	end;
-	int	count;
+	int		start;
+	int		end;
+	int		history_count;
 	char	*str;
 	char	*tmp;
 
 	start = 0;
 	end = 0;
-	count = 0;
 	str = read_file(fd);
 	if (!str)
 		return (-1);
@@ -41,21 +66,17 @@ long	get_history_count(int fd)
 	while (str[--start] != '\n')
 		;
 	tmp = malloc(sizeof(char) * (end - start + 2));
-	while (str[++start])
-	{
-		tmp[count] = str[start];
-		count++;
-	}
-	tmp[count] = '\0';
-	count = ft_atoi(tmp);
-	return (free(tmp), free(str), count);
+	if (!tmp)
+		return (-1);
+	history_count = copy_final_line(str, tmp, start);
+	return (free(tmp), free(str), history_count);
 }
 
 int	register_command(char *prompt, int fd)
 {
-	static long history_count;
-	char	*number_string;
-	struct stat status;
+	static long	history_count;
+	char		*number_string;
+	struct stat	status;
 
 	fstat(fd, &status);
 	if (!history_count)
