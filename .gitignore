@@ -1,4 +1,4 @@
 *.o
-./history
-./minishell
+history
+minishell
 *.a
