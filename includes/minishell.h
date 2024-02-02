@@ -3,6 +3,7 @@
 
 #include "macros.h"
 #include "structs.h"
+#include "../libft/libft.h"
 
 # include <dirent.h>
 # include <fcntl.h>
@@ -20,4 +21,8 @@
 # include <termios.h>
 # include <unistd.h>
 
+
+char *read_file(int fd);
+long	get_history_count(int fd);
+int	register_command(char *prompt, int fd);
 #endif
