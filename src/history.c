@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 16:29:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/02 11:21:08 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/02/02 11:26:53 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	register_command(char *prompt, int fd)
 	}
 	history_count++;
 	number_string = ft_itoa(history_count);
+	if (!number_string)
+		return (FALSE);
 	write(fd, number_string, ft_strlen(number_string));
 	write(fd, " ", 1);
 	write(fd, prompt, ft_strlen(prompt));
