@@ -1,0 +1,4 @@
+*.o
+history
+minishell
+*.a
