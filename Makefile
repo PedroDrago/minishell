@@ -16,11 +16,11 @@ $(NAME): $(SRC) $(LIBFT)
 	$(CC) $(FLAGS) $(SRC) $(LIBFT) $(INCLUDES) -o $(NAME)
 	@echo "$(GREEN)finished compiling minishell$(ENDCOLOR)"
 
-$(LIBFT):
-	cd libft && make
-
 $(PWD):
 	$(CC) $(PWD_SRC) $(FLAGS) -o $(PWD)
+
+$(LIBFT):
+	cd libft && make
 
 clean:
 	rm -f $(NAME)
