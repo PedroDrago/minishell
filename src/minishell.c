@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 16:29:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/04 18:45:46 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/02/04 18:52:58 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	main(void)
 	int		history_fd;
 
 	history_fd = open("history", O_RDWR | O_APPEND | O_CREAT, 0777);
+	if (!history_fd)
+		return (1);
 	while (TRUE)
 	{
 		prompt = readline("$ ");
