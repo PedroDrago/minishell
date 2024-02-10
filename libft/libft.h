@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:53:29 by pdrago            #+#    #+#             */
-/*   Updated: 2024/01/27 04:23:10 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/02/09 21:26:49 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,21 @@
 #  define FALSE 0
 # endif
 
+# ifndef O_BOTH
+#  define O_BOTH 3
+# endif
+
+# ifndef O_NONE
+#  define O_NONE 0
+# endif
+
+# ifndef O_ONE
+#  define O_ONE 1
+# endif
+
+# ifndef O_TWO
+#  define O_TWO 2
+# endif
 /*
 Converts the initial portion of the string pointed 
 to by `str` to `int`. The number in the string can 
@@ -176,12 +191,12 @@ Allocates (with malloc(3)) and returns a new
 string, which is the result of the concatenation
 of `s1` and `s2`.
 
-If flag is passed as `1` it will free `s1`
-If flag is passed as `2` it will free `s2`
-If flag is passed as `3` it will free both `s1 and `s2`
-Otherwise it won't free any string
+If flag is passed as O_ONE it will free `s1`
+If flag is passed as O_TWO it will free `s2`
+If flag is passed as O_BOTH it will free both `s1 and `s2`
+Otherwise it won't free any string (you can pass O_NONE for readability purposes)
 */
-char	*ft_strjoin(char const *s1, char const *s2, int should_free);
+char	*ft_strjoin(char *s1, char *s2, int should_free);
 /*
 Allocates (with malloc(3)) and returns a copy of
 `s1` with the characters specified in `set` removed
