@@ -72,6 +72,7 @@ int	init_shell(t_shell *shell, int argc, char *execution_path)
 		return (close(shell->history_fd), FALSE);
 	history_path = ft_strjoin(shell->shell_path, "history", O_NONE);
 	shell->history_fd = open(history_path, O_RDWR | O_APPEND | O_CREAT, 0777);
+	free (history_path);
 	if(shell->history_fd < 0)
 		return (FALSE);
 	(void) argc;

@@ -10,7 +10,8 @@ int	resolve_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	fill_command(&command, splited);
 	if (!resolve_command(command, shell))
-		return (FALSE);
+		return (free_split(splited), free_split(command.args), FALSE);
 	free_split(splited);
+	free_split(command.args);
 	return (TRUE);
 }
