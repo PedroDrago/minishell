@@ -1,19 +1,9 @@
 #include "../includes/minishell.h"
 
-void	free_split(char **splited)
-{
-	int count;
-
-	count = -1;
-	while (splited[++count])
-		free(splited[count]);
-	free (splited);
-}
-
 int	fill_command(t_command *command, char **splited)
 {
-	char *str;
-	int	count;
+	int		count;
+	char	*str;
 
 	command->command = splited[0];
 	str = ft_calloc(1, 1);
@@ -31,8 +21,8 @@ int	fill_command(t_command *command, char **splited)
 
 int	execute_pwd(t_shell *shell, t_command command)
 {
-	int	pid;
-	int	status;
+	int		pid;
+	int		status;
 	char	*path;
 
 	path = ft_strjoin(shell->path, "pwd", O_NONE);
@@ -60,8 +50,8 @@ int	execute_cd(t_shell *shell, t_command command)
 
 int	execute_echo(t_shell *shell, t_command command)
 {
-	int	pid;
-	int	status;
+	int		pid;
+	int		status;
 	char	*path;
 
 	path = ft_strjoin(shell->path, "echo", O_NONE);
@@ -78,7 +68,6 @@ int	execute_echo(t_shell *shell, t_command command)
 
 int	resolve_command(t_command command, t_shell *shell)
 {
-
 	if (!ft_strncmp(command.command, "cd", 3))
 		return (execute_cd(shell, command));
 	else if (!ft_strncmp(command.command, "pwd", 4))
