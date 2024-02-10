@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 16:29:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/02 11:26:53 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 char	*read_file(int fd)
@@ -26,8 +14,7 @@ char	*read_file(int fd)
 		return (NULL);
 	while (tmp)
 	{
-		str = ft_strjoin(str, tmp, 1);
-		free (tmp);
+		str = ft_strjoin(str, tmp, O_BOTH);
 		tmp = get_next_line(fd);
 	}
 	return (str);

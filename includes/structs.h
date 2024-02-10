@@ -1,16 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 11:25:57 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/02 11:25:58 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+typedef struct s_command
+{
+	char *command;
+	char **args;
+}	t_command;
+
+typedef struct s_shell
+{
+	int	history_fd;
+	int	last_status;
+	char	*shell_path;
+	char	*path;
+
+}	t_shell;
 #endif

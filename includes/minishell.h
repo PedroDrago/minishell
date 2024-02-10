@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 11:25:12 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/02 11:25:13 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -33,7 +21,21 @@
 # include <termios.h>
 # include <unistd.h>
 
+int	valid_prompt(char *prompt);
+int	resolve_prompt(char *prompt, t_shell *shell);
+int	fill_flags(char **splited, t_command *command);
+void	free_split(char **splited);
+int	fill_command(t_command *command, char **splited);
+int	resolve_command(t_command command, t_shell *shell);
 char	*read_file(int fd);
+long	copy_final_line(char *str, char *tmp, int start);
 long	get_history_count(int fd);
-int		register_command(char *prompt, int fd);
+int	register_command(char *prompt, int fd);
+int	valid_prompt(char *prompt);
+int	resolve_prompt(char *prompt, t_shell *shell);
+char *parse_path(char *str);
+int	set_paths(t_shell *shell, char *execution_path);
+int	init_shell(t_shell *shell, int argc, char *execution_path);
+int	valid_characters(char *prompt);
+
 #endif
