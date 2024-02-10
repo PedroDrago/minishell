@@ -4,7 +4,7 @@ char	*parse_path(char *str)
 {
 	char	*new_path;
 	char	*last_bar;
-	int	count;
+	int		count;
 
 	if (*str == '.')
 		str++;
@@ -21,16 +21,12 @@ char	*parse_path(char *str)
 		return (NULL);
 	count = 0;
 	while (str != (last_bar + 1))
-	{
-		new_path[count] = *str;
-		str++;
-		count++;
-	}
+		new_path[count++] = *str++;
 	new_path[count] = '\0';
 	return (new_path);
 }
 
-char	*get_pwd()
+char	*get_pwd(void)
 {
 	char	*buffer;
 	int		size;
@@ -73,7 +69,7 @@ int	init_shell(t_shell *shell, int argc, char *execution_path)
 	history_path = ft_strjoin(shell->shell_path, "history", O_NONE);
 	shell->history_fd = open(history_path, O_RDWR | O_APPEND | O_CREAT, 0777);
 	free (history_path);
-	if(shell->history_fd < 0)
+	if (shell->history_fd < 0)
 		return (FALSE);
 	(void) argc;
 	return (TRUE);
