@@ -3,7 +3,6 @@
 
 typedef struct s_shell
 {
-	int	history_fd;
 	int	last_status;
 	char	*shell_path;
 	char	*path;
