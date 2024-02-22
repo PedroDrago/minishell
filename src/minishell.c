@@ -27,7 +27,7 @@ int	main(int argc, char *argv[])
 			write(2, "Minishell: Invalid Prompt\n", 26);
 			continue ;
 		}
-		if (!resolve_prompt(prompt, &shell))
+		if (!evaluate(prompt, &shell))
 			return (terminate_shell(&shell, EXIT_FAILURE));
 	}
 	return (terminate_shell(&shell, EXIT_SUCCESS));
