@@ -32,6 +32,9 @@ int	fill_list(char **splited, t_list *list, char *str)
 		node->command = splited[i++];
 		while (!is_token(splited[i]))
 		{
+			str = ft_strjoin(str, " ", O_ONE);
+			if (!str)
+				return (FALSE);
 			str = ft_strjoin(str, splited[i++], O_ONE);
 			if (!str)
 				return (FALSE);
@@ -40,8 +43,10 @@ int	fill_list(char **splited, t_list *list, char *str)
 		if (!node->args)
 			return (FALSE);
 		free (str);
-		node->token = splited[i++];
+		node->token = splited[i];
 		append_node(list, node);
+		if (!splited[i++])
+			return (TRUE);
 	}
 	return (TRUE);
 }
@@ -54,7 +59,8 @@ t_list	*generate_list(char *prompt)
 
 	list = create_list();
 	splited = ft_split(prompt, ' ');
-	if (!splited || !list || !splited)
+	str = NULL;
+	if (!splited || !list)
 		return (NULL);
 	fill_list(splited, list, str);
 	return (list);
