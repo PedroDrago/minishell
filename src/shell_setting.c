@@ -26,7 +26,7 @@ char	*parse_path(char *str)
 	return (new_path);
 }
 
-char	*get_pwd(void)
+char	*get_cwd(void)
 {
 	char	*buffer;
 	int		size;
@@ -51,7 +51,7 @@ int	set_paths(t_shell *shell, char *execution_path)
 	char	*pwd;
 	char	*parsed_execution;
 
-	pwd = get_pwd();
+	pwd = get_cwd();
 	parsed_execution = parse_path(execution_path);
 	if (parsed_execution[0] != '/')
 		pwd = ft_strjoin(pwd, "/", O_ONE);
