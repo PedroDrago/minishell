@@ -17,45 +17,44 @@ int	is_token(char *item)
 	return (FALSE);
 }
 
-int	parse_arguments(char **splited, int *i, t_node *node)
+char	**parse_arguments(char **splited, t_node *node)
 {
 	char	*str;
 
 	str = ft_calloc(1, 1);
-	while (!is_token(splited[*i]))
+	while (!is_token(*splited))
 	{
 		str = ft_strjoin(str, " ", O_ONE);
 		if (!str)
-			return (FALSE);
-		str = ft_strjoin(str, splited[*i], O_ONE);
+			return (NULL);
+		str = ft_strjoin(str, *splited, O_ONE);
 		if (!str)
-			return (FALSE);
-		(*i)++;
+			return (NULL);
+		splited++;
 	}
 	node->args = ft_split(str, ' ');
 	if (!node->args)
-		return (FALSE);
+		return (NULL);
 	free (str);
-	return (TRUE);
+	return (splited);
 }
 
 int	fill_list(char **splited, t_list *list)
 {
-	int		i;
 	t_node	*node;
 
-	i = 0;
-	while (splited[i])
+	while (*splited)
 	{
 		node = create_node();
 		if (!node)
 			return (FALSE);
-		node->command = splited[i++];
-		if (!parse_arguments(splited, &i, node))
+		node->command = *splited++;
+		splited = parse_arguments(splited, node);
+		if (!splited)
 			return (FALSE);
-		node->token = splited[i];
+		node->token = *splited;
 		append_node(list, node);
-		if (!splited[i++])
+		if (!(*splited++))
 			return (TRUE);
 	}
 	return (TRUE);
