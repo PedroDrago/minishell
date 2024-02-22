@@ -16,7 +16,8 @@ void	print_split(char **argv)
 
 	i = 0;
 	while (argv[i])
-		printf("%s \n", argv[i++]);
+		printf("%s|", argv[i++]);
+	printf("\n");
 }
 
 void	print_list(t_list *arg)
