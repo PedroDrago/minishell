@@ -48,7 +48,7 @@ int	fill_list(char **splited, t_list *list)
 		node = create_node();
 		if (!node)
 			return (FALSE);
-		node->command = *splited++;
+		node->command = *splited;
 		splited = parse_arguments(splited, node);
 		if (!splited)
 			return (FALSE);
@@ -71,16 +71,4 @@ t_list	*generate_list(char *prompt)
 		return (NULL);
 	fill_list(splited, list);
 	return (list);
-}
-
-int	evaluate(char *prompt, t_shell *shell)
-{
-	t_list	*prompt_list;
-
-	prompt_list = generate_list(prompt);
-	if (!prompt_list)
-		return (FALSE);
-	print_list(prompt_list);
-	(void) shell;
-	return (TRUE);
 }

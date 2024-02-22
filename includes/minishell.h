@@ -38,6 +38,7 @@ t_list *generate_list(char *prompt);
 
 //evaluate
 int    evaluate(char *prompt, t_shell *shell);
+int	eval_pipe(t_node *current);
 
 
 //shell settings
