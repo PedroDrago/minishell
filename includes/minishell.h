@@ -21,21 +21,39 @@
 # include <termios.h>
 # include <unistd.h>
 
-int	valid_prompt(char *prompt);
-int	resolve_prompt(char *prompt, t_shell *shell);
-int	fill_flags(char **splited, t_command *command);
-void	free_split(char **splited);
-int	fill_command(t_command *command, char **splited);
-int	resolve_command(t_command command, t_shell *shell);
+
+//history
 char	*read_file(int fd);
 long	copy_final_line(char *str, char *tmp, int start);
 long	get_history_count(int fd);
 int	register_command(char *prompt, int fd);
-int	valid_prompt(char *prompt);
-int	resolve_prompt(char *prompt, t_shell *shell);
-char *parse_path(char *str);
+
+//parser
+t_node *create_node();
+void append_node(t_list *list,t_node *node);
+t_list *create_list();
+int    is_token(char *item);
+t_list *generate_list(char *prompt);
+
+
+//evaluate
+int    evaluate(char *prompt, t_shell *shell);
+
+
+//shell settings
+char	*parse_path(char *str);
+char	*get_cwd(void);
 int	set_paths(t_shell *shell, char *execution_path);
 int	init_shell(t_shell *shell, int argc, char *execution_path);
-int	valid_characters(char *prompt);
 
+
+//utils
+void print_list(t_list *arg);
+void print_split(char **argv);
+void	free_split(char **splited);
+
+
+//validations
+int	valid_prompt(char *prompt);
+int	valid_characters(char *prompt);
 #endif
