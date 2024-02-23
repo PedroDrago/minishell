@@ -48,6 +48,41 @@ int *evaluate_command(t_node *current, int *old_yield)
 	return (new_yield);
 }
 
+int is_pipe(char *token)
+{
+	if (!ft_strncmp(token, "|", 2))
+		return (TRUE);
+	return (FALSE);
+}
+
+int is_redirect_output(char *token)
+{
+	if (!ft_strncmp(token, ">", 2))
+		return (TRUE);
+	return (FALSE);
+}
+
+int is_append_output(char *token)
+{
+	if (!ft_strncmp(token, ">>", 3))
+		return (TRUE);
+	return (FALSE);
+}
+
+int is_redirect_input(char *token)
+{
+	if (!ft_strncmp(token, "<", 2))
+		return (TRUE);
+	return (FALSE);
+}
+
+int is_heredoc(char *token)
+{
+	if (!ft_strncmp(token, "<<", 3))
+		return (TRUE);
+	return (FALSE);
+}
+
 int    evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list    *prompt_list;
