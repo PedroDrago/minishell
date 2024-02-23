@@ -57,14 +57,7 @@ int is_pipe(char *token)
 
 int is_redirect_output(char *token)
 {
-	if (!ft_strncmp(token, ">", 2))
-		return (TRUE);
-	return (FALSE);
-}
-
-int is_append_output(char *token)
-{
-	if (!ft_strncmp(token, ">>", 3))
+	if (!ft_strncmp(token, ">", 2) || !(ft_strncmp(token, ">>", 3)))
 		return (TRUE);
 	return (FALSE);
 }
@@ -84,7 +77,6 @@ int is_heredoc(char *token)
 }
 
 // file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0777);
-//
 void	redirect_output(t_node *current, int *old_yield)
 {
 	int file;
@@ -93,7 +85,10 @@ void	redirect_output(t_node *current, int *old_yield)
 
 	if (!current->next || !current->next->command || !ft_strlen(current->next->command))
 		printf("minishell: Syntax error\n");
-	file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0777);
+	if (!ft_strncmp(current->token, ">", 2))
+		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0777);
+	else
+		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0777);
 	pid = fork();
 	if (pid == 0)
 	{
