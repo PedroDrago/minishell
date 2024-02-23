@@ -15,6 +15,7 @@ void	print_result(int fd)
 	}
 	close(fd);
 	printf("%s", str);
+	free (str);
 }
 
 int *pipe_command(t_node *current, int *old_yield)
