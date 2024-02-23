@@ -37,9 +37,8 @@ t_list *generate_list(char *prompt);
 
 
 //evaluate
-int    evaluate(char *prompt, t_shell *shell);
-int	eval_pipe(t_node *current);
-
+int    evaluate_prompt(char *prompt, t_shell *shell);
+int *evaluate_command(t_node *current, int *fds);
 
 //shell settings
 char	*parse_path(char *str);
