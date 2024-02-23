@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include <unistd.h>
 
-int *evaluate_command(t_node *current, int *fds)
+int *pipe_command(t_node *current, int *fds)
 {
 	char *path;
 	int pid;
@@ -43,7 +43,7 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 	pipe(yield);
 	while (current)
 	{
-		yield = evaluate_command(current, yield);
+		yield = pipe_command(current, yield);
 		current = current->next;
 	}
 	//isso aqui abaixo foi apenas para testar se o output tava certo
