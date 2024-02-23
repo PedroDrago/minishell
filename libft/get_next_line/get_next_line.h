@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 16:46:13 by pdrago            #+#    #+#             */
-/*   Updated: 2023/12/10 00:29:49 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/02/22 22:34:27 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h> 
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 420
 # endif
 
 # ifndef MAX_FD
