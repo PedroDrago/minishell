@@ -18,7 +18,7 @@ void	print_result(int fd)
 	free (str);
 }
 
-int *pipe_command(t_node *current, int *old_yield)
+int *evaluate_command(t_node *current, int *old_yield)
 {
 	char *path;
 	int pid;
@@ -62,7 +62,7 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 	pipe(yield);
 	while (current)
 	{
-		yield = pipe_command(current, yield);
+		yield = evaluate_command(current, yield);
 		current = current->next;
 	}
 	close(yield[1]);
