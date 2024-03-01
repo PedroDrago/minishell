@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 19:18:38 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:32:55 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@ char	**error_free(char **splited)
 	int	i;
 
 	i = 0;
-	while (splited[i])
-	{
-		free(splited[i]);
-		i++;
-	}
-	free(splited);
+	free_split(splited);
 	return (NULL);
 }
 
@@ -187,8 +182,7 @@ t_env	*load_envs(void)
 		exit(1);
 	}
 	wait(NULL);
-	free(args[0]);
-	free(args);
+	free_split(args);
 	close(fd[1]);
 	env = fill_env_struct(fd[0]);
 	put_envs(env);
