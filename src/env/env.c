@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 19:32:55 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:34:08 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 char	**error_free(char **splited)
 {
-	int	i;
-
-	i = 0;
 	free_split(splited);
 	return (NULL);
 }
