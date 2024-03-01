@@ -6,15 +6,17 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 19:34:08 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:54:12 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//essa função deveria encerrar o programa
 char	**error_free(char **splited)
 {
 	free_split(splited);
+
 	return (NULL);
 }
 
@@ -136,7 +138,7 @@ t_env	*get_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-int	set_env_value(t_env *env, char *key, char *value)
+int		set_env_value(t_env *env, char *key, char *value)
 {
 	t_env   *temp;
 	t_env   *target_node;
@@ -149,6 +151,8 @@ int	set_env_value(t_env *env, char *key, char *value)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = make_new_env_node(key, value);
+		if (!temp->next)
+			return (0);
 		return (1);
 	}
 	new_value = ft_strdup(value);
