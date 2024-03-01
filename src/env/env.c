@@ -6,23 +6,17 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 19:18:38 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 19:57:12 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//essa função deveria encerrar o programa
 char	**error_free(char **splited)
 {
-	int	i;
+	free_split(splited);
 
-	i = 0;
-	while (splited[i])
-	{
-		free(splited[i]);
-		i++;
-	}
-	free(splited);
 	return (NULL);
 }
 
@@ -144,7 +138,7 @@ t_env	*get_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-int	set_env_value(t_env *env, char *key, char *value)
+int		set_env_value(t_env *env, char *key, char *value)
 {
 	t_env   *temp;
 	t_env   *target_node;
@@ -157,6 +151,8 @@ int	set_env_value(t_env *env, char *key, char *value)
 		while (temp->next)
 			temp = temp->next;
 		temp->next = make_new_env_node(key, value);
+		if (!temp->next)
+			return (0);
 		return (1);
 	}
 	new_value = ft_strdup(value);
@@ -187,17 +183,17 @@ t_env	*load_envs(void)
 		exit(1);
 	}
 	wait(NULL);
-	free(args[0]);
-	free(args);
+	free_split(args);
 	close(fd[1]);
 	env = fill_env_struct(fd[0]);
 	put_envs(env);
 	return (env);
 }
-
+/*
 int	main()
 {
 	t_env	*env;
 	env = load_envs();
 	free_env(env);
 }
+*/
