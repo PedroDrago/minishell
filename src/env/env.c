@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 16:44:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 18:14:34 by rafaelro         ###   ########.fr       */
+/*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
+/*   Updated: 2024/03/01 19:18:38 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ t_env	*make_new_env_node(char *key, char *value)
 {
 	t_env	*new_env;
 
-	new_env = (t_env *)malloc(sizeof(new_env));
+	new_env = (t_env *)malloc(sizeof(t_env));
 	if (!new_env)
 		return (NULL);
 	new_env->key = key;
+	value[ft_strlen(value) - 1] = '\0';
 	new_env->value = value;
 	new_env->next = NULL;
 	return (new_env);
@@ -108,6 +109,7 @@ t_env	*fill_env_struct(int fd)
 		else
 			temp_env->next = make_new_env_node(args[0], args[1]);
 		free(args);
+		free(str);
 		str = get_next_line(fd);
 		if (temp_env->next)
 			temp_env = temp_env->next;
@@ -165,7 +167,7 @@ int	set_env_value(t_env *env, char *key, char *value)
 	return (1);
 }
 
-void	load_envs(void)
+t_env	*load_envs(void)
 {
 	t_env	*env;
 	int		fd[2];
@@ -184,12 +186,18 @@ void	load_envs(void)
 		printf("Error\n");
 		exit(1);
 	}
-	else
-	{
-		wait(NULL);
-		close(fd[1]);
-	}
+	wait(NULL);
+	free(args[0]);
+	free(args);
+	close(fd[1]);
 	env = fill_env_struct(fd[0]);
 	put_envs(env);
+	return (env);
 }
 
+int	main()
+{
+	t_env	*env;
+	env = load_envs();
+	free_env(env);
+}
