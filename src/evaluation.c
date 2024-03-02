@@ -8,6 +8,12 @@ void	print_result(int fd)
 
 	gnl = get_next_line(fd);
 	str = ft_calloc(1, 1);
+	if (!str)
+	{
+		if (gnl)
+			free(gnl);
+		return ;
+	}
 	while (gnl)
 	{
 		str = ft_strjoin(str, gnl, O_BOTH);
@@ -25,7 +31,10 @@ int *evaluate_command(t_node *current, int *old_yield)
 	int *new_yield;
 
 	new_yield = (int *) malloc(sizeof(int) * 2);
-	pipe(new_yield);
+	if (!new_yield)
+		return (NULL);
+	if (pipe(new_yield) < 0)
+		return (free(new_yield), NULL);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -36,6 +45,8 @@ int *evaluate_command(t_node *current, int *old_yield)
 		close(new_yield[1]);
 		close(new_yield[0]);
 		path = ft_strjoin("/bin/", current->command, O_NONE);
+		if (!path)
+			exit(1);
 		execv(path, current->args);
 	}
 	else
@@ -98,6 +109,8 @@ void	redirect_output(t_node *current, int *old_yield)
 		close(old_yield[1]);
 		close(file);
 		path = ft_strjoin("/bin/", current->command, O_NONE);
+		if (!path)
+			exit(1);
 		execv(path, current->args);
 	}
 	else
@@ -120,7 +133,10 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	current = prompt_list->head;
 	yield = (int *) malloc (sizeof(int) * 2);
-	pipe(yield);
+	if (!yield)
+		return (free_list(prompt_list), FALSE);
+	if (pipe(yield) < 0)
+		return (free_list(prompt_list), free(yield), FALSE);
 	while (current)
 	{
 		if (!current->token || is_pipe(current->token))
@@ -134,6 +150,7 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 	}
 	close(yield[1]);
 	print_result(yield[0]);
+	free_list(prompt_list);
 	(void) shell;
 	return (TRUE);
 }
