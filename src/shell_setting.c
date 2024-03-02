@@ -67,7 +67,7 @@ int	set_paths(t_shell *shell, char *execution_path)
 	shell->shell_path = ft_strjoin(pwd, parsed_execution, O_BOTH);
 	if (!shell->shell_path)
 		return (free(pwd), free(parsed_execution), FALSE);
-	shell->path = ft_strjoin(shell->shell_path, "bin/", O_NONE);
+	shell->path = ft_strjoin(shell->shell_path, "bin", O_NONE);
 	if (!shell->path)
 		return (free(pwd), free(parsed_execution), FALSE);
 	return (TRUE);
@@ -79,6 +79,19 @@ void	terminate_shell(t_shell *shell)
 	free (shell->path);
 	free_env(shell->env);
 	free(shell);
+}
+
+int	append_path(t_shell *shell)
+{
+	char *new_path;
+	t_env *old_path;
+
+	old_path = get_env_node(shell->env, "PATH");
+	new_path = ft_strjoin(shell->path, ":", O_NONE);
+	new_path = ft_strjoin(new_path, old_path->value, O_ONE);
+	set_env_value(shell->env, "PATH", new_path);
+
+	return (TRUE);
 }
 
 t_shell *init_shell(int argc, char *execution_path)
@@ -95,5 +108,6 @@ t_shell *init_shell(int argc, char *execution_path)
 		return (free(shell->path), free(shell->shell_path), free(shell), NULL);
 	shell->last_status = -99;
 	(void) argc;
+	append_path(shell);
 	return (shell);
 }
