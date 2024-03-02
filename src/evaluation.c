@@ -45,9 +45,7 @@ int *evaluate_command(t_node *current, int *old_yield)
 		close(new_yield[1]);
 		close(new_yield[0]);
 		path = ft_strjoin("/bin/", current->command, O_NONE);
-		if (!path)
-			exit(1);
-		execv(path, current->args);
+		execv(path, current->args); //NOTE: execve retorna 1 mesmo quando o path é um ponteiro NULL, então não precisamos de check pro malloc aqui.
 	}
 	else
 	{
@@ -100,6 +98,8 @@ void	redirect_output(t_node *current, int *old_yield)
 		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0777);
 	else
 		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0777);
+	if (file < 0)
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -109,9 +109,7 @@ void	redirect_output(t_node *current, int *old_yield)
 		close(old_yield[1]);
 		close(file);
 		path = ft_strjoin("/bin/", current->command, O_NONE);
-		if (!path)
-			exit(1);
-		execv(path, current->args);
+		execv(path, current->args); //NOTE: execve retorna 1 mesmo quando o path é um ponteiro NULL, então não precisamos de check pro malloc aqui.
 	}
 	else
 	{
