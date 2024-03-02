@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdlib.h>
 
 char	*parse_path(char *str)
 {
@@ -64,21 +65,35 @@ int	set_paths(t_shell *shell, char *execution_path)
 			return (free(parsed_execution), FALSE);
 	}
 	shell->shell_path = ft_strjoin(pwd, parsed_execution, O_BOTH);
-	if (!shell->path)
-		return (free (pwd), free(parsed_execution), FALSE);
+	if (!shell->shell_path)
+		return (free(pwd), free(parsed_execution), FALSE);
 	shell->path = ft_strjoin(shell->shell_path, "bin/", O_NONE);
 	if (!shell->path)
-		return (free (pwd), free(parsed_execution), FALSE);
+		return (free(pwd), free(parsed_execution), FALSE);
 	return (TRUE);
 }
 
-int	init_shell(t_shell *shell, int argc, char *execution_path)
+void	terminate_shell(t_shell *shell)
 {
+	free (shell->shell_path);
+	free (shell->path);
+	free_env(shell->env);
+	free(shell);
+}
+
+t_shell *init_shell(int argc, char *execution_path)
+{
+	t_shell *shell;
+
+	shell = (t_shell *) malloc (sizeof(t_shell));
+	if (!shell)
+		exit (EXIT_FAILURE); //NOTE: nada no programa foi mallocado nesse ponto, é seguro só dar exit
 	if (!set_paths(shell, execution_path))
-		return (FALSE);
+		return (free(shell), NULL);
 	shell->env = load_envs();
 	if (!shell->env)
-		return (free(shell->path), free(shell->shell_path), FALSE);
+		return (free(shell->path), free(shell->shell_path), free(shell), NULL);
+	shell->last_status = -99;
 	(void) argc;
-	return (TRUE);
+	return (shell);
 }
