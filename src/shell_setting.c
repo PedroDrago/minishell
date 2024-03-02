@@ -64,6 +64,9 @@ int	init_shell(t_shell *shell, int argc, char *execution_path)
 {
 	if (!set_paths(shell, execution_path))
 		return (FALSE);
+	shell->env = load_envs();
+	if (!shell->env)
+		return (FALSE);
 	(void) argc;
 	return (TRUE);
 }

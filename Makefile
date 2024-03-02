@@ -1,52 +1,64 @@
 NAME = minishell
-SRC = src/*.c
+
+MINISHELL_SRC = src/main.c src/parser.c src/parser_list.c src/pipe.c src/shell_setting.c src/utils.c src/validations.c src/env/env.c
+MINISHELL_OBJ = $(MINISHELL_SRC:.c=.o)
+
+BINS = $(PWD) $(ECHO)
+
 PWD= bin/pwd
 PWD_SRC = src/pwd/pwd.c
+PWD_OBJ = $(PWD_SRC:.c=.o)
+
 ECHO= bin/echo
 ECHO_SRC = src/echo/echo.c
+ECHO_OBJ = $(ECHO_SRC:.c=.o)
+
 LIBFT = libft/libft.a
+
 CC = cc
 FLAGS = -Wall -Wextra -Werror -ggdb3
 INCLUDES = -lreadline
+
 RED=\e[31m
 GREEN=\e[32m
 ENDCOLOR=\e[0m
 
-all: $(NAME) $(PWD) $(ECHO)
+all: $(NAME) $(BINS)
 
-$(NAME): $(SRC) $(LIBFT)
-	$(CC) $(FLAGS) $(SRC) $(LIBFT) $(INCLUDES) -o $(NAME)
+$(NAME): $(LIBFT) $(MINISHELL_OBJ) $(PWD_OBJ) $(ECHO_OBJ)
+	$(CC) $(FLAGS) $(MINISHELL_OBJ) $(LIBFT) $(INCLUDES) -o $(NAME)
 	@echo "$(GREEN)finished compiling minishell$(ENDCOLOR)"
 
-$(PWD):
-	$(CC) $(PWD_SRC) $(FLAGS) -o $(PWD)
+.c.o:
+	$(CC) $(FLAGS) -c $< -o $@
 
-$(ECHO): $(LIBFT)
-	$(CC) $(ECHO_SRC) $(LIBFT) $(FLAGS) -o $(ECHO)
+$(PWD):
+	$(CC) $(FLAGS) $(PWD_OBJ) -o $(PWD)
+	@echo "$(GREEN)finished compiling pwd$(ENDCOLOR)"
+
+$(ECHO):
+	$(CC) $(FLAGS) $(ECHO_OBJ) $(LIBFT) -o $(ECHO)
+	@echo "$(GREEN)finished compiling echo$(ENDCOLOR)"
 
 $(LIBFT):
-	cd libft && make
+	@make -C libft/
 
 clean:
-	rm -f $(NAME)
+	rm -f $(MINISHELL_OBJ) $(ECHO_OBJ) $(PWD_OBJ)
+	@echo "$(GREEN)finished cleaning binaries$(ENDCOLOR)"
+	@make clean -C libft/
 
 fclean: clean
-	rm -f ./bin/*
-	cd libft && make fclean
-	@echo "$(GREEN)finished cleaning builtins Binaries$(ENDCOLOR)"
+	rm -f $(BINS) $(NAME)
+	@echo "$(GREEN)finished cleaning binaries$(ENDCOLOR)"
+	@make fclean -C libft/
+
+exec: all
+	./$(NAME)
+
+leak: all
+	valgrind ./$(NAME)
 
 re: fclean all
 
-debug: all
-	@echo "$(GREEN)Starting Debugging Minishell:$(ENDCOLOR)"
-	@lldb $(NAME)
-
-leak: all
-	@echo "$(GREEN)Checking Minishell leaks:$(ENDCOLOR)"
-	@valgrind ./$(NAME)
-
-exec: all
-	@echo "$(GREEN)Starting Minishell:$(ENDCOLOR)"
-	@./$(NAME)
-
-.PHONY: all clean fclean re
+.PHONY: clean fclean re exec leak all

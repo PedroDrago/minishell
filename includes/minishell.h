@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 16:48:44 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:10:55 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,12 @@ void	free_split(char **splited);
 //validations
 int	valid_prompt(char *prompt);
 int	valid_characters(char *prompt);
+
+//nev
+t_env	*load_envs(void);
+int		set_env_value(t_env *env, char *key, char *value);
+t_env	*get_env_node(t_env *env, char *key);
+void	put_envs(t_env *env);
+void	free_env(t_env *env);
+
 #endif
