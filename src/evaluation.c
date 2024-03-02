@@ -5,8 +5,8 @@
 
 void	print_result(int fd)
 {
-	char *gnl;
-	char *str;
+	char	*gnl;
+	char	*str;
 
 	gnl = get_next_line(fd);
 	str = ft_calloc(1, 1);
@@ -23,14 +23,14 @@ void	print_result(int fd)
 	}
 	close(fd);
 	printf("%s", str);
-	free (str);
+	free(str);
 }
 
 int	execute_command(t_shell *shell, t_node *current)
 {
-	char **paths;
-	char *path;
-	int	count;
+	char	**paths;
+	char	*path;
+	int		count;
 
 	paths = ft_split(get_env_node(shell->env, "PATH")->value, ':');
 	count = 0;
@@ -46,14 +46,14 @@ int	execute_command(t_shell *shell, t_node *current)
 	exit(EXIT_FAILURE);
 }
 
-int *evaluate_command(t_node *current, int *old_yield, t_shell *shell)
+int	*evaluate_command(t_node *current, int *old_yield, t_shell *shell)
 {
-	int pid;
-	int status;
-	int *new_yield;
+	int	pid;
+	int	status;
+	int	*new_yield;
 
 	status = -1;
-	new_yield = (int *) malloc(sizeof(int) * 2);
+	new_yield = (int *)malloc(sizeof(int) * 2);
 	if (!new_yield)
 		return (NULL);
 	if (pipe(new_yield) < 0)
@@ -81,29 +81,28 @@ int *evaluate_command(t_node *current, int *old_yield, t_shell *shell)
 	return (new_yield);
 }
 
-
-int is_pipe(char *token)
+int	is_pipe(char *token)
 {
 	if (!ft_strncmp(token, "|", 2))
 		return (TRUE);
 	return (FALSE);
 }
 
-int is_redirect_output(char *token)
+int	is_redirect_output(char *token)
 {
 	if (!ft_strncmp(token, ">", 2) || !(ft_strncmp(token, ">>", 3)))
 		return (TRUE);
 	return (FALSE);
 }
 
-int is_redirect_input(char *token)
+int	is_redirect_input(char *token)
 {
 	if (!ft_strncmp(token, "<", 2))
 		return (TRUE);
 	return (FALSE);
 }
 
-int is_heredoc(char *token)
+int	is_heredoc(char *token)
 {
 	if (!ft_strncmp(token, "<<", 3))
 		return (TRUE);
@@ -113,11 +112,12 @@ int is_heredoc(char *token)
 // file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0777);
 void	redirect_output(t_node *current, int *old_yield)
 {
-	int file;
-	int pid;
-	char *path;
+	int		file;
+	int		pid;
+	char	*path;
 
-	if (!current->next || !current->next->command || !ft_strlen(current->next->command))
+	if (!current->next || !current->next->command
+		|| !ft_strlen(current->next->command))
 		printf("minishell: Syntax error\n");
 	if (!ft_strncmp(current->token, ">", 2))
 		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0777);
@@ -134,7 +134,8 @@ void	redirect_output(t_node *current, int *old_yield)
 		close(old_yield[1]);
 		close(file);
 		path = ft_strjoin("/bin/", current->command, O_NONE);
-		execv(path, current->args); //NOTE: execve retorna 1 mesmo quando o path é um ponteiro NULL, então não precisamos de check pro malloc aqui.
+		execv(path, current->args);
+			// NOTE: execve retorna 1 mesmo quando o path é um ponteiro NULL, então não precisamos de check pro malloc aqui.
 	}
 	else
 	{
@@ -145,17 +146,17 @@ void	redirect_output(t_node *current, int *old_yield)
 	}
 }
 
-int    evaluate_prompt(char *prompt, t_shell *shell)
+int	evaluate_prompt(char *prompt, t_shell *shell)
 {
-	t_list    *prompt_list;
+	t_list	*prompt_list;
 	t_node	*current;
-	int *yield;
+	int		*yield;
 
 	prompt_list = generate_list(prompt);
 	if (!prompt_list)
 		return (FALSE);
 	current = prompt_list->head;
-	yield = (int *) malloc (sizeof(int) * 2);
+	yield = (int *)malloc(sizeof(int) * 2);
 	if (!yield)
 		return (free_list(prompt_list), FALSE);
 	if (pipe(yield) < 0)
@@ -166,7 +167,7 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 		{
 			yield = evaluate_command(current, yield, shell);
 		}
-		else if(is_redirect_output(current->token))
+		else if (is_redirect_output(current->token))
 		{
 			redirect_output(current, yield);
 			current = current->next;
@@ -176,6 +177,6 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 	close(yield[1]);
 	print_result(yield[0]);
 	free_list(prompt_list);
-	(void) shell;
+	(void)shell;
 	return (TRUE);
 }

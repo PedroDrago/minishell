@@ -17,7 +17,7 @@ char	*parse_path(char *str)
 		count++;
 		new_path++;
 	}
-	new_path = (char *) malloc (sizeof(char) * count + 2);
+	new_path = (char *)malloc(sizeof(char) * count + 2);
 	if (!new_path)
 		return (NULL);
 	count = 0;
@@ -33,14 +33,14 @@ char	*get_cwd(void)
 	int		size;
 
 	size = 200;
-	buffer = (char *) malloc(sizeof(char) * size);
+	buffer = (char *)malloc(sizeof(char) * size);
 	if (!buffer)
 		return (FALSE);
 	while (!getcwd(buffer, size))
 	{
 		free(buffer);
 		size += 100;
-		buffer = (char *) malloc(sizeof(char) * size);
+		buffer = (char *)malloc(sizeof(char) * size);
 		if (!buffer)
 			return (FALSE);
 	}
@@ -75,39 +75,38 @@ int	set_paths(t_shell *shell, char *execution_path)
 
 void	terminate_shell(t_shell *shell)
 {
-	free (shell->shell_path);
-	free (shell->path);
+	free(shell->shell_path);
+	free(shell->path);
 	free_env(shell->env);
 	free(shell);
 }
 
 int	append_path(t_shell *shell)
 {
-	char *new_path;
-	t_env *old_path;
+	char	*new_path;
+	t_env	*old_path;
 
 	old_path = get_env_node(shell->env, "PATH");
 	new_path = ft_strjoin(shell->path, ":", O_NONE);
 	new_path = ft_strjoin(new_path, old_path->value, O_ONE);
 	set_env_value(shell->env, "PATH", new_path);
-
 	return (TRUE);
 }
 
-t_shell *init_shell(int argc, char *execution_path)
+t_shell	*init_shell(int argc, char *execution_path)
 {
-	t_shell *shell;
+	t_shell	*shell;
 
-	shell = (t_shell *) malloc (sizeof(t_shell));
+	shell = (t_shell *)malloc(sizeof(t_shell));
 	if (!shell)
-		exit (EXIT_FAILURE); //NOTE: nada no programa foi mallocado nesse ponto, é seguro só dar exit
+		exit(EXIT_FAILURE); // NOTE: nada no programa foi mallocado nesse ponto, é seguro só dar exit
 	if (!set_paths(shell, execution_path))
 		return (free(shell), NULL);
 	shell->env = load_envs();
 	if (!shell->env)
 		return (free(shell->path), free(shell->shell_path), free(shell), NULL);
 	shell->last_status = -99;
-	(void) argc;
+	(void)argc;
 	append_path(shell);
 	return (shell);
 }
