@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 22:12:04 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:14:53 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,12 @@ t_env	*fill_env_struct(int fd)
 		if (!temp_env)
 		{
 			env_head = make_new_env_node(args[0], args[1]);
+			//FIX:deveriamos checar se make_new_env_node() der NULL, e retornar? N entendi se a função ja lida com isso de outra forma
 			temp_env = env_head;
 		}
 		else
 			temp_env->next = make_new_env_node(args[0], args[1]);
+			//FIX:deveriamos checar se make_new_env_node() der NULL, e retornar? N entendi se a função ja lida com isso de outra forma
 		free(args);
 		free(str);
 		str = get_next_line(fd);
