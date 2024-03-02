@@ -6,19 +6,12 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 22:07:25 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:12:04 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <stdlib.h>
-
-// essa função deveria encerrar o programa
-char	**error_free(char **splited)
-{
-	free_split(splited);
-	return (NULL);
-}
 
 char	**split_keyvalue(char *str, char sep)
 {
@@ -37,14 +30,14 @@ char	**split_keyvalue(char *str, char sep)
 		i++;
 	splited[0] = ft_substr(str, j, i);
 	if (!splited[0])
-		return (error_free(splited));
+		return (free_split(splited), NULL);
 	i++;
 	j = i;
 	while (str[i])
 		i++;
 	splited[1] = ft_substr(str, j, i);
 	if (!splited[1])
-		return (error_free(splited));
+		return (free_split(splited), NULL);
 	splited[2] = NULL;
 	return (splited);
 }
@@ -93,7 +86,7 @@ t_env	*fill_env_struct(int fd)
 		if (!args)
 		{
 			free_env(env_head);
-			return (NULL); // PARAR O PROGRAMA
+			return (NULL);
 		}
 		if (!temp_env)
 		{
