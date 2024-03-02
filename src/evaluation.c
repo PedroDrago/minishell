@@ -1,4 +1,6 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 void	print_result(int fd)
@@ -24,12 +26,33 @@ void	print_result(int fd)
 	free (str);
 }
 
-int *evaluate_command(t_node *current, int *old_yield)
+int	execute_command(t_shell *shell, t_node *current)
 {
+	char **paths;
 	char *path;
+	int	count;
+
+	paths = ft_split(get_env_node(shell->env, "PATH")->value, ':');
+	count = 0;
+	while (paths[count])
+	{
+		path = ft_strjoin(paths[count], "/", O_NONE);
+		path = ft_strjoin(path, current->command, O_ONE);
+		execv(path, current->args);
+		free(path);
+		count++;
+	}
+	free_split(paths);
+	exit(EXIT_FAILURE);
+}
+
+int *evaluate_command(t_node *current, int *old_yield, t_shell *shell)
+{
 	int pid;
+	int status;
 	int *new_yield;
 
+	status = -1;
 	new_yield = (int *) malloc(sizeof(int) * 2);
 	if (!new_yield)
 		return (NULL);
@@ -44,18 +67,20 @@ int *evaluate_command(t_node *current, int *old_yield)
 		close(old_yield[1]);
 		close(new_yield[1]);
 		close(new_yield[0]);
-		path = ft_strjoin("/bin/", current->command, O_NONE);
-		execv(path, current->args); //NOTE: execve retorna 1 mesmo quando o path é um ponteiro NULL, então não precisamos de check pro malloc aqui.
+		execute_command(shell, current);
 	}
 	else
 	{
 		close(old_yield[0]);
 		close(old_yield[1]);
 		free(old_yield);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		if (status > 0)
+			printf("%s: command not found\n", current->command);
 	}
 	return (new_yield);
 }
+
 
 int is_pipe(char *token)
 {
@@ -138,7 +163,9 @@ int    evaluate_prompt(char *prompt, t_shell *shell)
 	while (current)
 	{
 		if (!current->token || is_pipe(current->token))
-			yield = evaluate_command(current, yield);
+		{
+			yield = evaluate_command(current, yield, shell);
+		}
 		else if(is_redirect_output(current->token))
 		{
 			redirect_output(current, yield);
