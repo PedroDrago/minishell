@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 23:38:40 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/01 23:44:55 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ t_env	*load_envs(void)
 		return (free_split(args), NULL);
 	pid = fork();
 	if (pid == 0)
-		if (dup2(fd[1], 1) < 0 || close(fd[0]) < 0 || close(fd[1]) < 0
+		if (dup2(fd[1], 1) < 0 || close(fd[0]) < 0 || close(fd[1]) < 0 //NOTE: quando eu estava refatorando o evaluation precebi que verificar se close da errado é um pouco inutil, mas acho que isso aqui reduziu linhas de qualquer forma
 			|| execv("/bin/env", args) < 0)
 			return (free_split(args), NULL);
 	if (pid > 0) //NOTE: se o fork() acima der errado a gnt n da wait pra n ficar preso num deadlock
