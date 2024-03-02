@@ -35,7 +35,7 @@ char	**parse_arguments(char **splited, t_node *node)
 	node->args = ft_split(str, ' ');
 	if (!node->args)
 		return (NULL);
-	free (str);
+	free(str);
 	return (splited);
 }
 
@@ -48,11 +48,15 @@ int	fill_list(char **splited, t_list *list)
 		node = create_node();
 		if (!node)
 			return (FALSE);
-		node->command = *splited;
+		node->command = ft_strdup(*splited);
 		splited = parse_arguments(splited, node);
 		if (!splited)
 			return (FALSE);
-		node->token = *splited;
+		if (!(*splited))        // NOTE: strdup da segfault se vc passa nulo, poderia 
+					// alterar a funcao mas prefiro consultar voce @rafael antes pra ver o que acha então fiz um if/else pra lidar com isso por enquanto
+			node->token = NULL;
+		else
+			node->token = ft_strdup(*splited);
 		append_node(list, node);
 		if (!(*splited++))
 			return (TRUE);
@@ -66,9 +70,14 @@ t_list	*generate_list(char *prompt)
 	t_list	*list;
 
 	list = create_list();
-	splited = ft_split(prompt, ' ');
-	if (!splited || !list)
+	if (!list)
 		return (NULL);
-	fill_list(splited, list);
-	return (list);
+	splited = ft_split(prompt, ' ');
+	if (!splited)
+		return (NULL); // free_list
+	if (!fill_list(splited, list))
+		return (free_split(splited), free_list(list), NULL);
+	free_split(splited);
+		// NOTE: antes nossos nodes tinham referencia pra memoria do split, isso é problematico para dar free nas coisas. Agora são copias, e splited é liberado assim que a função acaba
+	return (list);       
 }

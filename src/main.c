@@ -1,19 +1,14 @@
 #include "../includes/minishell.h"
-
-int	terminate_shell(t_shell *shell, int EXIT_STATUS)
-{
-	free (shell->path);
-	free (shell->shell_path);
-	return (EXIT_STATUS);
-}
+#include <stdlib.h>
 
 int	main(int argc, char *argv[])
 {
 	char	*prompt;
-	t_shell	shell;
+	t_shell	*shell;
 
-	if (!init_shell(&shell, argc, argv[0]))
-		return (EXIT_FAILURE);
+	shell = init_shell(argc, argv[0]);
+	if (!shell)
+		exit(1);
 	while (TRUE)
 	{
 		prompt = readline("$ ");
@@ -25,8 +20,8 @@ int	main(int argc, char *argv[])
 			write(2, "Minishell: Invalid Prompt\n", 26);
 			continue ;
 		}
-		if (!evaluate_prompt(prompt, &shell))
-			return (terminate_shell(&shell, EXIT_FAILURE));
+		if (!evaluate_prompt(prompt, shell))
+			return (terminate_shell(shell), EXIT_FAILURE);
 	}
-	return (terminate_shell(&shell, EXIT_SUCCESS));
+	return (terminate_shell(shell), EXIT_SUCCESS);
 }

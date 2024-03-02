@@ -6,19 +6,12 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 21:10:15 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/02 00:26:17 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//essa função deveria encerrar o programa
-char	**error_free(char **splited)
-{
-	free_split(splited);
-
-	return (NULL);
-}
+#include <stdlib.h>
 
 char	**split_keyvalue(char *str, char sep)
 {
@@ -37,14 +30,14 @@ char	**split_keyvalue(char *str, char sep)
 		i++;
 	splited[0] = ft_substr(str, j, i);
 	if (!splited[0])
-		return (error_free(splited));
+		return (free_split(splited), NULL);
 	i++;
 	j = i;
 	while (str[i])
 		i++;
 	splited[1] = ft_substr(str, j, i);
 	if (!splited[1])
-		return (error_free(splited));
+		return (free_split(splited), NULL);
 	splited[2] = NULL;
 	return (splited);
 }
@@ -93,15 +86,19 @@ t_env	*fill_env_struct(int fd)
 		if (!args)
 		{
 			free_env(env_head);
-			return (NULL);// PARAR O PROGRAMA
+			return (NULL);
 		}
 		if (!temp_env)
 		{
 			env_head = make_new_env_node(args[0], args[1]);
+			//FIX:deveriamos checar se make_new_env_node() der NULL, e retornar? 
+			//N entendi se a função ja lida com isso de outra forma, pq parece que o looping espera que temp_env seja nulo eventualmente
 			temp_env = env_head;
 		}
 		else
 			temp_env->next = make_new_env_node(args[0], args[1]);
+			//FIX:deveriamos checar se make_new_env_node() der NULL, e retornar? 
+			//N entendi se a função ja lida com isso de outra forma, pq parece que o looping espera que temp_env seja nulo eventualmente
 		free(args);
 		free(str);
 		str = get_next_line(fd);
@@ -138,10 +135,10 @@ t_env	*get_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-int		set_env_value(t_env *env, char *key, char *value)
+int	set_env_value(t_env *env, char *key, char *value)
 {
-	t_env   *temp;
-	t_env   *target_node;
+	t_env	*temp;
+	t_env	*target_node;
 	char	*new_value;
 
 	target_node = get_env_node(env, key);
@@ -170,22 +167,23 @@ t_env	*load_envs(void)
 	int		pid;
 	char	**args;
 
-	pipe(fd);
+	args = ft_split("env", ' ');
+	if (!args)
+		return (NULL);
+	if (pipe(fd) < 0)
+		return (free_split(args), NULL);
 	pid = fork();
-	args = ft_split ("env", ' ');
 	if (pid == 0)
 	{
 		dup2(fd[1], 1);
-		close(fd[0]);
+		close(fd[0]) ;
 		close(fd[1]);
 		execv("/bin/env", args);
-		printf("Error\n");
-		exit(1);
 	}
-	wait(NULL);
+	if (pid > 0) //NOTE: se o fork() acima der errado a gnt n da wait pra n ficar preso num deadlock
+		wait(NULL);
 	free_split(args);
 	close(fd[1]);
 	env = fill_env_struct(fd[0]);
-	put_envs(env);
 	return (env);
 }

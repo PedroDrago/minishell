@@ -7,7 +7,7 @@ void	free_split(char **splited)
 	count = -1;
 	while (splited[++count])
 		free(splited[count]);
-	free (splited);
+	free(splited);
 }
 
 void	print_split(char **argv)
