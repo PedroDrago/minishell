@@ -39,3 +39,24 @@ t_list	*create_list(void)
 	list->head = NULL;
 	return (list);
 }
+
+
+void free_list(t_list *list)
+{
+	t_node *tmp;
+
+	if (!list)
+		return ;
+	tmp = list->head;
+	while (tmp)
+	{
+		if (tmp->args)
+			free_split(tmp->args);
+		if (tmp->command)
+			free(tmp->command);
+		if (tmp->token)
+			free(tmp->token);
+		tmp = tmp->next;
+	}
+	free (list);
+}
