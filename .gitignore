@@ -3,4 +3,3 @@ history
 minishell
 *.a
 .vscode
-./bin/*
