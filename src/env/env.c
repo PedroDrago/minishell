@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 21:10:15 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/01 21:53:10 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,9 @@ t_env	*load_envs(void)
 	int		pid;
 	char	**args;
 
+	args = ft_split ("env", ' ');
 	pipe(fd);
 	pid = fork();
-	args = ft_split ("env", ' ');
 	if (pid == 0)
 	{
 		dup2(fd[1], 1);
