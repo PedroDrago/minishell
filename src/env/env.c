@@ -6,17 +6,17 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 21:53:10 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:07:25 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdlib.h>
 
-//essa função deveria encerrar o programa
+// essa função deveria encerrar o programa
 char	**error_free(char **splited)
 {
 	free_split(splited);
-
 	return (NULL);
 }
 
@@ -93,7 +93,7 @@ t_env	*fill_env_struct(int fd)
 		if (!args)
 		{
 			free_env(env_head);
-			return (NULL);// PARAR O PROGRAMA
+			return (NULL); // PARAR O PROGRAMA
 		}
 		if (!temp_env)
 		{
@@ -138,10 +138,10 @@ t_env	*get_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-int		set_env_value(t_env *env, char *key, char *value)
+int	set_env_value(t_env *env, char *key, char *value)
 {
-	t_env   *temp;
-	t_env   *target_node;
+	t_env	*temp;
+	t_env	*target_node;
 	char	*new_value;
 
 	target_node = get_env_node(env, key);
@@ -170,22 +170,21 @@ t_env	*load_envs(void)
 	int		pid;
 	char	**args;
 
-	args = ft_split ("env", ' ');
-	pipe(fd);
+	args = ft_split("env", ' ');
+	if (!args)
+		return (NULL);
+	if (pipe(fd) < 0)
+		return (free_split(args), NULL);
 	pid = fork();
+	if (pid < 0)
+		return (free_split(args), NULL);
 	if (pid == 0)
-	{
-		dup2(fd[1], 1);
-		close(fd[0]);
-		close(fd[1]);
-		execv("/bin/env", args);
-		printf("Error\n");
-		exit(1);
-	}
+		if (dup2(fd[1], 1) < 0 || close(fd[0]) < 0 || close(fd[1]) < 0
+			|| execv("/bin/env", args) < 0)
+			return (free_split(args), NULL);
 	wait(NULL);
 	free_split(args);
 	close(fd[1]);
 	env = fill_env_struct(fd[0]);
-	put_envs(env);
 	return (env);
 }
