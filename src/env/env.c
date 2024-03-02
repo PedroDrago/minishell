@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 19:57:12 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:10:15 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,11 +189,3 @@ t_env	*load_envs(void)
 	put_envs(env);
 	return (env);
 }
-/*
-int	main()
-{
-	t_env	*env;
-	env = load_envs();
-	free_env(env);
-}
-*/

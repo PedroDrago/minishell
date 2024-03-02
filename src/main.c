@@ -14,7 +14,6 @@ int	main(int argc, char *argv[])
 
 	if (!init_shell(&shell, argc, argv[0]))
 		return (EXIT_FAILURE);
-	printf("TESTE\n");
 	while (TRUE)
 	{
 		prompt = readline("$ ");
