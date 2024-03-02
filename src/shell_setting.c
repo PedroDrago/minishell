@@ -52,11 +52,23 @@ int	set_paths(t_shell *shell, char *execution_path)
 	char	*parsed_execution;
 
 	pwd = get_cwd();
+	if (!pwd)
+		return (FALSE);
 	parsed_execution = parse_path(execution_path);
+	if (!parsed_execution)
+		return (free(pwd), FALSE);
 	if (parsed_execution[0] != '/')
+	{
 		pwd = ft_strjoin(pwd, "/", O_ONE);
+		if (!pwd)
+			return (free(parsed_execution), FALSE);
+	}
 	shell->shell_path = ft_strjoin(pwd, parsed_execution, O_BOTH);
+	if (!shell->path)
+		return (free (pwd), free(parsed_execution), FALSE);
 	shell->path = ft_strjoin(shell->shell_path, "bin/", O_NONE);
+	if (!shell->path)
+		return (free (pwd), free(parsed_execution), FALSE);
 	return (TRUE);
 }
 
@@ -66,7 +78,7 @@ int	init_shell(t_shell *shell, int argc, char *execution_path)
 		return (FALSE);
 	shell->env = load_envs();
 	if (!shell->env)
-		return (FALSE);
+		return (free(shell->path), free(shell->shell_path), FALSE);
 	(void) argc;
 	return (TRUE);
 }
