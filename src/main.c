@@ -1,12 +1,12 @@
 #include "../includes/minishell.h"
 #include <stdlib.h>
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
 	t_shell	*shell;
 
-	shell = init_shell(argc, argv[0]);
+	shell = init_shell(argc, argv[0], envp);
 	if (!shell)
 		exit(1);
 	while (TRUE)

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/02 00:26:17 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/06 18:05:19 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_env	*make_new_env_node(char *key, char *value)
 	if (!new_env)
 		return (NULL);
 	new_env->key = key;
-	value[ft_strlen(value) - 1] = '\0';
 	new_env->value = value;
 	new_env->next = NULL;
 	return (new_env);
@@ -160,30 +159,20 @@ int	set_env_value(t_env *env, char *key, char *value)
 	return (1);
 }
 
-t_env	*load_envs(void)
+t_env	*load_envs(char *envp[])
 {
 	t_env	*env;
-	int		fd[2];
-	int		pid;
 	char	**args;
-
-	args = ft_split("env", ' ');
-	if (!args)
-		return (NULL);
-	if (pipe(fd) < 0)
-		return (free_split(args), NULL);
-	pid = fork();
-	if (pid == 0)
+	
+	env = NULL;
+	while (envp && *envp)
 	{
-		dup2(fd[1], 1);
-		close(fd[0]) ;
-		close(fd[1]);
-		execv("/bin/env", args);
+		args = split_keyvalue(*envp, '='); //VALIDAR MALLOC
+		if (!env)
+			env = make_new_env_node(args[0], args[1]); //VALIDAR MALLOC
+		else
+			set_env_value(env, args[0], args[1]); //VALIDAR MALLOC?
+		envp++;
 	}
-	if (pid > 0) //NOTE: se o fork() acima der errado a gnt n da wait pra n ficar preso num deadlock
-		wait(NULL);
-	free_split(args);
-	close(fd[1]);
-	env = fill_env_struct(fd[0]);
 	return (env);
 }

@@ -93,7 +93,7 @@ int	append_path(t_shell *shell)
 	return (TRUE);
 }
 
-t_shell	*init_shell(int argc, char *execution_path)
+t_shell	*init_shell(int argc, char *execution_path, char *envp[])
 {
 	t_shell	*shell;
 
@@ -102,7 +102,7 @@ t_shell	*init_shell(int argc, char *execution_path)
 		exit(EXIT_FAILURE); // NOTE: nada no programa foi mallocado nesse ponto, é seguro só dar exit
 	if (!set_paths(shell, execution_path))
 		return (free(shell), NULL);
-	shell->env = load_envs();
+	shell->env = load_envs(envp);
 	if (!shell->env)
 		return (free(shell->path), free(shell->shell_path), free(shell), NULL);
 	shell->last_status = -99;
