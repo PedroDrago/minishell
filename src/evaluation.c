@@ -177,6 +177,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	close(yield[1]);
 	print_result(yield[0]);
 	free_list(prompt_list);
+	free(yield);
 	(void)shell;
 	return (TRUE);
 }

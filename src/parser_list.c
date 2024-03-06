@@ -43,6 +43,7 @@ t_list	*create_list(void)
 void	free_list(t_list *list)
 {
 	t_node	*tmp;
+	t_node	*tmp2;
 
 	if (!list)
 		return ;
@@ -55,7 +56,9 @@ void	free_list(t_list *list)
 			free(tmp->command);
 		if (tmp->token)
 			free(tmp->token);
+		tmp2 = tmp;
 		tmp = tmp->next;
+		free(tmp2);
 	}
 	free(list);
 }
