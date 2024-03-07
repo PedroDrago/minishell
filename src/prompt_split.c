@@ -187,10 +187,10 @@ void do_split(char *str, char **splited)
 		if (str[start] == '\"')
 		{
 			*splited = quote_substr(str, start, get_end_quote(str, start, '\"'), '\"');
-			printf("\nfrom %i to %i: |%s|", start, get_end_quote(str, start, '\"'), *splited);
+			// printf("\nfrom %i to %i: |%s|", start, get_end_quote(str, start, '\"'), *splited);
 			start = get_end_quote(str, start, '\"') + 1;
-			printf("---- start after: %i\n", start);
-			printf("--------------------\n");
+			// printf("---- start after: %i\n", start);
+			// printf("--------------------\n");
 			splited++;
 		}
 		else if (str[start] == '\'')
@@ -202,10 +202,10 @@ void do_split(char *str, char **splited)
 		else
 		{
 			*splited = default_substr(str, start, get_end_space(str, start));
-			printf("\nfrom %i to %i: |%s|", start, get_end_space(str, start), *splited);
+			// printf("\nfrom %i to %i: |%s|", start, get_end_space(str, start), *splited);
 			start = get_end_space(str, start) + 1;
-			printf("---- start after: %i\n", start);
-			printf("--------------------\n");
+			// printf("---- start after: %i\n", start);
+			// printf("--------------------\n");
 			splited++;
 		}
 		while (str[start] == ' ')
