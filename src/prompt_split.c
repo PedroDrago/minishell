@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include <strings.h>
 
-
-# define DEBUG 0
-
 int count_splits(char *str)
 {
 	int	count;
