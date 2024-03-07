@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/01 23:33:12 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/06 16:00:51 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int *pipe_command(t_node *current, int *fds);
 char	*parse_path(char *str);
 char	*get_cwd(void);
 int	set_paths(t_shell *shell, char *execution_path);
-t_shell *init_shell(int argc, char *execution_path);
+t_shell *init_shell(int argc, char *execution_path, char *envp[]);
 void	terminate_shell(t_shell *shell);
 
 
@@ -72,7 +72,7 @@ int	valid_prompt(char *prompt);
 int	valid_characters(char *prompt);
 
 //nev
-t_env	*load_envs(void);
+t_env	*load_envs(char *envp[]);
 int		set_env_value(t_env *env, char *key, char *value);
 t_env	*get_env_node(t_env *env, char *key);
 void	put_envs(t_env *env);

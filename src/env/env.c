@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/06 18:05:19 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:06:07 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ t_env	*load_envs(char *envp[])
 		else
 			set_env_value(env, args[0], args[1]); //VALIDAR MALLOC?
 		envp++;
+		free(args);
 	}
 	return (env);
 }

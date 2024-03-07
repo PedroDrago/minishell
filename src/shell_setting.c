@@ -90,6 +90,7 @@ int	append_path(t_shell *shell)
 	new_path = ft_strjoin(shell->path, ":", O_NONE);
 	new_path = ft_strjoin(new_path, old_path->value, O_ONE);
 	set_env_value(shell->env, "PATH", new_path);
+	free(new_path); // SET_ENV_VALUE TA CLONANDO ESSE CARA ENTÃO PODE APAGAR AQUI
 	return (TRUE);
 }
 
