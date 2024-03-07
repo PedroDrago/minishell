@@ -12,58 +12,51 @@ int count_splits(char *str)
 
 	count = 0;
 	splits = 0;
-	quote_count = 0;
+	quote_count = 1;
 	while (str[count])
 	{
 		if (str[count] == '\"')
 		{
 			quote_count++;
+			count++;
 			while (str[count])
 			{
-				count++;
-				if (str[count] == '\0')
-					break ;
-				while(str[count] != '\"')
-					count++;
-				quote_count++;
-				if (quote_count % 2 == 0 && (str[count + 1] == ' ' || str[count + 1] == '\0'))
+				if (str[count] == '\"')
 				{
-					splits++;
-					count++;
-					quote_count = 0;
-					break ;
+					if ((str[count + 1] == ' ' || str[count + 1] == '\0') && quote_count % 2 == 0)
+						break;
+					quote_count++;
 				}
+				count++;
 			}
-			if (str[count] == '\0')
-				return (splits);
+			splits++;
+			quote_count = 0;
 		}
-		if (str[count] == '\'')
+		else if (str[count] == '\'')
 		{
 			quote_count++;
+			count++;
 			while (str[count])
 			{
-				count++;
-				if (str[count] == '\0')
-					break ;
-				while(str[count] != '\'')
-					count++;
-				quote_count++;
-				if (quote_count % 2 == 0 && (str[count + 1] == ' ' || str[count + 1] == '\0'))
+				if (str[count] == '\"')
 				{
-					splits++;
-					count++;
-					quote_count = 0;
-					break ;
+					if ((str[count + 1] == ' ' || str[count + 1] == '\0') && quote_count % 2 == 0)
+						break;
+					quote_count++;
 				}
+				count++;
 			}
-			if (str[count] == '\0')
-				return (splits);
+			splits++;
+			quote_count = 0;
 		}
 		else
+		{
 			if (str[count] != ' ' && (str[count + 1] == ' ' || str[count + 1] == '\0'))
 				splits++;
+		}
 		count++;
 	}
+	printf("splits: %i\n", splits);
 	return (splits);
 }
 
