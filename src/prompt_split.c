@@ -5,7 +5,7 @@
 #include <strings.h>
 
 
-# define DEBUG 1
+# define DEBUG 0
 
 int count_splits(char *str)
 {
@@ -83,36 +83,25 @@ int substr_len_quote(char *str, int start_i, int end_i, char quote)
 			quotes++;
 		start_i++;
 	}
-	return (len - quotes);
+	return (len - quotes + 2);
 }
 
-char *quote_substr(char *str, int start_i, int end_i, char quote)
+char *quote_substr(char *str, int start, int end, char quote)
 {
 	char	*substr;
 	int	i;
 
-	substr = ft_calloc(sizeof(char) , substr_len_quote(str, start_i, end_i, quote) + 1);
+	substr = ft_calloc(sizeof(char) , substr_len_quote(str, start, end, quote) + 1);
 	if (!substr)
 		return (NULL);
 	i = 0;
-	if (DEBUG)
-		printf("start: %i | end: %i |", start_i ,end_i);
-	while(*str && start_i < end_i)
+	while (start <= end)
 	{
-		start_i++;
-		while (str[start_i] == quote)
-			start_i++;
-		if (start_i >= end_i)
-		{
-			substr[i] = '\0';
-			break ;
-		}
-		substr[i] = str[start_i];
-		i++;
+		while (str[start] == quote && (i != 0 && start != end)) // NOTE: Skip quote if not first or last quotes
+			start++;
+		substr[i++] = str[start++];
 	}
-	substr[++i] = '\0';
-	if (DEBUG)
-		printf("str:[%s]\n", substr);
+	substr[i] = '\0';
 	return (substr);
 }
 
@@ -197,20 +186,31 @@ void do_split(char *str, char **splited)
 	{
 		if (str[start] == '\"')
 		{
-			*splited++ = quote_substr(str, start, get_end_quote(str, start, '\"'), '\"');
+			*splited = quote_substr(str, start, get_end_quote(str, start, '\"'), '\"');
+			printf("\nfrom %i to %i: |%s|", start, get_end_quote(str, start, '\"'), *splited);
 			start = get_end_quote(str, start, '\"') + 1;
+			printf("---- start after: %i\n", start);
+			printf("--------------------\n");
+			splited++;
 		}
 		else if (str[start] == '\'')
 		{
-			*splited++ = quote_substr(str, start, get_end_quote(str, start, '\''), '\'');
+			*splited = quote_substr(str, start, get_end_quote(str, start, '\''), '\'');
 			start = get_end_quote(str, start, '\'') + 1;
+			splited++;
 		}
 		else
 		{
-			*splited++ = default_substr(str, start, get_end_space(str, start));
+			*splited = default_substr(str, start, get_end_space(str, start));
+			printf("\nfrom %i to %i: |%s|", start, get_end_space(str, start), *splited);
 			start = get_end_space(str, start) + 1;
+			printf("---- start after: %i\n", start);
+			printf("--------------------\n");
+			splited++;
 		}
-		if (str[start++] == '\0')
+		while (str[start] == ' ')
+			start++;
+		if (str[start] == '\0')
 			break ;
 	}
 	*splited = NULL;
