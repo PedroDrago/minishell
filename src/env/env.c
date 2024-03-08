@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/06 19:06:07 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/08 04:30:50 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ t_env	*get_env_node(t_env *env, char *key)
 			return (temp);
 		temp = temp->next;
 	}
-	return (NULL);
+	return (NULL); // WARN: here maybe we should return an empty string instead of null
 }
 
 int	set_env_value(t_env *env, char *key, char *value)

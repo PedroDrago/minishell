@@ -56,7 +56,6 @@ int count_splits(char *str)
 		}
 		count++;
 	}
-	printf("splits: %i\n", splits);
 	return (splits);
 }
 
@@ -156,7 +155,7 @@ char *default_substr(char *str, int start, int end)
 	while (start <= end)
 	{
 		substr[i++] = str[start++];
-		while (str[start] == '\"' || str[start] == '\'' && (start <= end))
+		while ((str[start] == '\"' || str[start] == '\'') && (start <= end)) // WARN: May be this is wrong
 			start++;
 	}
 	substr[++i] = '\0';
@@ -166,7 +165,7 @@ char *default_substr(char *str, int start, int end)
 int	apply_substr_quote(char **splited, char *str, int start, char quote)
 {
 	*splited = quote_substr(str, start, get_end_quote(str, start, quote), quote);
-	start = get_end_quote(str, start, '\"') + 1;
+	start = get_end_quote(str, start, quote) + 1;
 	return (start);
 }
 
@@ -180,8 +179,6 @@ int apply_substr_space(char **splited, char *str, int start)
 void do_split(char *str, char **splited)
 {
 	int	start;
-	int	end;
-	char *hold;
 
 	start = 0;
 	while (str[start])
@@ -207,22 +204,10 @@ char **prompt_split(char *s)
 	char *str = ft_strtrim(s, " ");
 	if (!str)
 		return (NULL);
-	splited = malloc(sizeof(char *) * count_splits(str) + 1);
+	// splited = malloc(sizeof(char *) * count_splits(str) + 1);
+	splited = malloc(sizeof(char *) * 30);
 	if (!splited)
 		return(free(str), NULL);
 	do_split(str, splited);
 	return (splited);
-}
-
-int main(int argc, char *argv[]){
-
-
-	while (1)
-	{
-		char **test = prompt_split(readline("$ "));
-		int	count = 0;;
-
-		while(test && test[count])
-			printf("|%s|\n", test[count++]);
-	}
 }
