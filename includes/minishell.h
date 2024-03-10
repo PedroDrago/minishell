@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/06 16:00:51 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/08 04:15:52 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_node *create_node();
 void append_node(t_list *list,t_node *node);
 t_list *create_list();
 int    is_token(char *item);
-t_list *generate_list(char *prompt);
+t_list	*generate_list(char *prompt, t_shell *shell);
 void free_list(t_list *list);
 
 
@@ -78,4 +78,7 @@ t_env	*get_env_node(t_env *env, char *key);
 void	put_envs(t_env *env);
 void	free_env(t_env *env);
 
+
+char **prompt_split(char *s);
+void expand_arguments(t_list *list, t_shell *shell);
 #endif

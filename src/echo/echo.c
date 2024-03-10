@@ -1,4 +1,5 @@
 #include "../../includes/minishell.h"
+#include <stdio.h>
 
 int	main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int	main(int argc, char *argv[])
 			count++;
 		}
 	}
+	count++;
 	while (argv[count])
 	{
 		printf("%s", argv[count]);
@@ -25,4 +27,5 @@ int	main(int argc, char *argv[])
 	if (!flag)
 		printf("\n");
 	return (0);
+	(void) argc, (void) argv;
 }

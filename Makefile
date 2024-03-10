@@ -1,6 +1,6 @@
 NAME = minishell
 
-MINISHELL_SRC = src/main.c src/parser.c src/parser_list.c src/evaluation.c src/shell_setting.c src/utils.c src/validations.c src/env/env.c
+MINISHELL_SRC = src/main.c src/parser.c src/parser_list.c src/evaluation.c src/shell_setting.c src/utils.c src/validations.c src/env/env.c src/prompt_split.c src/arg_expansion.c
 MINISHELL_OBJ = $(MINISHELL_SRC:.c=.o)
 
 BINS = $(PWD) $(ECHO)

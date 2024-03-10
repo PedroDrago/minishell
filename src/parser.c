@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 int	is_token(char *item)
 {
@@ -64,7 +65,7 @@ int	fill_list(char **splited, t_list *list)
 	return (TRUE);
 }
 
-t_list	*generate_list(char *prompt)
+t_list	*generate_list(char *prompt, t_shell *shell)
 {
 	char	**splited;
 	t_list	*list;
@@ -72,12 +73,12 @@ t_list	*generate_list(char *prompt)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	splited = ft_split(prompt, ' ');
+	splited = prompt_split(prompt);
 	if (!splited)
 		return (NULL); // free_list
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
-	free_split(splited);
-		// NOTE: antes nossos nodes tinham referencia pra memoria do split, isso é problematico para dar free nas coisas. Agora são copias, e splited é liberado assim que a função acaba
+	free_split(splited); // NOTE: antes nossos nodes tinham referencia pra memoria do split, isso é problematico para dar free nas coisas. Agora são copias, e splited é liberado assim que a função acaba
+	expand_arguments(list, shell);
 	return (list);       
 }

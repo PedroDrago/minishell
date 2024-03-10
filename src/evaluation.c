@@ -32,6 +32,7 @@ int	execute_command(t_shell *shell, t_node *current)
 	char	*path;
 	int		count;
 
+	execv(current->command, current->args);
 	paths = ft_split(get_env_node(shell->env, "PATH")->value, ':');
 	count = 0;
 	while (paths[count])
@@ -152,7 +153,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	t_node	*current;
 	int		*yield;
 
-	prompt_list = generate_list(prompt);
+	prompt_list = generate_list(prompt, shell);
 	if (!prompt_list)
 		return (FALSE);
 	current = prompt_list->head;
@@ -161,8 +162,8 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (free_list(prompt_list), FALSE);
 	if (pipe(yield) < 0)
 		return (free_list(prompt_list), free(yield), FALSE);
-	while (current)
-	{
+	while (current) // FIX: The evaluation process always pipe. This is a problem just because bash don't do that by default. 
+	{		//	               This is the reason our `ls` is displayed in a different way. I guess we'll need to check if it is a solo command?
 		if (!current->token || is_pipe(current->token))
 		{
 			yield = evaluate_command(current, yield, shell);

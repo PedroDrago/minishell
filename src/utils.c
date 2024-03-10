@@ -22,15 +22,15 @@ void	print_split(char **argv)
 
 void	print_list(t_list *arg)
 {
-	t_list	*list;
+	t_node *tmp;
 
-	list = arg;
-	while (list->head)
+	tmp = arg->head;
+	while (tmp)
 	{
-		printf("command: %s\n", list->head->command);
+		printf("command: %s\n", tmp->command);
 		printf("args: ");
-		print_split(list->head->args);
-		printf("token: %s\n", list->head->token);
-		list->head = list->head->next;
+		print_split(tmp->args);
+		printf("token: %s\n", tmp->token);
+		tmp = tmp->next;
 	}
 }
