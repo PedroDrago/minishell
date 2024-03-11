@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 18:08:01 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/03/11 19:41:52 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	valid_characters(char *prompt);
 t_env	*load_envs(char *envp[]);
 int		set_env_value(t_env *env, char *key, char *value);
 t_env	*get_env_node(t_env *env, char *key);
-void	put_envs(t_env *env);
+void	env(t_env *env, int fd_out);
 void	free_env(t_env *env);
 
 //signal
@@ -94,4 +94,12 @@ int	execute_command(t_shell *shell, t_node *current);
 void	execute_pipe(t_node *current, t_shell *shell, int *old_yield, int *new_yield);
 int	*pipe_output(t_node *current, int *old_yield, t_shell *shell);
 int	is_pipe(char *token);
+
+
+int	pwd(int fd_out);
+int	echo(int argc, char *argv[], int fd_out);
+int	split_len(char **split);
+void	exit_safely(t_shell *shell);
+int	is_builtin(char *command);
+void	exec_builtin(t_node *current, t_shell *shell, int fd_out);
 #endif

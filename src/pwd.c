@@ -1,12 +1,12 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-int	main(void)
+int	pwd(int fd_out)
 {
 	char	*buffer;
 	int		size;
 
 	size = 100;
-	buffer = (char *) malloc(sizeof(char) * size);
+	buffer = (char *) malloc(sizeof(char) * size + 1);
 	if (!buffer)
 		return (1);
 	while (!getcwd(buffer, size))
@@ -17,7 +17,8 @@ int	main(void)
 		if (!buffer)
 			return (1);
 	}
-	printf("%s\n", buffer);
+	ft_putstr_fd(buffer, fd_out);
+	ft_putchar_fd('\n', fd_out);
 	free(buffer);
 	return (0);
 }

@@ -108,6 +108,7 @@ t_shell	*init_shell(int argc, char *execution_path, char *envp[])
 	if (!shell->env)
 		return (free(shell->path), free(shell->shell_path), free(shell), NULL);
 	shell->last_status = -99;
+	shell->prompt_string = NULL;
 	(void)argc;
 	append_path(shell);
 	return (shell);

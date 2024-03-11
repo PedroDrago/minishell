@@ -6,11 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/08 04:30:50 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/11 19:41:53 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <stdlib.h>
 
 char	**split_keyvalue(char *str, char sep)
@@ -108,14 +108,14 @@ t_env	*fill_env_struct(int fd)
 	return (env_head);
 }
 
-void	put_envs(t_env *env)
+void	env(t_env *env, int fd_out)
 {
 	while (env)
 	{
-		ft_putstr_fd(env->key, 1);
-		ft_putchar_fd('=', 1);
-		ft_putstr_fd(env->value, 1);
-		ft_putchar_fd('\n', 1);
+		ft_putstr_fd(env->key, fd_out);
+		ft_putchar_fd('=', fd_out);
+		ft_putstr_fd(env->value, fd_out);
+		ft_putchar_fd('\n', fd_out);
 		env = env->next;
 	}
 }

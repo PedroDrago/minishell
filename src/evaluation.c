@@ -78,13 +78,18 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 	int	pid;
 	int	status;
 
-	pid = fork();
-	g_pid = pid;
-	if (pid == 0)
-		execute_command(shell, current);
-	waitpid(pid, &status, 0);
-	if (status > 0 && WTERMSIG(status) != SIGINT)
-		printf("%s: command not found\n", current->command);
+	if (is_builtin(current->command))
+		exec_builtin(current, shell, 1);
+	else
+	{
+		pid = fork();
+		g_pid = pid;
+		if (pid == 0)
+			execute_command(shell, current);
+		waitpid(pid, &status, 0);
+		if (status > 0 && WTERMSIG(status) != SIGINT)
+			printf("%s: command not found\n", current->command);
+	}
 }
 
 int	evaluate_prompt(char *prompt, t_shell *shell)
