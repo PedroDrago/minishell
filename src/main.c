@@ -20,8 +20,6 @@ void	exit_program(int sig)
 void	exit_safely(t_shell *shell)
 {
 	free_env(shell->env);
-	free(shell->path);
-	free(shell->shell_path);
 	free(shell);
 	exit(1);
 }
@@ -55,7 +53,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*prompt;
 	t_shell	*shell;
 
-	shell = init_shell(argc, argv[0], envp);
+	shell = init_shell(envp);
 	if (!shell)
 		exit(1);
 	while (TRUE)
@@ -73,7 +71,8 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		if (!evaluate_prompt(prompt, shell))
-			return (terminate_shell(shell), EXIT_FAILURE);
+			return (exit_safely(shell), EXIT_FAILURE);
 	}
-	return (terminate_shell(shell), EXIT_SUCCESS);
+	(void) argc, (void) argv;
+	return (exit_safely(shell), EXIT_SUCCESS);
 }

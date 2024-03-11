@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 19:41:52 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:26:16 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int *pipe_command(t_node *current, int *fds);
 char	*parse_path(char *str);
 char	*get_cwd(void);
 int	set_paths(t_shell *shell, char *execution_path);
-t_shell *init_shell(int argc, char *execution_path, char *envp[]);
+t_shell *init_shell(char *envp[]);
 void	terminate_shell(t_shell *shell);
 
 

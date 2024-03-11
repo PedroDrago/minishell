@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:38 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 20:08:02 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/11 20:25:17 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ typedef struct s_env
 typedef struct s_shell
 {
 	int	last_status;
-	char	*shell_path;
-	char	*path;
 	char	*prompt_string;
 	t_env	*env;
 	
