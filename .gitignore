@@ -3,5 +3,4 @@ history
 minishell
 *.a
 *.log
-bin/*
 .vscode

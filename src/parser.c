@@ -73,7 +73,8 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	splited = prompt_split(prompt);
+	// splited = prompt_split(prompt);
+	splited = ft_split(prompt, ' ');
 	if (!splited)
 		return (NULL); // free_list
 	if (!fill_list(splited, list))
