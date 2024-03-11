@@ -2,9 +2,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	exit_program()
+int	g_pid;
+
+void	exit_program(int sig)
 {
-	printf("Implementar sair do processo atual com ctrl+c\n");
+	char	*pwd;
+
+	(void)sig;
+	write(1, "\n", 1);
+	if (g_pid == 0)
+	{
+		pwd = get_cwd();
+		ft_putstr_fd(pwd, 1);
+		rl_on_new_line();
+		rl_clear_history();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		free(pwd);
+	}
 }
 
 void	exit_safely(t_shell *shell)
@@ -16,18 +31,18 @@ void	exit_safely(t_shell *shell)
 	exit(1);
 }
 
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
 	t_shell	*shell;
 
-	signal(SIGINT, exit_program);
 	shell = init_shell(argc, argv[0], envp);
 	if (!shell)
 		exit(1);
 	while (TRUE)
 	{
+		g_pid = 0;
+		ft_putstr_fd(get_env_node(shell->env, "PWD")->value, 1);
 		prompt = readline("$ ");
 		if (prompt == NULL)
 			exit_safely(shell);

@@ -99,6 +99,7 @@ t_shell	*init_shell(int argc, char *execution_path, char *envp[])
 	t_shell	*shell;
 
 	shell = (t_shell *)malloc(sizeof(t_shell));
+	signal(SIGINT, exit_program);
 	if (!shell)
 		exit(EXIT_FAILURE); // NOTE: nada no programa foi mallocado nesse ponto, é seguro só dar exit
 	if (!set_paths(shell, execution_path))

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 12:26:21 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:08:01 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include <termios.h>
 # include <unistd.h>
 
-
+extern int	g_pid;
 //history
 char	*read_file(int fd);
 long	copy_final_line(char *str, char *tmp, int start);
@@ -78,6 +78,8 @@ t_env	*get_env_node(t_env *env, char *key);
 void	put_envs(t_env *env);
 void	free_env(t_env *env);
 
+//signal
+void	exit_program(int n);
 
 char **prompt_split(char *s);
 void expand_arguments(t_list *list, t_shell *shell);
