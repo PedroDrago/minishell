@@ -30,17 +30,22 @@ int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
 		return (NULL);
 	if (pipe(new_yield) < 0)
 		return (free(new_yield), NULL);
-	pid = fork();
-	if (pid == 0)
-		execute_pipe(current, shell, old_yield, new_yield);
+	if (is_builtin(current->command))
+		exec_builtin(current, shell, new_yield[1]);
 	else
 	{
-		close(old_yield[0]);
-		close(old_yield[1]);
-		free(old_yield);
-		waitpid(pid, &status, 0);
-		if (status > 0)
-			printf("%s: command not found\n", current->command);
+		pid = fork();
+		if (pid == 0)
+			execute_pipe(current, shell, old_yield, new_yield);
+		else
+		{
+			close(old_yield[0]);
+			close(old_yield[1]);
+			free(old_yield);
+			waitpid(pid, &status, 0);
+			if (status > 0)
+				printf("%s: command not found\n", current->command);
+		}
 	}
 	return (new_yield);
 }
