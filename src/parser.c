@@ -79,6 +79,7 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited); // NOTE: antes nossos nodes tinham referencia pra memoria do split, isso é problematico para dar free nas coisas. Agora são copias, e splited é liberado assim que a função acaba
-	expand_arguments(list, shell);
+	// expand_arguments(list, shell);
+	(void) shell;
 	return (list);       
 }

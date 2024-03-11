@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/08 04:15:52 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/11 12:26:21 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,15 @@ void	free_env(t_env *env);
 
 char **prompt_split(char *s);
 void expand_arguments(t_list *list, t_shell *shell);
+
+
+int	is_redirect_input(char *token);
+int	is_heredoc(char *token);
+int	is_redirect_output(char *token);
+void	execute_redirection(t_node *current, t_shell *shell, int *old_yield, int file);
+void	redirect_output(t_node *current, t_shell *shell, int *old_yield);
+int	execute_command(t_shell *shell, t_node *current);
+void	execute_pipe(t_node *current, t_shell *shell, int *old_yield, int *new_yield);
+int	*pipe_output(t_node *current, int *old_yield, t_shell *shell);
+int	is_pipe(char *token);
 #endif
