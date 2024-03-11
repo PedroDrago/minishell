@@ -11,7 +11,6 @@ void	exit_program(int sig)
 	if (g_pid == 0)
 	{
 		rl_on_new_line();
-		rl_clear_history();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
