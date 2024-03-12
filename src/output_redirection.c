@@ -27,9 +27,9 @@ void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
 		|| !ft_strlen(current->next->command))
 		printf("minishell: Syntax error\n");
 	if (!ft_strncmp(current->token, ">", 2))
-		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0777);
+		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0664);
 	else
-		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0777);
+		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0664);
 	if (file < 0)
 		return ;
 	if (is_builtin(current->command))
