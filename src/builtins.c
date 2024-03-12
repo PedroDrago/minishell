@@ -24,9 +24,15 @@ int	is_builtin(char *command)
 
 void	cd(t_node *current, t_shell *shell)
 {
-	set_env_value(shell->env, "OLDPWD" , get_cwd());
+	char *cwd;
+
+	cwd = get_cwd();
+	set_env_value(shell->env, "OLDPWD" , cwd);
+	free(cwd);
 	chdir(current->args[1]);
-	set_env_value(shell->env, "PWD" , get_cwd());
+	cwd = get_cwd();
+	set_env_value(shell->env, "PWD" , cwd);
+	free(cwd);
 }
 
 void	exec_builtin(t_node *current, t_shell *shell, int fd_out)

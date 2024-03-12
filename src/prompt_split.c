@@ -61,18 +61,13 @@ int count_splits(char *str)
 
 int substr_len_quote(char *str, int start_i, int end_i, char quote)
 {
-	int	quotes;
 	int	len;
 
-	quotes = 0;
 	len = end_i - start_i - 1;
 	while (str && start_i++ < end_i)
-	{
-		if (str[start_i] == quote)
-			quotes++;
 		start_i++;
-	}
-	return (len - quotes + 2);
+	(void) quote;
+	return (len + 2);
 }
 
 char *quote_substr(char *str, int start, int end, char quote)
@@ -86,8 +81,6 @@ char *quote_substr(char *str, int start, int end, char quote)
 	i = 0;
 	while (start <= end)
 	{
-		while (str[start] == quote && (i != 0 && start != end)) // NOTE: Skip quote if not first or last quotes
-			start++;
 		substr[i++] = str[start++];
 	}
 	substr[i] = '\0';

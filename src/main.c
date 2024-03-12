@@ -33,7 +33,7 @@ char *create_prompt_str(t_shell *shell)
 		free (shell->prompt_string);
 	str = ft_calloc(1, 1);
 	str = ft_strjoin(str, "\e[1;32m", O_ONE);
-	user = get_env_node(shell->env, "USERNAME")->value;
+	user = get_env_node(shell->env, "USER")->value;
 	if (!user)
 		user = "username";
 	str = ft_strjoin(str, user, O_ONE);
