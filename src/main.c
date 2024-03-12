@@ -32,12 +32,12 @@ char *create_prompt_str(t_shell *shell)
 	if (shell->prompt_string != NULL)
 		free (shell->prompt_string);
 	str = ft_calloc(1, 1);
-	str = ft_strjoin(str, "\e[32m", O_ONE);
+	str = ft_strjoin(str, "\e[1;32m", O_ONE);
 	user = get_env_node(shell->env, "USERNAME")->value;
 	if (!user)
 		user = "username";
 	str = ft_strjoin(str, user, O_ONE);
-	str = ft_strjoin(str, "\e[0m:\e[34m", O_ONE);
+	str = ft_strjoin(str, "\e[0m:\e[1;34m", O_ONE);
 	pwd = get_env_node(shell->env, "PWD")->value;
 	if (!pwd)
 		user = ".";
