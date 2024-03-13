@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/12 17:55:40 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/13 18:17:23 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_strndup(char *str, int n)
 
 char	**split_loop(char **splited, char *str, char *charset)
 {
+	// NOTE: str = "a\0"
 	int	i;
 	int	j;
 	int	k;
@@ -88,6 +89,9 @@ char	**split_loop(char **splited, char *str, char *charset)
 char	**ft_split_charset_mod(char *str, char *charset)
 {
 	char	**splited;
+
+	if (ft_strlen(str) == 1)
+		return (ft_split(str, '\''));
 	splited = (char **)malloc(8 * charset_split_count(str, charset) + 1);
 	if (!splited)
 		return (NULL);
@@ -129,6 +133,7 @@ char *split_join(char **splited)
 	i = 0;
 	j = 0;
 	z = 0;
+	quote = 0;
 	if (splited[0][0] == '\"' || splited[0][0] == '\'')
 	{
 		quote = 1;
@@ -141,11 +146,9 @@ char *split_join(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1))
-			{
-				j++;
+			if (((splited[i][j] == '\"' && quote == 2)
+				|| (splited[i][j] == '\'' && quote == 1)) && ++j)
 				continue;
-			}
 			join[z] = splited[i][j];
 			z++;
 			j++;
@@ -153,8 +156,6 @@ char *split_join(char **splited)
 		i++;
 	}
 	join[z] = '\0';
-	if (join[z - 1] == '\"' || join[z - 1] == '\'')
-		join[z - 1] = '\0';
 	return (join);
 }
 
@@ -171,7 +172,7 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 	while (node->args[i])
 	{
 		splited = ft_split_charset_mod(node->args[i], " $\"\'");
-		print_split(splited);
+		// print_split(splited);
 		j = 0;
 		while (splited[j])
 		{
