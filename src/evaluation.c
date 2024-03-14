@@ -87,6 +87,8 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 		if (pid == 0)
 			execute_command(shell, current);
 		waitpid(pid, &status, 0);
+		if (!set_env_value(shell->env, "?", ft_itoa(status)))
+			exit_safely(shell);
 		if (status > 0 && WTERMSIG(status) != SIGINT)
 			printf("%s: command not found\n", current->command);
 	}
@@ -100,6 +102,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	prompt_list = generate_list(prompt, shell);
 	if (!prompt_list)
 		return (FALSE);
+	shell->prompt_list = prompt_list;
 	current = prompt_list->head;
 	if (!current->token)
 		evaluate_solo(current, shell);

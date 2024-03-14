@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/08 05:14:58 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/13 18:17:23 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_strndup(char *str, int n)
 
 char	**split_loop(char **splited, char *str, char *charset)
 {
+	// NOTE: str = "a\0"
 	int	i;
 	int	j;
 	int	k;
@@ -88,13 +89,9 @@ char	**split_loop(char **splited, char *str, char *charset)
 char	**ft_split_charset_mod(char *str, char *charset)
 {
 	char	**splited;
-	// int		i;
-	// int		j;
-	// int		k;
 
-	// i = 0;
-	// j = -1;
-	// k = 0;
+	if (ft_strlen(str) == 1)
+		return (ft_split(str, '\''));
 	splited = (char **)malloc(8 * charset_split_count(str, charset) + 1);
 	if (!splited)
 		return (NULL);
@@ -102,76 +99,111 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	return (splited);
 }
 
-char *get_expanded_arg(char	**splited_arg, t_shell *shell)
-{
-	int	i;
-	char *expanded_arg;
-	char *parsed_arg;
-	char *joined;
-	t_env *node ;
-	
 
+int	split_str_len(char **splited)
+{
+	int len;
+	int	i;
+
+	if (!splited)
+		return (0);
+	len = 0;
 	i = 0;
-	joined = ft_calloc(1, 1);
-	expanded_arg = "";
-	while (splited_arg[i])
+	while (splited[i])
 	{
-		if (splited_arg[i][0] == '$')
-		{
-			parsed_arg = ft_strtrim(splited_arg[i],"\"$"); // FIX: this is fucked up about single quotes, and only adding it to the trim may fuck up arguments that have '" at the end
-			node = get_env_node(shell->env, parsed_arg);
-			if (node)
-				expanded_arg = node->value;
-			free(splited_arg[i]);
-			free(parsed_arg);
-			splited_arg[i] = ft_strdup(expanded_arg);
-		}
+		len += ft_strlen(splited[i]);
 		i++;
 	}
-	i = 1; // NOTE: starts at 1 to remove quote
-	free(splited_arg[0]);
-	while (splited_arg[i])
-	{
-		joined = ft_strjoin(joined, splited_arg[i], O_BOTH);
-		i++;
-	}
-	return (joined);
+	if (splited[0][0] == '\"' || splited[0][0] == '\'')
+		len -= 2;
+	return (len);
 }
 
-void	expand_node_arguments(t_node *current_node, t_shell *shell)
+char *split_join(char **splited)
 {
+	char	*join;
 	int	i;
-	char *tmp;
-	char **splited_arg;
+	int	j;
+	int	z;
+	int	quote;
 
+	join = malloc(sizeof(char) * split_str_len(splited));
+	if (!join)
+		return (NULL);
 	i = 0;
-	while (current_node->args && current_node->args[i])
+	j = 0;
+	z = 0;
+	quote = 0;
+	if (splited[0][0] == '\"' || splited[0][0] == '\'')
 	{
-		splited_arg = ft_split_charset_mod(current_node->args[i], " $");
-		if (splited_arg[0][0] != '\'')
+		quote = 1;
+		if (splited[0][0] == '\"')
+			quote = 2;
+		splited++;
+	}
+	while(splited[i])
+	{
+		j = 0;
+		while (splited[i][j])
 		{
-			tmp = current_node->args[i];
-			current_node->args[i] = get_expanded_arg(splited_arg, shell);
-			free (tmp);
-		}
-		else
-		{
-			// TODO:remove simple quotes (trimm?) from argument.
-			current_node->args[i] = ft_strtrim(current_node->args[i], "\'");
+			if (((splited[i][j] == '\"' && quote == 2)
+				|| (splited[i][j] == '\'' && quote == 1)) && ++j)
+				continue;
+			join[z] = splited[i][j];
+			z++;
+			j++;
 		}
 		i++;
-		free(splited_arg);
+	}
+	join[z] = '\0';
+	return (join);
+}
+
+
+void	expand_node_arguments(t_node *node, t_shell *shell)
+{
+	int	i;
+	int	j;
+	char	**splited;
+	t_env	*env;
+	char	*value;
+
+	i = 0;
+	while (node->args[i])
+	{
+		splited = ft_split_charset_mod(node->args[i], " $\"\'");
+		// print_split(splited);
+		j = 0;
+		while (splited[j])
+		{
+			if (splited[0][0] != '\"' && splited[j][0] == '\'')
+				break;
+			if (splited[j][0] == '$')
+			{
+				env = get_env_node(shell->env, &splited[j][1]);
+				if (env)
+					value = ft_strdup(env->value);
+				else
+					value = ft_strdup("");
+				free(splited[j]);
+				splited[j] = value;
+			}
+			j++;
+		}
+		free(node->args[i]);
+		node->args[i] = split_join(splited);
+		i++;
 	}
 }
 
-void expand_arguments(t_list *list, t_shell *shell)
+void	expand_arguments(t_list *list, t_shell *shell)
 {
-	t_node	*current_node;
+	t_node *current;
 
-	current_node = list->head;
-	while (current_node)
+	current = list->head;
+	while (current)
 	{
-		expand_node_arguments(current_node, shell);
-		current_node = current_node->next;
+		expand_node_arguments(current, shell);
+		current = current->next;
 	}
 }

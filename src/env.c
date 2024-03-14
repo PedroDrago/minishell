@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 19:41:53 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/13 20:53:40 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**split_keyvalue(char *str, char sep)
 		return (free_split(splited), NULL);
 	i++;
 	j = i;
-	while (str[i])
+	while (str[i] && str[i] != ' ')
 		i++;
 	splited[1] = ft_substr(str, j, i);
 	if (!splited[1])
@@ -108,16 +108,22 @@ t_env	*fill_env_struct(int fd)
 	return (env_head);
 }
 
-void	env(t_env *env, int fd_out)
+int	env(t_env *env, int fd_out)
 {
 	while (env)
 	{
+		if (ft_strchr(env->key, '?'))
+		{
+			env = env->next;
+			continue;
+		}
 		ft_putstr_fd(env->key, fd_out);
 		ft_putchar_fd('=', fd_out);
 		ft_putstr_fd(env->value, fd_out);
 		ft_putchar_fd('\n', fd_out);
 		env = env->next;
 	}
+	return (0);
 }
 
 t_env	*get_env_node(t_env *env, char *key)
@@ -140,6 +146,8 @@ int	set_env_value(t_env *env, char *key, char *value)
 	t_env	*target_node;
 	char	*new_value;
 
+	if (!value || !key)
+		return (0);
 	target_node = get_env_node(env, key);
 	if (!target_node)
 	{
@@ -175,5 +183,6 @@ t_env	*load_envs(char *envp[])
 		envp++;
 		free(args);
 	}
+	set_env_value(env, ft_strdup("?"), ft_strdup("0"));
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/11 20:26:16 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/13 21:05:13 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	valid_characters(char *prompt);
 t_env	*load_envs(char *envp[]);
 int		set_env_value(t_env *env, char *key, char *value);
 t_env	*get_env_node(t_env *env, char *key);
-void	env(t_env *env, int fd_out);
+int	env(t_env *env, int fd_out);
 void	free_env(t_env *env);
 
 //signal
@@ -102,4 +102,8 @@ int	split_len(char **split);
 void	exit_safely(t_shell *shell);
 int	is_builtin(char *command);
 void	exec_builtin(t_node *current, t_shell *shell, int fd_out);
+int	unset(t_node *current, t_shell *shell);
+char	**split_keyvalue(char *str, char sep);
+int	export(t_node *node, t_shell *shell, int fd_out);
+int	cd(t_node *node, t_shell *shell);
 #endif
