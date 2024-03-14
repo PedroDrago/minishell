@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/13 18:17:23 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:53:27 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,13 @@ char *split_join(char **splited)
 	j = 0;
 	z = 0;
 	quote = 0;
+	// print_split(splited);
 	if (splited[0][0] == '\"' || splited[0][0] == '\'')
 	{
 		quote = 1;
 		if (splited[0][0] == '\"')
 			quote = 2;
-		splited++;
+		// splited++;
 	}
 	while(splited[i])
 	{
