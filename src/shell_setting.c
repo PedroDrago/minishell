@@ -34,5 +34,6 @@ t_shell	*init_shell(char *envp[])
 		return (free(shell), NULL);
 	shell->last_status = -99;
 	shell->prompt_string = NULL;
+	shell->prompt_list = NULL;
 	return (shell);
 }

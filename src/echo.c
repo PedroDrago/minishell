@@ -26,7 +26,6 @@ int	echo(int argc, char *argv[], int fd_out)
 	if (!flag)
 		ft_putstr_fd("\n", fd_out);
 	return (0);
-	(void) argc, (void) argv;
 }
 
 int	split_len(char **split)

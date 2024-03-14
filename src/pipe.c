@@ -43,6 +43,8 @@ int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
 			close(old_yield[1]);
 			free(old_yield);
 			waitpid(pid, &status, 0);
+			if (!set_env_value(shell->env, "?", ft_itoa(status)))
+				exit_safely(shell);
 			if (status > 0)
 				printf("%s: command not found\n", current->command);
 		}

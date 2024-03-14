@@ -22,35 +22,25 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-void	cd(t_node *current, t_shell *shell)
-{
-	char *cwd;
 
-	cwd = get_cwd();
-	set_env_value(shell->env, "OLDPWD" , cwd);
-	free(cwd);
-	chdir(current->args[1]);
-	cwd = get_cwd();
-	set_env_value(shell->env, "PWD" , cwd);
-	free(cwd);
-}
-
-void	exec_builtin(t_node *current, t_shell *shell, int fd_out)
+void	exec_builtin(t_node *node, t_shell *shell, int fd_out)
 {
-	if(!ft_strncmp(current->command, "echo", 5))
-		echo(split_len(current->args), current->args, fd_out);
-	if(!ft_strncmp(current->command, "cd", 3))
-		cd(current, shell);
-	if(!ft_strncmp(current->command, "pwd", 4))
-		pwd(fd_out);
-	// if(!ft_strncmp(current->command, "export", 7))
-	// if(!ft_strncmp(current->command, "unset", 6))
-	if(!ft_strncmp(current->command, "env", 4))
-		env(shell->env, fd_out);
-	if(!ft_strncmp(current->command, "exit", 5))
-	{
-		// FIX: Tem que dar free na lista tb, mas n ta acessivel aqui ainda.
+	int	status;
+
+	if(!ft_strncmp(node->command, "echo", 5))
+		status = echo(split_len(node->args), node->args, fd_out);
+	else if(!ft_strncmp(node->command, "cd", 3))
+		status = cd(node, shell);
+	else if(!ft_strncmp(node->command, "pwd", 4))
+		status = pwd(fd_out);
+	else if(!ft_strncmp(node->command, "export", 7))
+		status = export(node, shell, fd_out);
+	else if(!ft_strncmp(node->command, "unset", 6))
+		status = unset(node, shell);
+	else if(!ft_strncmp(node->command, "env", 4))
+		status = env(shell->env, fd_out);
+	else if(!ft_strncmp(node->command, "exit", 5))
 		exit_safely(shell);
-	}
-	(void) shell;
+	if (!set_env_value(shell->env, "?", ft_itoa(status)))
+		exit_safely(shell);
 }
