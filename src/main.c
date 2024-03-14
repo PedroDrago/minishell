@@ -18,12 +18,12 @@ void	exit_program(int sig)
 
 void	exit_safely(t_shell *shell)
 {
-	free_list(shell->prompt_list);
+	if (shell->prompt_list)
+		free_list(shell->prompt_list);
 	free_env(shell->env);
-	// if (shell->prompt_string)
-	// 	free(shell->prompt_string);
-	// free(shell);
-	(void) shell;
+	if (shell->prompt_string)
+		free(shell->prompt_string);
+	free(shell);
 	exit(1);
 }
 

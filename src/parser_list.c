@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 t_node	*create_node(void)
 {
@@ -38,27 +39,4 @@ t_list	*create_list(void)
 	list->tail = NULL;
 	list->head = NULL;
 	return (list);
-}
-
-void	free_list(t_list *list)
-{
-	t_node	*tmp;
-	t_node	*tmp2;
-
-	if (!list)
-		return ;
-	tmp = list->head;
-	while (tmp)
-	{
-		if (tmp->args)
-			free_split(tmp->args);
-		if (tmp->command)
-			free(tmp->command);
-		if (tmp->token)
-			free(tmp->token);
-		tmp2 = tmp;
-		tmp = tmp->next;
-		free(tmp2);
-	}
-	free(list);
 }

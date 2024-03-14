@@ -35,9 +35,8 @@ char	**parse_arguments(char **splited, t_node *node)
 	}
 	node->args = ft_split(str, ' ');
 	if (!node->args)
-		return (NULL);
-	free(str);
-	return (splited);
+		return (free(str), NULL);
+	return (free(str), splited);
 }
 
 int	fill_list(char **splited, t_list *list)
@@ -53,8 +52,7 @@ int	fill_list(char **splited, t_list *list)
 		splited = parse_arguments(splited, node);
 		if (!splited)
 			return (FALSE);
-		if (!(*splited))        // NOTE: strdup da segfault se vc passa nulo, poderia 
-					// alterar a funcao mas prefiro consultar voce @rafael antes pra ver o que acha então fiz um if/else pra lidar com isso por enquanto
+		if (!(*splited))
 			node->token = NULL;
 		else
 			node->token = ft_strdup(*splited);
@@ -80,5 +78,5 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited);
 	expand_arguments(list, shell);
-	return (list);       
+	return (list);
 }
