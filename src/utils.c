@@ -16,7 +16,7 @@ void	print_split(char **argv)
 
 	i = 0;
 	while (argv[i])
-		printf("%s|", argv[i++]);
+		printf("!%s!", argv[i++]);
 	printf("\n");
 }
 

@@ -18,9 +18,10 @@ void	exit_program(int sig)
 
 void	exit_safely(t_shell *shell)
 {
-	// free_list(shell->prompt_list);
+	free_list(shell->prompt_list);
 	free_env(shell->env);
-	// free(shell->prompt_string);
+	// if (shell->prompt_string)
+	// 	free(shell->prompt_string);
 	// free(shell);
 	(void) shell;
 	exit(1);
@@ -50,12 +51,30 @@ char *create_prompt_str(t_shell *shell)
 	return (str);
 }
 
+t_shell	*init_shell(int argc, char *argv[], char *envp[])
+{
+	t_shell	*shell;
+
+	shell = (t_shell *)malloc(sizeof(t_shell));
+	signal(SIGINT, exit_program);
+	if (!shell)
+		exit(EXIT_FAILURE);
+	shell->env = load_envs(envp);
+	if (!shell->env)
+		return (free(shell), NULL);
+	shell->last_status = -99;
+	shell->prompt_string = NULL;
+	shell->prompt_list = NULL;
+	(void) argc, (void) argv;
+	return (shell);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
 	t_shell	*shell;
 
-	shell = init_shell(envp);
+	shell = init_shell(argc, argv, envp);
 	if (!shell)
 		exit(1);
 	while (TRUE)
@@ -67,14 +86,13 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(prompt);
 		if (!prompt || !ft_strlen(prompt))
 			continue ;
-		if (!valid_prompt(prompt))
+		if (!valid_quotes(prompt))
 		{
-			write(2, "Minishell: Invalid Prompt\n", 26);
+			write(2, "Minishell: Unclosed quotes\n", 27);
 			continue ;
 		}
 		if (!evaluate_prompt(prompt, shell))
 			return (exit_safely(shell), EXIT_FAILURE);
 	}
-	(void) argc, (void) argv;
 	return (exit_safely(shell), EXIT_SUCCESS);
 }
