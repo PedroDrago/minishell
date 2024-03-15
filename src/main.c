@@ -84,13 +84,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (prompt == NULL)
 			exit_safely(shell);
 		add_history(prompt);
-		if (!prompt || !ft_strlen(prompt))
+		if (!prompt || !ft_strlen(prompt) || !valid_quotes(prompt))
 			continue ;
-		if (!valid_quotes(prompt))
-		{
-			write(2, "Minishell: Unclosed quotes\n", 27);
-			continue ;
-		}
 		if (!evaluate_prompt(prompt, shell))
 			return (exit_safely(shell), EXIT_FAILURE);
 	}
