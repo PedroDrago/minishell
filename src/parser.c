@@ -76,7 +76,7 @@ int	has_invalid_characters(char **splited)
 		j = 0;
 		while(splited[i][j])
 		{
-			if (splited[i][j] == ';' || splited[i][j] == '\\')
+			if (splited[i][j] == ';' || ((splited[i][j] == '\\') && (size_t) j != ft_strlen(splited[i] - 1)))
 				return (TRUE);
 			j++;
 		}

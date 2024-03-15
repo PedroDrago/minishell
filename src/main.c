@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -98,6 +99,20 @@ t_shell	*init_shell(int argc, char *argv[], char *envp[])
 	return (shell);
 }
 
+char *get_prompt(t_shell *shell)
+{
+	char *prompt = readline(get_prompt_string(shell));
+	if (prompt == NULL)
+		exit_safely(shell);
+	while (prompt[ft_strlen(prompt) - 1] == '\\')
+	{
+		prompt[ft_strlen(prompt) - 1] = '\0';
+		prompt = ft_strjoin(prompt, readline("> "), O_NONE);
+		if (prompt == NULL)
+			exit_safely(shell);
+	}
+	return (prompt);
+}
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
@@ -109,9 +124,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (TRUE)
 	{
 		g_pid = 0;
-		prompt = readline(get_prompt_string(shell));
-		if (prompt == NULL)
-			exit_safely(shell);
+		prompt = get_prompt(shell);
 		add_history(prompt);
 		if (!prompt || !ft_strlen(prompt) || !valid_quotes(prompt))
 			continue ;
