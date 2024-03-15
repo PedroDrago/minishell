@@ -37,22 +37,24 @@ char *get_env_node_value(t_env *env, char *key)
 	return (node->value);
 }
 
-char *create_prompt_str(t_shell *shell)
+char *get_prompt_user(char *str, t_shell *shell)
 {
-	char	*str;
 	char	*user;
-	char	*pwd;
-	char	*home;
 
-	if (shell->prompt_string != NULL)
-		free (shell->prompt_string);
-	str = ft_calloc(1, 1);
 	str = ft_strjoin(str, "\e[1;32m", O_ONE);
 	user = get_env_node_value(shell->env, "USER");
 	if (!user)
 		user = "username";
 	str = ft_strjoin(str, user, O_ONE);
 	str = ft_strjoin(str, "\e[0m:\e[1;34m", O_ONE);
+	return (str);
+}
+
+char *get_prompt_pwd(char *str, t_shell *shell)
+{
+	char	*pwd;
+	char	*home;
+
 	pwd = get_env_node(shell->env, "PWD")->value;
 	pwd = get_env_node_value(shell->env, "PWD");
 	if (!pwd)
@@ -62,6 +64,18 @@ char *create_prompt_str(t_shell *shell)
 		pwd = "~";
 	str = ft_strjoin(str, pwd, O_ONE);
 	str = ft_strjoin(str, "\e[0m$ ", O_ONE);
+	return (str);
+}
+
+char *get_prompt_string(t_shell *shell)
+{
+	char	*str;
+
+	if (shell->prompt_string != NULL)
+		free (shell->prompt_string);
+	str = ft_calloc(1, 1);
+	str = get_prompt_user(str, shell);
+	str = get_prompt_pwd(str, shell);
 	shell->prompt_string = str;
 	return (str);
 }
@@ -95,7 +109,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (TRUE)
 	{
 		g_pid = 0;
-		prompt = readline(create_prompt_str(shell));
+		prompt = readline(get_prompt_string(shell));
 		if (prompt == NULL)
 			exit_safely(shell);
 		add_history(prompt);
