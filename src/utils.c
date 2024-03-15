@@ -33,7 +33,7 @@ void	free_list(t_list *list)
 			free(list->head->command);
 		if (list->head->token)
 			free(list->head->token);
-		if (list->head->args)
+		if (list->head->args) 
 			free_split(list->head->args);
 		tmp = list->head;
 		list->head = list->head->next;

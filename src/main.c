@@ -18,8 +18,8 @@ void	exit_program(int sig)
 
 void	exit_safely(t_shell *shell)
 {
-	if (shell->prompt_list)
-		free_list(shell->prompt_list);
+	// if (shell->prompt_list)            FIX: THis causes a segfault. I don't know why.
+	// 	free_list(shell->prompt_list);
 	free_env(shell->env);
 	if (shell->prompt_string)
 		free(shell->prompt_string);
