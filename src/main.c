@@ -101,7 +101,9 @@ t_shell	*init_shell(int argc, char *argv[], char *envp[])
 
 char *get_prompt(t_shell *shell)
 {
-	char *prompt = readline(get_prompt_string(shell));
+	char *prompt;
+
+	prompt = readline(get_prompt_string(shell));
 	if (prompt == NULL)
 		exit_safely(shell);
 	while (prompt[ft_strlen(prompt) - 1] == '\\')
