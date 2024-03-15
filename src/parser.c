@@ -35,9 +35,8 @@ char	**parse_arguments(char **splited, t_node *node)
 	}
 	node->args = ft_split(str, ' ');
 	if (!node->args)
-		return (NULL);
-	free(str);
-	return (splited);
+		return (free(str), NULL);
+	return (free(str), splited);
 }
 
 int	fill_list(char **splited, t_list *list)
@@ -53,8 +52,7 @@ int	fill_list(char **splited, t_list *list)
 		splited = parse_arguments(splited, node);
 		if (!splited)
 			return (FALSE);
-		if (!(*splited))        // NOTE: strdup da segfault se vc passa nulo, poderia 
-					// alterar a funcao mas prefiro consultar voce @rafael antes pra ver o que acha então fiz um if/else pra lidar com isso por enquanto
+		if (!(*splited))
 			node->token = NULL;
 		else
 			node->token = ft_strdup(*splited);
@@ -63,6 +61,28 @@ int	fill_list(char **splited, t_list *list)
 			return (TRUE);
 	}
 	return (TRUE);
+}
+
+int	has_invalid_characters(char **splited)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (splited[i])
+	{
+		if ((splited[i][0] == '\'' || splited[i][0] == '\"') && (++i))
+			continue;
+		j = 0;
+		while(splited[i][j])
+		{
+			if (splited[i][j] == ';' || ((splited[i][j] == '\\') && (size_t) j != ft_strlen(splited[i] - 1)))
+				return (TRUE);
+			j++;
+		}
+		i++;
+	}
+	return (FALSE);
 }
 
 t_list	*generate_list(char *prompt, t_shell *shell)
@@ -74,13 +94,13 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	if (!list)
 		return (NULL);
 	splited = prompt_split(prompt);
-	// splited = ft_split(prompt, ' ');
 	if (!splited)
-		return (NULL); // free_list
+		return (NULL);
+	if (has_invalid_characters(splited))
+		return (free_split(splited), write(2, "Minishell: Invalid Characters (; or \\) \n", 40), NULL);
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
-	free_split(splited); // NOTE: antes nossos nodes tinham referencia pra memoria do split, isso é problematico para dar free nas coisas. Agora são copias, e splited é liberado assim que a função acaba
+	free_split(splited);
 	expand_arguments(list, shell);
-	// print_list(list);
-	return (list);       
+	return (list);
 }

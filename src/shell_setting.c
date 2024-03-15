@@ -21,19 +21,3 @@ char	*get_cwd(void)
 	return (buffer);
 }
 
-t_shell	*init_shell(char *envp[])
-{
-	t_shell	*shell;
-
-	shell = (t_shell *)malloc(sizeof(t_shell));
-	signal(SIGINT, exit_program);
-	if (!shell)
-		exit(EXIT_FAILURE);
-	shell->env = load_envs(envp);
-	if (!shell->env)
-		return (free(shell), NULL);
-	shell->last_status = -99;
-	shell->prompt_string = NULL;
-	shell->prompt_list = NULL;
-	return (shell);
-}

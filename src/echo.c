@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 int	echo(int argc, char *argv[], int fd_out)
 {
@@ -7,9 +8,9 @@ int	echo(int argc, char *argv[], int fd_out)
 
 	flag = 0;
 	count = 0;
-	if (argc > 0 && argv[0][0] == '-')
+	if (argc > 0 && argv[1][0] == '-') // WARN: I remember that while i was testing original echo you had to use the flag as the first argument
 	{
-		if (!ft_strncmp(argv[0], "-n", 3))
+		if (!ft_strncmp(argv[1], "-n", 3))
 		{
 			flag = 1;
 			count++;

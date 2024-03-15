@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/13 21:05:13 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/14 19:08:09 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int *pipe_command(t_node *current, int *fds);
 char	*parse_path(char *str);
 char	*get_cwd(void);
 int	set_paths(t_shell *shell, char *execution_path);
-t_shell *init_shell(char *envp[]);
 void	terminate_shell(t_shell *shell);
 
 
@@ -106,4 +105,8 @@ int	unset(t_node *current, t_shell *shell);
 char	**split_keyvalue(char *str, char sep);
 int	export(t_node *node, t_shell *shell, int fd_out);
 int	cd(t_node *node, t_shell *shell);
+char	*substr_q(char *str, int start, int end, char quote);
+int	get_substr_quote_len(char *str, int start, int end, char quote);
+int	get_end_q(char *str, char quote, int start);
+int	valid_quotes(char *prompt);
 #endif

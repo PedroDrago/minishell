@@ -6,22 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/13 18:17:23 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/14 23:32:03 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-
-// void	free_split(char **splited)
-// {
-// 	int	count;
-//
-// 	count = -1;
-// 	while (splited[++count])
-// 		free(splited[count]);
-// 	free(splited);
-// }
 
 int	is_charset(char c, char *charset)
 {
@@ -59,7 +48,6 @@ char	*ft_strndup(char *str, int n)
 
 char	**split_loop(char **splited, char *str, char *charset)
 {
-	// NOTE: str = "a\0"
 	int	i;
 	int	j;
 	int	k;
@@ -139,7 +127,6 @@ char *split_join(char **splited)
 		quote = 1;
 		if (splited[0][0] == '\"')
 			quote = 2;
-		splited++;
 	}
 	while(splited[i])
 	{
@@ -172,7 +159,6 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 	while (node->args[i])
 	{
 		splited = ft_split_charset_mod(node->args[i], " $\"\'");
-		// print_split(splited);
 		j = 0;
 		while (splited[j])
 		{
