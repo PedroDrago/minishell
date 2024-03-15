@@ -63,6 +63,28 @@ int	fill_list(char **splited, t_list *list)
 	return (TRUE);
 }
 
+int	has_invalid_characters(char **splited)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (splited[i])
+	{
+		if ((splited[i][0] == '\'' || splited[i][0] == '\"') && (++i))
+			continue;
+		j = 0;
+		while(splited[i][j])
+		{
+			if (splited[i][j] == ';' || splited[i][j] == '\\')
+				return (TRUE);
+			j++;
+		}
+		i++;
+	}
+	return (FALSE);
+}
+
 t_list	*generate_list(char *prompt, t_shell *shell)
 {
 	char	**splited;
@@ -74,6 +96,8 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	splited = prompt_split(prompt);
 	if (!splited)
 		return (NULL);
+	if (has_invalid_characters(splited))
+		return (free_split(splited), write(2, "Minishell: Invalid Characters (; or \\) \n", 40), NULL);
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited);

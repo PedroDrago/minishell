@@ -26,5 +26,7 @@ int	valid_quotes(char *prompt)
 				double_quotes = 0;
 		}
 	}
-	return (!(single_quotes % 2 != 0 || double_quotes % 2 != 0));
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+		return (write(2, "Minishell: Unclosed quotes\n", 27), FALSE);
+	return (TRUE);
 }
