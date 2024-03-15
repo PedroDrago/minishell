@@ -22,7 +22,7 @@ int	cd(t_node *node, t_shell *shell)
 	if (!cwd)
 		return (1);
 	path = node->args[1];
-	if (split_len((node->args)) == 1)
+	if (split_len((node->args)) == 1 || !ft_strncmp(node->args[1], "~", 2))
 		path = get_home_path(shell->env);
 	if (!path)
 		return (1);
