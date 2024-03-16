@@ -6,11 +6,12 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:25:54 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:42:53 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 int	is_charset(char c, char *charset)
 {
@@ -79,7 +80,7 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	char	**splited;
 
 	if (ft_strlen(str) == 1)
-		return (ft_split(str, '\''));
+		return (ft_split(str, '\0'));
 	splited = (char **)malloc(sizeof(char *) * (charset_split_count(str, charset) + 1));
 	if (!splited)
 		return (NULL);
@@ -115,6 +116,8 @@ char *split_join(char **splited)
 	int	z;
 	int	quote;
 
+	// print_split(splited);
+	// printf("______________________\n");
 	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
 	if (!join)
 		return (NULL);
@@ -133,8 +136,7 @@ char *split_join(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if (((splited[i][j] == '\"' && quote == 2)
-				|| (splited[i][j] == '\'' && quote == 1)) && ++j)
+			if (i != 0 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j)
 				continue;
 			join[z] = splited[i][j];
 			z++;
