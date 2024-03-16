@@ -8,7 +8,7 @@ int	echo(int argc, char *argv[], int fd_out)
 
 	flag = 0;
 	count = 0;
-	if (argc > 0 && argv[1][0] == '-') // WARN: I remember that while i was testing original echo you had to use the flag as the first argument
+	if (argc > 0 && argv && argv[0] && argv[1] && argv[1][0] == '-')
 	{
 		if (!ft_strncmp(argv[1], "-n", 3))
 		{
@@ -17,7 +17,7 @@ int	echo(int argc, char *argv[], int fd_out)
 		}
 	}
 	count++;
-	while (argv[count])
+	while (argv && argv[count])
 	{
 		ft_putstr_fd(argv[count], fd_out);
 		if (count != (argc - 1))

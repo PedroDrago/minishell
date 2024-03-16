@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/14 23:32:03 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/15 22:34:51 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**ft_split_charset_mod(char *str, char *charset)
 
 	if (ft_strlen(str) == 1)
 		return (ft_split(str, '\''));
-	splited = (char **)malloc(8 * charset_split_count(str, charset) + 1);
+	splited = (char **)malloc(sizeof(char *) * (charset_split_count(str, charset) + 1));
 	if (!splited)
 		return (NULL);
 	split_loop(splited, str, charset);
@@ -115,7 +115,7 @@ char *split_join(char **splited)
 	int	z;
 	int	quote;
 
-	join = malloc(sizeof(char) * split_str_len(splited));
+	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
 	if (!join)
 		return (NULL);
 	i = 0;
