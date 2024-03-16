@@ -7,14 +7,17 @@
 
 int	get_end(char *str, int start)
 {
-	while (str[start])
+	int	index;
+
+	index = start;
+	while (str[index])
 	{
-		if (str[start] != ' ' && (str[start + 1] == ' ' || str[start
+		if (str[index] != ' ' && (str[index + 1] == ' ' || str[index
 					+ 1] == '\0'))
-			return (start);
-		start++;
+			return (index);
+		index++;
 	}
-	return (start);
+	return (index);
 }
 
 char	*substr(char *str, int start, int end)
@@ -46,8 +49,8 @@ void	do_split(char *str, char **splited)
 		}
 		else if (str[i] == '\'')
 		{
-			*splited++ = substr_q(str, i, get_end_q(str, '\"', i), '\'');
-			i = get_end_q(str, '\"', i) + 1;
+			*splited++ = substr_q(str, i, get_end_q(str, '\'', i), '\'');
+			i = get_end_q(str, '\'', i) + 1;
 		}
 		else
 		{
