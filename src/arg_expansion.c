@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/15 22:34:51 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:04:56 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 		}
 		free(node->args[i]);
 		node->args[i] = split_join(splited);
+		free(splited);
 		i++;
 	}
 }
