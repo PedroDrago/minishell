@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:04:56 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:15:56 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,14 +171,13 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 					value = ft_strdup(env->value);
 				else
 					value = ft_strdup("");
-				free(splited[j]);
 				splited[j] = value;
 			}
 			j++;
 		}
 		free(node->args[i]);
 		node->args[i] = split_join(splited);
-		free(splited);
+		free_split(splited);
 		i++;
 	}
 }
