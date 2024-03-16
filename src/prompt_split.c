@@ -90,7 +90,7 @@ char	**prompt_split(char *s)
 	str = ft_strtrim(s, " ");
 	if (!str)
 		return (NULL);
-	splited = malloc(sizeof(char *) * prompt_split_count(str) + 1);
+	splited = malloc(sizeof(char *) * (prompt_split_count(str) + 1));
 	if (!splited)
 		return (free(str), NULL);
 	do_split(str, splited);

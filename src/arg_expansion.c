@@ -6,11 +6,12 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/14 23:32:03 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:51:19 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 int	is_charset(char c, char *charset)
 {
@@ -79,8 +80,8 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	char	**splited;
 
 	if (ft_strlen(str) == 1)
-		return (ft_split(str, '\''));
-	splited = (char **)malloc(8 * charset_split_count(str, charset) + 1);
+		return (ft_split(str, '\0'));
+	splited = (char **)malloc(sizeof(char *) * (charset_split_count(str, charset) + 1));
 	if (!splited)
 		return (NULL);
 	split_loop(splited, str, charset);
@@ -102,8 +103,8 @@ int	split_str_len(char **splited)
 		len += ft_strlen(splited[i]);
 		i++;
 	}
-	if (splited[0][0] == '\"' || splited[0][0] == '\'')
-		len -= 2;
+	// if (splited[0][0] == '\"' || splited[0][0] == '\'')
+	//	len -= 2; //FIX: acho que isso da merda. Se for uma string que é só umas aspas, pd dar len -1 ou len 0. Retirei e sumiram erros de invalid write.
 	return (len);
 }
 
@@ -115,7 +116,9 @@ char *split_join(char **splited)
 	int	z;
 	int	quote;
 
-	join = malloc(sizeof(char) * split_str_len(splited));
+	// print_split(splited);
+	// printf("______________________\n");
+	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
 	if (!join)
 		return (NULL);
 	i = 0;
@@ -133,8 +136,7 @@ char *split_join(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if (((splited[i][j] == '\"' && quote == 2)
-				|| (splited[i][j] == '\'' && quote == 1)) && ++j)
+			if (i != 0 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j) //FIX: Problemao. Esse i != 0 resolve um segfault, mas ele causa com que prompts sempre tenham a aspas no comeco, ou seja, "$PATH" sai o path sem exluir as aspas.
 				continue;
 			join[z] = splited[i][j];
 			z++;
@@ -171,13 +173,13 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 					value = ft_strdup(env->value);
 				else
 					value = ft_strdup("");
-				free(splited[j]);
 				splited[j] = value;
 			}
 			j++;
 		}
 		free(node->args[i]);
 		node->args[i] = split_join(splited);
+		free_split(splited);
 		i++;
 	}
 }

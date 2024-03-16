@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/14 19:08:09 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 15:56:43 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,5 @@ char	*substr_q(char *str, int start, int end, char quote);
 int	get_substr_quote_len(char *str, int start, int end, char quote);
 int	get_end_q(char *str, char quote, int start);
 int	valid_quotes(char *prompt);
+void	set_exit_status(int status, t_shell *shell);
 #endif

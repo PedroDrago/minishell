@@ -12,17 +12,20 @@ int	get_end_q(char *str, char quote, int start)
 	return (start);
 }
 
+//"$ECHO"
 int	get_substr_quote_len(char *str, int start, int end, char quote)
 {
 	int	ignored;
+	int	index;
 
 	ignored = 0;
-	start++;
-	while (start < end)
+	index = start;
+	index++;
+	while (index < end)
 	{
-		if (str[start] == quote)
+		if (str[index] == quote)
 			ignored++;
-		start++;
+		index++;
 	}
 	return (end - start + 1 - ignored);
 }
@@ -32,8 +35,7 @@ char	*substr_q(char *str, int start, int end, char quote)
 	char	*substr;
 	int		i;
 
-	substr = malloc(sizeof(char) * get_substr_quote_len(str, start, end, quote)
-			+ 1);
+	substr = malloc(sizeof(char) * (get_substr_quote_len(str, start, end, quote) + 1));
 	if (!substr)
 		return (NULL);
 	i = 0;
