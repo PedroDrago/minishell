@@ -73,6 +73,18 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 	return (TRUE);
 }
 
+void	set_exit_status(int status, t_shell *shell)
+{
+	char	*status_string;
+
+	status_string = ft_itoa(status);
+	if (!status_string)
+		exit_safely(shell);
+	if (!set_env_value(shell->env, "?", status_string))
+		exit_safely(shell);
+	free(status_string);
+}
+
 void	evaluate_solo(t_node *current, t_shell *shell)
 {
 	int	pid;
@@ -87,8 +99,7 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 		if (pid == 0)
 			execute_command(shell, current);
 		waitpid(pid, &status, 0);
-		if (!set_env_value(shell->env, "?", ft_itoa(status)))
-			exit_safely(shell);
+		set_exit_status(status, shell);
 		if (status > 0 && WTERMSIG(status) != SIGINT)
 			printf("%s: command not found\n", current->command);
 	}

@@ -45,8 +45,7 @@ void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
 			close(old_yield[1]);
 			close(file);
 			waitpid(pid, &status, 0);
-			if (!set_env_value(shell->env, "?", ft_itoa(status)))
-				exit_safely(shell);
+			set_exit_status(status, shell);
 			if (status > 0 && WTERMSIG(status) != SIGINT)
 				printf("%s: command not found\n", current->command);
 		}

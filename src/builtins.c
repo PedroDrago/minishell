@@ -41,6 +41,5 @@ void	exec_builtin(t_node *node, t_shell *shell, int fd_out)
 		status = env(shell->env, fd_out);
 	else if(!ft_strncmp(node->command, "exit", 5))
 		exit_safely(shell);
-	if (!set_env_value(shell->env, "?", ft_itoa(status)))
-		exit_safely(shell);
+	set_exit_status(status, shell);
 }
