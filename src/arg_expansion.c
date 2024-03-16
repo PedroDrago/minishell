@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:15:56 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:25:54 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char *split_join(char **splited)
 	int	z;
 	int	quote;
 
-	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
+	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
 	if (!join)
 		return (NULL);
 	i = 0;
