@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:47:52 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:51:19 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char *split_join(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if (i != 0 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j)
+			if (i != 0 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j) //FIX: Problemao. Esse i != 0 resolve um segfault, mas ele causa com que prompts sempre tenham a aspas no comeco, ou seja, "$PATH" sai o path sem exluir as aspas.
 				continue;
 			join[z] = splited[i][j];
 			z++;
