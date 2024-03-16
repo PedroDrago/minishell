@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:42:53 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:47:52 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int	split_str_len(char **splited)
 		len += ft_strlen(splited[i]);
 		i++;
 	}
-	if (splited[0][0] == '\"' || splited[0][0] == '\'')
-		len -= 2;
+	// if (splited[0][0] == '\"' || splited[0][0] == '\'')
+	//	len -= 2; //FIX: acho que isso da merda. Se for uma string que é só umas aspas, pd dar len -1 ou len 0. Retirei e sumiram erros de invalid write.
 	return (len);
 }
 
