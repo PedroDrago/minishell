@@ -6,12 +6,13 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 17:38:11 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/17 01:52:58 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int	is_charset(char c, char *charset)
 {
@@ -75,7 +76,7 @@ char	**split_loop(char **splited, char *str, char *charset)
 	return (splited);
 }
 
-char	**ft_split_charset_mod(char *str, char *charset)
+char	**ft_split_charset_mod(char *str, char *charset) // FIX: echo "tes                  te" -> este prompt vai sair como `tes te`, os espacos consecutivos estao sendo engolidos
 {
 	char	**splited;
 
@@ -106,6 +107,35 @@ int	split_str_len(char **splited)
 	return (len);
 }
 
+char *remove_leading_quotes(char *str)
+{
+	char *new_str;
+	int	len;
+	int	i;
+	int	j;
+
+	len = ft_strlen(str);
+	new_str = malloc(sizeof(char) * (len - 1));
+	if (!new_str)
+		return (NULL);
+	if (len == 2)
+	{
+		new_str[0] = '\0';
+		return (new_str);
+	}
+	i = 1;
+	j = 0;
+	while (i < (len - 1))
+	{
+		new_str[j] = str[i];
+		i++;
+		j++;
+	}
+	new_str[i] = '\0';
+	free(str);
+	return (new_str);
+}
+
 char *split_join(char **splited)
 {
 	char	*join;
@@ -113,7 +143,7 @@ char *split_join(char **splited)
 	int	j;
 	int	z;
 
-	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
+	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
 	if (!join)
 		return (NULL);
 	i = 0;
@@ -131,6 +161,8 @@ char *split_join(char **splited)
 		i++;
 	}
 	join[z] = '\0';
+	if (join[0] == '\"' || join[0] == '\'')
+		join = remove_leading_quotes(join);
 	return (join);
 }
 
@@ -146,26 +178,34 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 	i = 0;
 	while (node->args[i])
 	{
-		splited = ft_split_charset_mod(node->args[i], " $\"\'");
-		j = 0;
-		while (splited[j])
+		// printf("node->args[i]: %s\n", node->args[i]);
+		splited = test_split(node->args[i]);
+		// print_split(splited);
+		if (!splited)
+			return;
+		if (!splited[0])
+			continue;
+		if (splited[0][0] != '\'')
 		{
-			if (splited[0][0] != '\"' && splited[j][0] == '\'')
-				break;
-			if (splited[j][0] == '$')
+			j = 0;
+			while (splited[j])
 			{
-				env = get_env_node(shell->env, &splited[j][1]);
-				if (env)
-					value = ft_strdup(env->value);
-				else
-					value = ft_strdup("");
-				splited[j] = value;
+				if (splited[j][0] == '$')
+				{
+					env = get_env_node(shell->env, &splited[j][1]);
+					if (!env)
+						value = ft_strdup("");
+					else
+						value = ft_strdup(env->value);
+					free(splited[j]);
+					splited[j] = value;
+				}
+				j++;
 			}
-			j++;
 		}
 		free(node->args[i]);
 		node->args[i] = split_join(splited);
-		free_split(splited);
+		free(splited);
 		i++;
 	}
 }
@@ -180,4 +220,5 @@ void	expand_arguments(t_list *list, t_shell *shell)
 		expand_node_arguments(current, shell);
 		current = current->next;
 	}
+	// print_list(list);
 }

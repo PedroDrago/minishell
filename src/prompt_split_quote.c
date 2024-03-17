@@ -1,11 +1,14 @@
 #include "../includes/minishell.h"
 #include <stdio.h>
+#include <strings.h>
 
 int	get_end_q(char *str, char quote, int start)
 {
 	int	index;
 
 	index = start + 1;
+	if (str[index] == quote)
+		return (index);
 	while (str[index])
 	{
 		if (str[index] == quote && (str[index + 1] == ' ' || str[index

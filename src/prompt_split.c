@@ -12,8 +12,8 @@ int	get_end(char *str, int start)
 	index = start;
 	while (str[index])
 	{
-		if (str[index] != ' ' && (str[index + 1] == ' ' || str[index
-					+ 1] == '\0'))
+
+		if (str[index] != ' ' && (str[index + 1] == ' ' || str[index+ 1] == '\0' || str[index + 1] == '\'' || str[index + 1] == '\"'))
 			return (index);
 		index++;
 	}
@@ -44,16 +44,19 @@ void	do_split(char *str, char **splited)
 	{
 		if (str[i] == '\"')
 		{
+			// printf("Doublefrom %i to %i\n", i, get_end_q(str, '\"', i));
 			*splited++ = substr_q(str, i, get_end_q(str, '\"', i), '\"');
 			i = get_end_q(str, '\"', i) + 1;
 		}
 		else if (str[i] == '\'')
 		{
+			// printf("Single from %i to %i\n", i, get_end_q(str, '\'', i));
 			*splited++ = substr_q(str, i, get_end_q(str, '\'', i), '\'');
 			i = get_end_q(str, '\'', i) + 1;
 		}
 		else
 		{
+			// printf("Normal from %i to %i\n", i, get_end(str, i));
 			*splited++ = substr(str, i, get_end(str, i));
 			i = get_end(str, i) + 1;
 		}
@@ -74,14 +77,21 @@ int	prompt_split_count(char *str)
 	{
 		count++;
 		if (str[i] == '\"')
+		{
 			i = get_end_q(str, '\"', i) + 1;
+		}
 		else if (str[i] == '\'')
+		{
 			i = get_end_q(str, '\'', i) + 1;
+		}
 		else
+		{
 			i = get_end(str, i) + 1;
+		}
 		while (str[i] == ' ')
 			i++;
 	}
+	// printf("Count %i\n", count);
 	return (count);
 }
 
@@ -99,3 +109,14 @@ char	**prompt_split(char *s)
 	do_split(str, splited);
 	return (free(str), splited);
 }
+
+// int main(void)
+// {
+//
+// 	while (1)
+// 	{
+// 		char **splited = prompt_split(readline(("$ ")));
+// 		print_split(splited);
+// 	}
+// 	return 0;
+// }
