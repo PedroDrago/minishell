@@ -20,7 +20,7 @@ int	echo(int argc, char *argv[], int fd_out)
 	while (argv && argv[count])
 	{
 		ft_putstr_fd(argv[count], fd_out);
-		if (count != (argc - 1))
+		if (count != (argc - 1) && argv[count][0])
 			ft_putstr_fd(" ", fd_out);
 		count++;
 	}

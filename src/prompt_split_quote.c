@@ -1,26 +1,31 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <strings.h>
 
 int	get_end_q(char *str, char quote, int start)
 {
-	while (str[start])
+	int	index;
+
+	index = start + 1;
+	if (str[index] == quote)
+		return (index);
+	while (str[index])
 	{
-		if (str[start] == quote && (str[start + 1] == ' ' || str[start
+		if (str[index] == quote && (str[index + 1] == ' ' || str[index
 					+ 1] == '\0'))
-			return (start);
-		start++;
+			return (index);
+		index++;
 	}
-	return (start);
+	return (index);
 }
 
-//"$ECHO"
 int	get_substr_quote_len(char *str, int start, int end, char quote)
 {
 	int	ignored;
 	int	index;
 
 	ignored = 0;
-	index = start;
-	index++;
+	index = start + 1;
 	while (index < end)
 	{
 		if (str[index] == quote)

@@ -6,12 +6,13 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/16 16:51:19 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:24:05 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int	is_charset(char c, char *charset)
 {
@@ -88,7 +89,6 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	return (splited);
 }
 
-
 int	split_str_len(char **splited)
 {
 	int len;
@@ -103,8 +103,6 @@ int	split_str_len(char **splited)
 		len += ft_strlen(splited[i]);
 		i++;
 	}
-	// if (splited[0][0] == '\"' || splited[0][0] == '\'')
-	//	len -= 2; //FIX: acho que isso da merda. Se for uma string que é só umas aspas, pd dar len -1 ou len 0. Retirei e sumiram erros de invalid write.
 	return (len);
 }
 
@@ -116,8 +114,6 @@ char *split_join(char **splited)
 	int	z;
 	int	quote;
 
-	// print_split(splited);
-	// printf("______________________\n");
 	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
 	if (!join)
 		return (NULL);
@@ -183,6 +179,126 @@ void	expand_node_arguments(t_node *node, t_shell *shell)
 		i++;
 	}
 }
+
+// int	split_str_len(char **splited) NOTE: Mudancas que eu fiz solo, testando, usando uma split diferente pra splitar $ARGS
+// {
+// 	int len;
+// 	int	i;
+//
+// 	if (!splited)
+// 		return (0);
+// 	len = 0;
+// 	i = 0;
+// 	while (splited[i])
+// 	{
+// 		len += ft_strlen(splited[i]);
+// 		i++;
+// 	}
+// 	return (len);
+// }
+//
+// char *remove_leading_quotes(char *str)
+// {
+// 	char *new_str;
+// 	int	len;
+// 	int	i;
+// 	int	j;
+//
+// 	len = ft_strlen(str);
+// 	new_str = malloc(sizeof(char) * (len - 1));
+// 	if (!new_str)
+// 		return (NULL);
+// 	if (len == 2)
+// 	{
+// 		new_str[0] = '\0';
+// 		return (new_str);
+// 	}
+// 	i = 1;
+// 	j = 0;
+// 	while (i < (len - 1))
+// 	{
+// 		new_str[j] = str[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	new_str[i] = '\0';
+// 	free(str);
+// 	return (new_str);
+// }
+//
+// char *split_join(char **splited)
+// {
+// 	char	*join;
+// 	int	i;
+// 	int	j;
+// 	int	z;
+//
+// 	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
+// 	if (!join)
+// 		return (NULL);
+// 	i = 0;
+// 	j = 0;
+// 	z = 0;
+// 	while(splited[i])
+// 	{
+// 		j = 0;
+// 		while (splited[i][j])
+// 		{
+// 			join[z] = splited[i][j];
+// 			z++;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	join[z] = '\0';
+// 	if (join[0] == '\"' || join[0] == '\'')
+// 		join = remove_leading_quotes(join);
+// 	return (join);
+// }
+//
+//
+// void	expand_node_arguments(t_node *node, t_shell *shell)
+// {
+// 	int	i;
+// 	int	j;
+// 	char	**splited;
+// 	t_env	*env;
+// 	char	*value;
+//
+// 	i = 0;
+// 	while (node->args[i])
+// 	{
+// 		// printf("node->args[i]: %s\n", node->args[i]);
+// 		splited = test_split(node->args[i]);
+// 		// print_split(splited);
+// 		if (!splited)
+// 			return;
+// 		if (!splited[0])
+// 			continue;
+// 		if (splited[0][0] != '\'')
+// 		{
+// 			j = 0;
+// 			while (splited[j])
+// 			{
+// 				if (splited[j][0] == '$')
+// 				{
+// 					env = get_env_node(shell->env, &splited[j][1]);
+// 					if (!env)
+// 						value = ft_strdup("");
+// 					else
+// 						value = ft_strdup(env->value);
+// 					free(splited[j]);
+// 					splited[j] = value;
+// 				}
+// 				j++;
+// 			}
+// 		}
+// 		free(node->args[i]);
+// 		node->args[i] = split_join(splited);
+// 		free(splited);
+// 		i++;
+// 	}
+// }
 
 void	expand_arguments(t_list *list, t_shell *shell)
 {
