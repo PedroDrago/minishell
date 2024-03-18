@@ -8,6 +8,8 @@ int	echo(int argc, char *argv[], int fd_out)
 
 	flag = 0;
 	count = 0;
+	// print_split(argv);
+	// exit(1);
 	if (argc > 0 && argv && argv[0] && argv[1] && argv[1][0] == '-')
 	{
 		if (!ft_strncmp(argv[1], "-n", 3))

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/18 17:24:05 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/18 20:07:06 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,40 +108,40 @@ int	split_str_len(char **splited)
 
 char *split_join(char **splited)
 {
-	char	*join;
-	int	i;
-	int	j;
-	int	z;
-	int	quote;
+    char    *join;
+    int    i;
+    int    j;
+    int    z;
+    int    quote;
 
-	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
-	if (!join)
-		return (NULL);
-	i = 0;
-	j = 0;
-	z = 0;
-	quote = 0;
-	if (splited[0][0] == '\"' || splited[0][0] == '\'')
-	{
-		quote = 1;
-		if (splited[0][0] == '\"')
-			quote = 2;
-	}
-	while(splited[i])
-	{
-		j = 0;
-		while (splited[i][j])
-		{
-			if (i != 0 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j) //FIX: Problemao. Esse i != 0 resolve um segfault, mas ele causa com que prompts sempre tenham a aspas no comeco, ou seja, "$PATH" sai o path sem exluir as aspas.
-				continue;
-			join[z] = splited[i][j];
-			z++;
-			j++;
-		}
-		i++;
-	}
-	join[z] = '\0';
-	return (join);
+    join = malloc(sizeof(char) * (split_str_len(splited) + 2));
+    if (!join)
+        return (NULL);
+    i = 0;
+    j = 0;
+    z = 0;
+    quote = 0;
+    if (splited[0][0] == '\"' || splited[0][0] == '\'')
+    {
+        quote = 1;
+        if (splited[0][0] == '\"')
+            quote = 2;
+    }
+    while(splited[i])
+    {
+        j = 0;
+        while (splited[i][j])
+        {
+            if (ft_strlen(splited[i]) >= 1 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j) //FIX: Problemao. Esse i != 0 resolve um segfault, mas ele causa com que prompts sempre tenham a aspas no comeco, ou seja, "$PATH" sai o path sem exluir as aspas.
+                continue;
+            join[z] = splited[i][j];
+            z++;
+            j++;
+        }
+        i++;
+    }
+    join[z] = '\0';
+    return (join);
 }
 
 

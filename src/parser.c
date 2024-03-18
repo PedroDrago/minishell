@@ -18,25 +18,28 @@ int	is_token(char *item)
 	return (FALSE);
 }
 
+int	count_arg_split(char **splited)
+{
+	int	count;
+	
+	count = 0;
+	while (!is_token(splited[count]))
+		count++;
+	return (count);
+}
+
 char	**parse_arguments(char **splited, t_node *node)
 {
-	char	*str;
+	int	i;
 
-	str = ft_calloc(1, 1);
-	while (!is_token(*splited))
-	{
-		str = ft_strjoin(str, " ", O_ONE);
-		if (!str)
-			return (NULL);
-		str = ft_strjoin(str, *splited, O_ONE);
-		if (!str)
-			return (NULL);
-		splited++;
-	}
-	node->args = ft_split(str, ' ');
+	i = 0;
+	node->args = malloc(sizeof(char *) * (count_arg_split(splited) + 1));
 	if (!node->args)
-		return (free(str), NULL);
-	return (free(str), splited);
+		return (NULL);
+	while (!is_token(*splited))
+		node->args[i++] = ft_strdup(*splited++);
+	node->args[i] = NULL;
+	return (splited);
 }
 
 int	fill_list(char **splited, t_list *list)
