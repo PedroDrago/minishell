@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/17 00:48:11 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:01:15 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,6 @@ int	get_end_q(char *str, char quote, int start);
 int	valid_quotes(char *prompt);
 void	set_exit_status(int status, t_shell *shell);
 char	**test_split(char *str);
+char	**ft_split_charset_mod(char *str, char *charset);
+char	**split_keep(char *str);
 #endif

@@ -105,9 +105,9 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 	}
 }
 
-int	evaluate_prompt(char *prompt, t_shell *shell)
+int    evaluate_prompt(char *prompt, t_shell *shell)
 {
-	t_list	*prompt_list;
+	t_list    *prompt_list;
 	t_node *current;
 
 	prompt_list = generate_list(prompt, shell);
@@ -121,5 +121,6 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		if (!evaluate_pipeline(current, shell))
 			return (free_list(prompt_list), FALSE);
 	free_list(prompt_list);
+	shell->prompt_list = NULL;
 	return (TRUE);
 }

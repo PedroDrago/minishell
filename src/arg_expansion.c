@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/19 15:24:02 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/19 19:42:31 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int	split_str_len(char **splited)
 
 	i = -1;
 	init_vars(&j, &z, &inside_single, &inside_double);
-	while(splited[++i])
+	while(splited && splited[++i])
 	{
 		j = 0;
 		while (splited[i][j])
@@ -195,7 +195,7 @@ void split_join_loop(char **splited, char *join, int z)
 	while(splited[++i])
 	{
 		j = 0;
-		while (splited[i][j])
+		while (splited[i] && splited[i][j])
 		{
 			if (splited[i][j] == '\'' && splited[i][j - 1] != '\\')
 				if (!inside_double && ++j)
@@ -215,7 +215,7 @@ char *split_join(char **splited)
 {
 	char    *join;
 
-	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
+	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
 	if (!join)
 		return (NULL);
 	split_join_loop(splited, join, 0);
@@ -229,6 +229,7 @@ void	expand_node_arguments(t_node *current, t_shell *shell)
 	char **splited;
 
 	i = 0;
+	print_split(current->args);
 	while (current->args[i])
 	{
 		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\'"), shell);

@@ -41,12 +41,11 @@ int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
 		{
 			close(old_yield[0]);
 			close(old_yield[1]);
-			free(old_yield);
 			waitpid(pid, &status, 0);
 			set_exit_status(status, shell);
 			if (status > 0)
 				printf("%s: command not found\n", current->command);
 		}
 	}
-	return (new_yield);
+	return (free(old_yield), new_yield);
 }

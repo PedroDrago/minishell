@@ -103,13 +103,14 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	splited = ft_split(prompt, ' ');
+	splited = split_keep(prompt);
 	if (!splited)
 		return (NULL);
 	if (has_invalid_characters(splited))
 		return (free_split(splited), write(2, "Minishell: Invalid Characters (; or \\) \n", 40), NULL);
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
+	// print_list(list);
 	free_split(splited);
 	expand_arguments(list, shell);
 	return (list);

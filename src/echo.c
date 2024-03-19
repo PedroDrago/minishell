@@ -1,36 +1,6 @@
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-int	echo(int argc, char *argv[], int fd_out)
-{
-	int	flag;
-	int	count;
-
-	flag = 0;
-	count = 0;
-	// print_split(argv);
-	// exit(1);
-	if (argc > 0 && argv && argv[0] && argv[1] && argv[1][0] == '-')
-	{
-		if (!ft_strncmp(argv[1], "-n", 3))
-		{
-			flag = 1;
-			count++;
-		}
-	}
-	count++;
-	while (argv && argv[count])
-	{
-		ft_putstr_fd(argv[count], fd_out);
-		if (count != (argc - 1) && argv[count][0])
-			ft_putstr_fd(" ", fd_out);
-		count++;
-	}
-	if (!flag)
-		ft_putstr_fd("\n", fd_out);
-	return (0);
-}
-
 int	split_len(char **split)
 {
 	int	len;
@@ -40,6 +10,31 @@ int	split_len(char **split)
 		len++;
 	return (len);
 }
+
+int	echo(int argc, char *argv[], int fd_out)
+{
+	int	flag;
+	int	i;
+
+
+	flag = 0;
+	if (split_len(argv) <= 1)
+		return (0);
+	i = 1;
+	if (argv[1] && !ft_strncmp(argv[1], "-n", 3))
+		flag = i++;
+	while(argv[i])
+	{
+		ft_putstr_fd(argv[i], fd_out);
+		if (argv[++i])
+			ft_putstr_fd(" ", fd_out);
+	}
+	if (!flag)
+		ft_putstr_fd("\n", fd_out);
+	(void) argc;
+	return (0);
+}
+
 
 int	exec_echo(t_node *command, int fd_out)
 {
