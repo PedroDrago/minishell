@@ -98,7 +98,6 @@ char	**split_keep(char *str)
 	if (!splited)
 		return (free(trimmed), NULL);
 	do_split(trimmed, splited);
-	print_split(splited);
 	free(trimmed);
 	return (splited);
 }

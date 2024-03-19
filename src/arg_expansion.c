@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   arg_expansion.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/19 19:42:31 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
@@ -73,6 +62,7 @@ char	**split_loop(char **splited, char *str, char *charset)
 	if (!splited[k++])
 		return (free_split(splited), NULL);
 	splited[k] = NULL;
+	print_split(splited);
 	return (splited);
 }
 
@@ -170,12 +160,19 @@ int	split_str_len(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if (splited[i][j] == '\'' && splited[i][j - 1] != '\\' && !inside_double)
+			if (splited[i][j] && splited[i][j] == '\'' && j > 0 && splited[i][j - 1] != '\\' && !inside_double)
+			{
 					j++;
-			else if (splited[i][j] == '\"' && splited[i][j - 1] != '\\' && !inside_single)
+			}
+			if (splited[i][j] && splited[i][j] == '\"' && j > 0 && splited[i][j - 1] != '\\' && !inside_single)
+			{
 					j++;
-			else if (!splited[i][j++])
+			}
+			if (!splited[i][j])
+			{
 				break ;
+			}
+			j++;
 			z++;
 		}
 	}
@@ -186,7 +183,7 @@ void split_join_loop(char **splited, char *join, int z)
 {
 	int	inside_double;
 	int	inside_single;
-	int	i;
+	int	i; 
 	int	j;
 
 	inside_double = 0;
@@ -197,10 +194,10 @@ void split_join_loop(char **splited, char *join, int z)
 		j = 0;
 		while (splited[i] && splited[i][j])
 		{
-			if (splited[i][j] == '\'' && splited[i][j - 1] != '\\')
+			if (splited[i][j] == '\'' && (j == 0 && splited[i][j - 1] != '\\'))
 				if (!inside_double && ++j)
 					inside_single = !inside_single;
-			if (splited[i][j] == '\"' && splited[i][j - 1] != '\\')
+			if (splited[i][j] == '\"' && (j == 0 || splited[i][j - 1] != '\\'))
 				if (!inside_single && ++j)
 					inside_double = !inside_double;
 			if (!splited[i][j])
@@ -229,7 +226,7 @@ void	expand_node_arguments(t_node *current, t_shell *shell)
 	char **splited;
 
 	i = 0;
-	print_split(current->args);
+	// print_split(current->args);
 	while (current->args[i])
 	{
 		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\'"), shell);
