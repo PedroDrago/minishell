@@ -194,7 +194,7 @@ void split_join_loop(char **splited, char *join, int z)
 		j = 0;
 		while (splited[i] && splited[i][j])
 		{
-			if (splited[i][j] == '\'' && (j == 0 && splited[i][j - 1] != '\\'))
+			if (splited[i][j] == '\'' && (j == 0 || splited[i][j - 1] != '\\'))
 				if (!inside_double && ++j)
 					inside_single = !inside_single;
 			if (splited[i][j] == '\"' && (j == 0 || splited[i][j - 1] != '\\'))
