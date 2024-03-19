@@ -22,6 +22,7 @@ void	print_split(char **argv)
 		printf("!%s!", argv[i++]);
 	// printf("%s", argv[i]);
 	printf("\n");
+	printf("------------------------\n");
 }
 
 void	free_list(t_list *list)
