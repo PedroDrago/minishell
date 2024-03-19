@@ -7,8 +7,14 @@ void	print_export(t_env *env, int fd_out)
 	{
 		ft_putstr_fd("declare -x ", fd_out);
 		ft_putstr_fd(env->key, fd_out);
-		ft_putchar_fd('=', fd_out);
-		ft_putstr_fd(env->value, fd_out);
+		if (env->value)
+		{
+			ft_putchar_fd('=', fd_out);
+			if (ft_strlen(env->value) > 1)
+				ft_putstr_fd(env->value, fd_out);
+			else
+				ft_putstr_fd("\"\"", fd_out);
+		}
 		ft_putchar_fd('\n', fd_out);
 		env = env->next;
 	}
@@ -32,11 +38,10 @@ int	export(t_node *node, t_shell *shell, int fd_out)
 
 	if (split_len(node->args) == 1)
 		return (print_export(shell->env, fd_out), 1);
-	i = 0;
+	i = 1;
+	splited = NULL;
 	while (node->args[i])
 	{
-		if (!ft_strchr(node->args[i], '=') && ++i)
-			continue;
 		splited = split_keyvalue(node->args[i], '=');
 		if (!splited)
 			return (1);
@@ -49,5 +54,7 @@ int	export(t_node *node, t_shell *shell, int fd_out)
 			return (free_split(splited), 1);
 		i++;
 	}
-	return (free_split(splited),0);
+	if (splited)
+		free(splited);
+	return (0);
 }

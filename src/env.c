@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/14 23:31:37 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/19 03:42:40 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,20 @@ char	**split_keyvalue(char *str, char sep)
 	splited = (char **)malloc(sizeof(char *) * 3);
 	if (!splited)
 		return (NULL);
+	if (!ft_strchr(str, sep))
+	{
+		splited[0] = ft_strdup(str);
+		splited[1] = NULL;
+		splited[2] = NULL;
+		return (splited);
+	}
+	if (str[ft_strlen(str) - 1] == sep)
+	{
+		splited[0] = ft_substr(str, 0, ft_strlen(str) - 1);
+		splited[1] = ft_strdup("");
+		splited[2] = NULL;
+		return (splited);
+	}
 	j = 0;
 	i = 0;
 	while (str[i] && str[i] != sep)
@@ -50,7 +64,8 @@ void	free_env(t_env *env)
 	while (env)
 	{
 		free(env->key);
-		free(env->value);
+		if (env->value)
+			free(env->value);
 		temp_env = env;
 		env = env->next;
 		free(temp_env);
@@ -113,10 +128,13 @@ int	env(t_env *env, int fd_out)
 			env = env->next;
 			continue;
 		}
-		ft_putstr_fd(env->key, fd_out);
-		ft_putchar_fd('=', fd_out);
-		ft_putstr_fd(env->value, fd_out);
-		ft_putchar_fd('\n', fd_out);
+		if (env->value)
+		{
+			ft_putstr_fd(env->key, fd_out);
+			ft_putchar_fd('=', fd_out);
+			ft_putstr_fd(env->value, fd_out);
+			ft_putchar_fd('\n', fd_out);
+		}
 		env = env->next;
 	}
 	return (0);
@@ -142,7 +160,7 @@ int	set_env_value(t_env *env, char *key, char *value)
 	t_env	*target_node;
 	char	*new_value;
 
-	if (!value || !key)
+	if (!key)
 		return (0);
 	target_node = get_env_node(env, key);
 	if (!target_node)
@@ -155,10 +173,16 @@ int	set_env_value(t_env *env, char *key, char *value)
 			return (0);
 		return (1);
 	}
-	new_value = ft_strdup(value);
-	if (!new_value)
-		return (0);
-	free(target_node->value);
+	if (value)
+	{
+		new_value = ft_strdup(value);
+		if (!new_value)
+			return (0);
+	}
+	else
+		new_value = NULL;
+	if (target_node->value)
+		free(target_node->value);
 	target_node->value = new_value;
 	return (1);
 }

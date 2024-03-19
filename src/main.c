@@ -2,6 +2,7 @@
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <term.h>
 
 int	g_pid;
 
