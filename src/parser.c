@@ -79,8 +79,15 @@ int	has_invalid_characters(char **splited)
 		j = 0;
 		while(splited[i][j])
 		{
-			if (splited[i][j] == ';' || ((splited[i][j] == '\\') && (size_t) j != ft_strlen(splited[i] - 1)))
+			if (splited[i][j] == ';')
 				return (TRUE);
+			else if (splited[i][j] == '\\')
+			{
+				if ((splited[i][j + 1] == '\"' || splited[i][j + 1] == '\'') && (++j))
+					continue;
+				else if ( (size_t) j != ft_strlen(splited[i] - 1))
+					return (TRUE);
+			}
 			j++;
 		}
 		i++;
@@ -97,7 +104,6 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	if (!list)
 		return (NULL);
 	splited = ft_split(prompt, ' ');
-	// print_split(splited);
 	if (!splited)
 		return (NULL);
 	if (has_invalid_characters(splited))

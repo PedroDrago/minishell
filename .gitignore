@@ -4,3 +4,4 @@ minishell
 *.a
 *.log
 .vscode
+a.out

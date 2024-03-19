@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/19 14:43:10 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/19 15:24:02 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,18 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	return (splited);
 }
 
+int	is_valid_char(char c)
+{
+	return (ft_isalpha(c) || c == '_');
+}
+
 char *get_expanded_arg(char *arg, t_shell *shell)
 {
 	t_env *node;
 
+	if (!is_valid_char(arg[1]))
+		if (arg[2])
+			return (ft_strdup(&arg[2]));
 	node = get_env_node(shell->env, &arg[1]);
 	if (!node || !node->value)
 		return (ft_strdup(""));
@@ -108,6 +116,7 @@ void	resolve_quotes(char c, int *in_single_quote, int *in_double_quote)
 	else if (c == '\'' && !(*in_double_quote))
 		*in_single_quote = !(*in_single_quote);
 }
+
 
 char **expand_split(char **splited, t_shell *shell)
 {
@@ -137,8 +146,6 @@ char **expand_split(char **splited, t_shell *shell)
 	}
 	return (splited);
 }
-// FIX: Caso onde primeiro caractere de argumento é invalido não esta sendo tratado, 
-// ex: "$2HOME" evaluates to -> HOME -> Ou seja, $2 é substituido por nada, que é invalido, e HOME é tratado como string normal
 
 void	init_vars(int *j, int *z, int *single_q, int *double_q)
 {
