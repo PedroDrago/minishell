@@ -92,10 +92,13 @@ char	**split_keep(char *str)
 	char	*trimmed;
 
 	trimmed = ft_strtrim(str, " ");
+	if (!trimmed)
+		return (NULL);
 	splited = malloc(sizeof(char *) * (count_split(trimmed) + 1));
 	if (!splited)
-		return (NULL);
+		return (free(trimmed), NULL);
 	do_split(trimmed, splited);
 	print_split(splited);
+	free(trimmed);
 	return (splited);
 }
