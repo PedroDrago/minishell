@@ -96,7 +96,8 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	splited = prompt_split(prompt);
+	splited = ft_split(prompt, ' ');
+	// print_split(splited);
 	if (!splited)
 		return (NULL);
 	if (has_invalid_characters(splited))

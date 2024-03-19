@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 11:45:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/18 20:07:06 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/19 14:43:10 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,216 +89,150 @@ char	**ft_split_charset_mod(char *str, char *charset)
 	return (splited);
 }
 
+char *get_expanded_arg(char *arg, t_shell *shell)
+{
+	t_env *node;
+
+	node = get_env_node(shell->env, &arg[1]);
+	if (!node || !node->value)
+		return (ft_strdup(""));
+	free(arg);
+	return (ft_strdup(node->value));
+}
+
+
+void	resolve_quotes(char c, int *in_single_quote, int *in_double_quote)
+{
+	if (c == '\"' && !(*in_single_quote))
+		*in_double_quote = !(*in_double_quote);
+	else if (c == '\'' && !(*in_double_quote))
+		*in_single_quote = !(*in_single_quote);
+}
+
+char **expand_split(char **splited, t_shell *shell)
+{
+	int	i;
+	int	j;
+	int	in_single_quote;
+	int	in_double_quote;
+
+	in_single_quote = 0;
+	in_double_quote = 0;
+	i = -1;
+	while(splited[++i])
+	{
+		j = 0;
+		while(splited[i][j])
+		{
+			resolve_quotes(splited[i][j], &in_single_quote, &in_double_quote);
+			if (splited[i][j] == '$' && !in_single_quote)
+			{
+				splited[i] = get_expanded_arg(splited[i], shell);
+				if (!splited[i])
+					return (NULL); // WARN: Malloc error
+				break ;
+			}
+			j++;
+		}
+	}
+	return (splited);
+}
+// FIX: Caso onde primeiro caractere de argumento é invalido não esta sendo tratado, 
+// ex: "$2HOME" evaluates to -> HOME -> Ou seja, $2 é substituido por nada, que é invalido, e HOME é tratado como string normal
+
+void	init_vars(int *j, int *z, int *single_q, int *double_q)
+{
+	*j = 0;
+	*z = 0;
+	*single_q = 0;
+	*double_q = 0;
+}
+
 int	split_str_len(char **splited)
 {
-	int len;
-	int	i;
+	int    i;
+	int    j;
+	int    z;
+	int	inside_single;
+	int	inside_double;
 
-	if (!splited)
-		return (0);
-	len = 0;
-	i = 0;
-	while (splited[i])
+	i = -1;
+	init_vars(&j, &z, &inside_single, &inside_double);
+	while(splited[++i])
 	{
-		len += ft_strlen(splited[i]);
-		i++;
+		j = 0;
+		while (splited[i][j])
+		{
+			if (splited[i][j] == '\'' && splited[i][j - 1] != '\\' && !inside_double)
+					j++;
+			else if (splited[i][j] == '\"' && splited[i][j - 1] != '\\' && !inside_single)
+					j++;
+			else if (!splited[i][j++])
+				break ;
+			z++;
+		}
 	}
-	return (len);
+	return (z);
+}
+
+void split_join_loop(char **splited, char *join, int z)
+{
+	int	inside_double;
+	int	inside_single;
+	int	i;
+	int	j;
+
+	inside_double = 0;
+	inside_single = 0;
+	i = -1;
+	while(splited[++i])
+	{
+		j = 0;
+		while (splited[i][j])
+		{
+			if (splited[i][j] == '\'' && splited[i][j - 1] != '\\')
+				if (!inside_double && ++j)
+					inside_single = !inside_single;
+			if (splited[i][j] == '\"' && splited[i][j - 1] != '\\')
+				if (!inside_single && ++j)
+					inside_double = !inside_double;
+			if (!splited[i][j])
+				break ;
+			join[z++] = splited[i][j++];
+		}
+	}
+	join[z] = '\0';
 }
 
 char *split_join(char **splited)
 {
-    char    *join;
-    int    i;
-    int    j;
-    int    z;
-    int    quote;
+	char    *join;
 
-    join = malloc(sizeof(char) * (split_str_len(splited) + 2));
-    if (!join)
-        return (NULL);
-    i = 0;
-    j = 0;
-    z = 0;
-    quote = 0;
-    if (splited[0][0] == '\"' || splited[0][0] == '\'')
-    {
-        quote = 1;
-        if (splited[0][0] == '\"')
-            quote = 2;
-    }
-    while(splited[i])
-    {
-        j = 0;
-        while (splited[i][j])
-        {
-            if (ft_strlen(splited[i]) >= 1 && ((splited[i][j] == '\"' && quote == 2) || (splited[i][j] == '\'' && quote == 1)) && ++j) //FIX: Problemao. Esse i != 0 resolve um segfault, mas ele causa com que prompts sempre tenham a aspas no comeco, ou seja, "$PATH" sai o path sem exluir as aspas.
-                continue;
-            join[z] = splited[i][j];
-            z++;
-            j++;
-        }
-        i++;
-    }
-    join[z] = '\0';
-    return (join);
+	join = malloc(sizeof(char) * (split_str_len(splited) + 2));
+	if (!join)
+		return (NULL);
+	split_join_loop(splited, join, 0);
+	return (join);
 }
 
 
-void	expand_node_arguments(t_node *node, t_shell *shell)
+void	expand_node_arguments(t_node *current, t_shell *shell)
 {
 	int	i;
-	int	j;
-	char	**splited;
-	t_env	*env;
-	char	*value;
+	char **splited;
 
 	i = 0;
-	while (node->args[i])
+	while (current->args[i])
 	{
-		splited = ft_split_charset_mod(node->args[i], " $\"\'");
-		j = 0;
-		while (splited[j])
-		{
-			if (splited[0][0] != '\"' && splited[j][0] == '\'')
-				break;
-			if (splited[j][0] == '$')
-			{
-				env = get_env_node(shell->env, &splited[j][1]);
-				if (env)
-					value = ft_strdup(env->value);
-				else
-					value = ft_strdup("");
-				splited[j] = value;
-			}
-			j++;
-		}
-		free(node->args[i]);
-		node->args[i] = split_join(splited);
+		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\'"), shell);
+		if (!splited)
+			return ; // WARN: Malloc error
+		free(current->args[i]);
+		current->args[i] = split_join(splited);
 		free_split(splited);
 		i++;
 	}
 }
-
-// int	split_str_len(char **splited) NOTE: Mudancas que eu fiz solo, testando, usando uma split diferente pra splitar $ARGS
-// {
-// 	int len;
-// 	int	i;
-//
-// 	if (!splited)
-// 		return (0);
-// 	len = 0;
-// 	i = 0;
-// 	while (splited[i])
-// 	{
-// 		len += ft_strlen(splited[i]);
-// 		i++;
-// 	}
-// 	return (len);
-// }
-//
-// char *remove_leading_quotes(char *str)
-// {
-// 	char *new_str;
-// 	int	len;
-// 	int	i;
-// 	int	j;
-//
-// 	len = ft_strlen(str);
-// 	new_str = malloc(sizeof(char) * (len - 1));
-// 	if (!new_str)
-// 		return (NULL);
-// 	if (len == 2)
-// 	{
-// 		new_str[0] = '\0';
-// 		return (new_str);
-// 	}
-// 	i = 1;
-// 	j = 0;
-// 	while (i < (len - 1))
-// 	{
-// 		new_str[j] = str[i];
-// 		i++;
-// 		j++;
-// 	}
-// 	new_str[i] = '\0';
-// 	free(str);
-// 	return (new_str);
-// }
-//
-// char *split_join(char **splited)
-// {
-// 	char	*join;
-// 	int	i;
-// 	int	j;
-// 	int	z;
-//
-// 	join = malloc(sizeof(char) * (split_str_len(splited) + 1));
-// 	if (!join)
-// 		return (NULL);
-// 	i = 0;
-// 	j = 0;
-// 	z = 0;
-// 	while(splited[i])
-// 	{
-// 		j = 0;
-// 		while (splited[i][j])
-// 		{
-// 			join[z] = splited[i][j];
-// 			z++;
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	join[z] = '\0';
-// 	if (join[0] == '\"' || join[0] == '\'')
-// 		join = remove_leading_quotes(join);
-// 	return (join);
-// }
-//
-//
-// void	expand_node_arguments(t_node *node, t_shell *shell)
-// {
-// 	int	i;
-// 	int	j;
-// 	char	**splited;
-// 	t_env	*env;
-// 	char	*value;
-//
-// 	i = 0;
-// 	while (node->args[i])
-// 	{
-// 		// printf("node->args[i]: %s\n", node->args[i]);
-// 		splited = test_split(node->args[i]);
-// 		// print_split(splited);
-// 		if (!splited)
-// 			return;
-// 		if (!splited[0])
-// 			continue;
-// 		if (splited[0][0] != '\'')
-// 		{
-// 			j = 0;
-// 			while (splited[j])
-// 			{
-// 				if (splited[j][0] == '$')
-// 				{
-// 					env = get_env_node(shell->env, &splited[j][1]);
-// 					if (!env)
-// 						value = ft_strdup("");
-// 					else
-// 						value = ft_strdup(env->value);
-// 					free(splited[j]);
-// 					splited[j] = value;
-// 				}
-// 				j++;
-// 			}
-// 		}
-// 		free(node->args[i]);
-// 		node->args[i] = split_join(splited);
-// 		free(splited);
-// 		i++;
-// 	}
-// }
 
 void	expand_arguments(t_list *list, t_shell *shell)
 {

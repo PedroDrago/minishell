@@ -7,12 +7,11 @@ int	get_end_q(char *str, char quote, int start)
 	int	index;
 
 	index = start + 1;
-	if (str[index] == quote)
-		return (index);
 	while (str[index])
 	{
-		if (str[index] == quote && (str[index + 1] == ' ' || str[index
-					+ 1] == '\0'))
+		if (quote == '\'' && str[index] == quote)
+			return (index);
+		else if (quote == '\"' && str[index] == quote && str[index - 1] != '\\')
 			return (index);
 		index++;
 	}
@@ -28,8 +27,8 @@ int	get_substr_quote_len(char *str, int start, int end, char quote)
 	index = start + 1;
 	while (index < end)
 	{
-		if (str[index] == quote)
-			ignored++;
+		if (quote == '\"' && str[index] == quote && str[index - 1] != '\\')
+			ignored ++;
 		index++;
 	}
 	return (end - start + 1 - ignored);
@@ -47,7 +46,7 @@ char	*substr_q(char *str, int start, int end, char quote)
 	substr[i++] = str[start++];
 	while (start < end)
 	{
-		while (str[start] == quote && start < end)
+		if (str[start] == '\\' && str[start + 1] == '\"')
 			start++;
 		substr[i++] = str[start++];
 	}

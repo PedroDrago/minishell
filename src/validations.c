@@ -19,7 +19,7 @@ int	valid_quotes(char *prompt)
 			if (double_quotes % 2 != 0)
 				single_quotes = 0;
 		}
-		else if (prompt[count] == '\"')
+		else if (prompt[count] == '\"' && prompt[count - 1] != '\\')
 		{
 			double_quotes++;
 			if (single_quotes % 2 != 0)
