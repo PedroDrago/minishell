@@ -93,9 +93,8 @@ char *get_expanded_arg(char *arg, t_shell *shell)
 			return (ft_strdup(&arg[2]));
 	node = get_env_node(shell->env, &arg[1]);
 	if (!node || !node->value)
-		return (ft_strdup(""));
-	free(arg);
-	return (ft_strdup(node->value));
+		return (free(arg), ft_strdup(""));
+	return (free(arg), ft_strdup(node->value));
 }
 
 
@@ -228,7 +227,7 @@ void	expand_node_arguments(t_node *current, t_shell *shell)
 	i = 0;
 	while (current->args[i])
 	{
-		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\' "), shell);
+		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/?+=-_\t\a\b\n\v\f\r"), shell);
 		if (!splited)
 			return ; // WARN: Malloc error
 		free(current->args[i]);

@@ -124,6 +124,7 @@ int	main(int argc, char *argv[], char *envp[])
 	shell = init_shell(argc, argv, envp);
 	if (!shell)
 		exit(1);
+	prompt = NULL;
 	while (TRUE)
 	{
 		g_pid = 0;
