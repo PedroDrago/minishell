@@ -6,118 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/19 03:42:40 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:38:01 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdlib.h>
-
-char	**split_keyvalue(char *str, char sep)
-{
-	char	**splited;
-	int		j;
-	int		i;
-
-	if (!str)
-		return (NULL);
-	splited = (char **)malloc(sizeof(char *) * 3);
-	if (!splited)
-		return (NULL);
-	if (!ft_strchr(str, sep))
-	{
-		splited[0] = ft_strdup(str);
-		splited[1] = NULL;
-		splited[2] = NULL;
-		return (splited);
-	}
-	if (str[ft_strlen(str) - 1] == sep)
-	{
-		splited[0] = ft_substr(str, 0, ft_strlen(str) - 1);
-		splited[1] = ft_strdup("");
-		splited[2] = NULL;
-		return (splited);
-	}
-	j = 0;
-	i = 0;
-	while (str[i] && str[i] != sep)
-		i++;
-	splited[0] = ft_substr(str, j, i);
-	if (!splited[0])
-		return (free_split(splited), NULL);
-	i++;
-	j = i;
-	while (str[i] && str[i] != ' ')
-		i++;
-	splited[1] = ft_substr(str, j, i);
-	if (!splited[1])
-		return (free_split(splited), NULL);
-	splited[2] = NULL;
-	return (splited);
-}
-
-void	free_env(t_env *env)
-{
-	t_env	*temp_env;
-
-	temp_env = env;
-	while (env)
-	{
-		free(env->key);
-		if (env->value)
-			free(env->value);
-		temp_env = env;
-		env = env->next;
-		free(temp_env);
-	}
-}
-
-t_env	*make_new_env_node(char *key, char *value)
-{
-	t_env	*new_env;
-
-	new_env = (t_env *)malloc(sizeof(t_env));
-	if (!new_env)
-		return (NULL);
-	new_env->key = key;
-	new_env->value = value;
-	new_env->next = NULL;
-	return (new_env);
-}
-
-t_env	*fill_env_struct(int fd)
-{
-	t_env	*env_head;
-	t_env	*temp_env;
-	char	*str;
-	char	**args;
-
-	str = get_next_line(fd);
-	temp_env = NULL;
-	while (str)
-	{
-		args = split_keyvalue(str, '=');
-		if (!args)
-		{
-			free_env(env_head);
-			return (NULL);
-		}
-		if (!temp_env)
-		{
-			env_head = make_new_env_node(args[0], args[1]);
-			temp_env = env_head;
-		}
-		else
-			temp_env->next = make_new_env_node(args[0], args[1]);
-		free(args);
-		free(str);
-		str = get_next_line(fd);
-		if (temp_env->next)
-			temp_env = temp_env->next;
-	}
-	close(fd);
-	return (env_head);
-}
 
 int	env(t_env *env, int fd_out)
 {
@@ -126,7 +19,7 @@ int	env(t_env *env, int fd_out)
 		if (ft_strchr(env->key, '?'))
 		{
 			env = env->next;
-			continue;
+			continue ;
 		}
 		if (env->value)
 		{
@@ -154,9 +47,21 @@ t_env	*get_env_node(t_env *env, char *key)
 	return (NULL);
 }
 
-int	set_env_value(t_env *env, char *key, char *value)
+int	insert_new_node(t_env *env, char *key, char *value)
 {
 	t_env	*temp;
+
+	temp = env;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = make_new_env_node(key, value);
+	if (!temp->next)
+		return (0);
+	return (1);
+}
+
+int	set_env_value(t_env *env, char *key, char *value)
+{
 	t_env	*target_node;
 	char	*new_value;
 
@@ -164,15 +69,7 @@ int	set_env_value(t_env *env, char *key, char *value)
 		return (0);
 	target_node = get_env_node(env, key);
 	if (!target_node)
-	{
-		temp = env;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = make_new_env_node(key, value);
-		if (!temp->next)
-			return (0);
-		return (1);
-	}
+		return (insert_new_node(env, key, value));
 	if (value)
 	{
 		new_value = ft_strdup(value);
@@ -191,18 +88,25 @@ t_env	*load_envs(char *envp[])
 {
 	t_env	*env;
 	char	**args;
-	
+
 	env = NULL;
 	while (envp && *envp)
 	{
-		args = split_keyvalue(*envp, '='); //VALIDAR MALLOC
+		args = split_keyvalue(*envp, '=');
+		if (!args)
+			return (NULL);
 		if (!env)
-			env = make_new_env_node(args[0], args[1]); //VALIDAR MALLOC
-		else
-			set_env_value(env, args[0], args[1]); //VALIDAR MALLOC?
+		{
+			env = make_new_env_node(args[0], args[1]);
+			if (!env)
+				return (NULL);
+		}
+		else if (!set_env_value(env, args[0], args[1]))
+			return (NULL);
 		envp++;
 		free(args);
 	}
-	set_env_value(env, ft_strdup("?"), ft_strdup("0"));
+	if (!set_env_value(env, ft_strdup("?"), ft_strdup("0")))
+		return (NULL);
 	return (env);
 }

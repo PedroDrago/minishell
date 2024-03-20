@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:18:25 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:38:25 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 int	is_token(char *item)
 {
@@ -21,7 +32,7 @@ int	is_token(char *item)
 int	count_arg_split(char **splited)
 {
 	int	count;
-	
+
 	count = 0;
 	while (!is_token(splited[count]))
 		count++;
@@ -66,35 +77,6 @@ int	fill_list(char **splited, t_list *list)
 	return (TRUE);
 }
 
-int	has_invalid_characters(char **splited)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (splited[i])
-	{
-		if ((splited[i][0] == '\'' || splited[i][0] == '\"') && (++i))
-			continue;
-		j = 0;
-		while(splited[i][j])
-		{
-			if (splited[i][j] == ';')
-				return (TRUE);
-			else if (splited[i][j] == '\\')
-			{
-				if ((splited[i][j + 1] == '\"' || splited[i][j + 1] == '\'') && (++j))
-					continue;
-				else if ( (size_t) j != ft_strlen(splited[i] - 1))
-					return (TRUE);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (FALSE);
-}
-
 t_list	*generate_list(char *prompt, t_shell *shell)
 {
 	char	**splited;
@@ -103,11 +85,12 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	splited = ft_split(prompt, ' ');
+	splited = prompt_split(prompt);
 	if (!splited)
 		return (NULL);
 	if (has_invalid_characters(splited))
-		return (free_split(splited), write(2, "Minishell: Invalid Characters (; or \\) \n", 40), NULL);
+		return (free_split(splited), write(2,
+				"Minishell: Invalid Characters (; or \\) \n", 40), NULL);
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited);

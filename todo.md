@@ -1,12 +1,9 @@
 # To-do
 
-- [ ] Multiline: Prompt && pipe
-- [ ] Fix `exit_safely()` segfault when freeing list
-- [ ] Metacharacter parsing
 - [ ] Error handling whole project!!!
     - [ ] stderror buffer.
-- [ ] Leaks
+- [ ] Leaks /  valgrind errors in every scenario
 - [ ] Malloc erros
 - [ ] input redirect
 - [ ] heredoc
-- [ ] Norm
+- [ ] Remove unused headers

@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:18:55 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:38:45 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 void	free_node(t_env *env)
 {
@@ -10,10 +21,9 @@ void	free_node(t_env *env)
 
 int	remove_node(t_env **env, char *key)
 {
-	t_env *previous;
-	t_env *current;
-	t_env *tmp;
-
+	t_env	*previous;
+	t_env	*current;
+	t_env	*tmp;
 
 	if (!ft_strncmp((*env)->key, key, ft_strlen(key)))
 	{
@@ -45,7 +55,7 @@ int	unset(t_node *current, t_shell *shell)
 	while (current->args[i])
 	{
 		if (ft_strchr(current->args[i], '?') && ++i)
-			continue;
+			continue ;
 		remove_node(&shell->env, current->args[i++]);
 	}
 	return (0);

@@ -1,7 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   evaluation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:38:09 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 void	print_result(int fd)
 {
@@ -73,18 +82,6 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 	return (TRUE);
 }
 
-void	set_exit_status(int status, t_shell *shell)
-{
-	char	*status_string;
-
-	status_string = ft_itoa(status);
-	if (!status_string)
-		exit_safely(shell);
-	if (!set_env_value(shell->env, "?", status_string))
-		exit_safely(shell);
-	free(status_string);
-}
-
 void	evaluate_solo(t_node *current, t_shell *shell)
 {
 	int	pid;
@@ -108,7 +105,7 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 int	evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list	*prompt_list;
-	t_node *current;
+	t_node	*current;
 
 	prompt_list = generate_list(prompt, shell);
 	if (!prompt_list)
@@ -117,9 +114,9 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	current = prompt_list->head;
 	if (!current->token)
 		evaluate_solo(current, shell);
-	else
-		if (!evaluate_pipeline(current, shell))
-			return (free_list(prompt_list), FALSE);
+	else if (!evaluate_pipeline(current, shell))
+		return (free_list(prompt_list), FALSE);
 	free_list(prompt_list);
+	shell->prompt_list = NULL;
 	return (TRUE);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 16:59:12 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:45:54 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	is_pipe(char *token)
@@ -7,7 +19,8 @@ int	is_pipe(char *token)
 	return (FALSE);
 }
 
-void	execute_pipe(t_node *current, t_shell *shell, int *old_yield, int *new_yield)
+void	execute_pipe(t_node *current, t_shell *shell,
+			int *old_yield, int *new_yield)
 {
 	dup2(old_yield[0], 0);
 	dup2(new_yield[1], 1);
@@ -18,13 +31,24 @@ void	execute_pipe(t_node *current, t_shell *shell, int *old_yield, int *new_yiel
 	execute_command(shell, current);
 }
 
+void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current)
+{
+	int	status;
+
+	status = 0;
+	close(old_yield[0]);
+	close(old_yield[1]);
+	waitpid(pid, &status, 0);
+	set_exit_status(status, shell);
+	if (status > 0)
+		printf("%s: command not found (Pipe.c)\n", current->command);
+}
+
 int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
 {
 	int	pid;
-	int	status;
 	int	*new_yield;
 
-	status = -1;
 	new_yield = (int *)malloc(sizeof(int) * 2);
 	if (!new_yield)
 		return (NULL);
@@ -38,15 +62,7 @@ int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
 		if (pid == 0)
 			execute_pipe(current, shell, old_yield, new_yield);
 		else
-		{
-			close(old_yield[0]);
-			close(old_yield[1]);
-			free(old_yield);
-			waitpid(pid, &status, 0);
-			set_exit_status(status, shell);
-			if (status > 0)
-				printf("%s: command not found\n", current->command);
-		}
+			wait_for_child(old_yield, pid, shell, current);
 	}
-	return (new_yield);
+	return (free(old_yield), new_yield);
 }

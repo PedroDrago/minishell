@@ -5,3 +5,4 @@ minishell
 *.log
 .vscode
 a.out
+src/a.out
