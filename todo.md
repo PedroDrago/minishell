@@ -1,10 +1,8 @@
 # To-do
 
-- [ ] Metacharacter parsing
 - [ ] Error handling whole project!!!
     - [ ] stderror buffer.
-- [ ] Leaks
+- [ ] Leaks /  valgrind errors in every scenario
 - [ ] Malloc erros
 - [ ] input redirect
 - [ ] heredoc
-- [ ] Norm
