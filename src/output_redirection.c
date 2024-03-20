@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   output_redirection.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:18:21 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:18:22 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	is_redirect_output(char *token)
@@ -7,7 +19,8 @@ int	is_redirect_output(char *token)
 	return (FALSE);
 }
 
-void	execute_redirection(t_node *current, t_shell *shell, int *old_yield, int file)
+void	execute_redirection(t_node *current, t_shell *shell, int *old_yield,
+		int file)
 {
 	dup2(old_yield[0], 0);
 	dup2(file, 1);
@@ -17,19 +30,29 @@ void	execute_redirection(t_node *current, t_shell *shell, int *old_yield, int fi
 	execute_command(shell, current);
 }
 
-void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
+int	open_file(t_node *current)
 {
-	int		file;
-	int		pid;
-	int status;
+	int	file;
 
 	if (!current->next || !current->next->command
 		|| !ft_strlen(current->next->command))
-		printf("minishell: Syntax error\n");
+		return (printf("minishell: Syntax error\n"), FALSE);
 	if (!ft_strncmp(current->token, ">", 2))
 		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0664);
 	else
 		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0664);
+	if (file < 0)
+		return (-1);
+	return (file);
+}
+
+void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
+{
+	int	file;
+	int	pid;
+	int	status;
+
+	file = open_file(current);
 	if (file < 0)
 		return ;
 	if (is_builtin(current->command))

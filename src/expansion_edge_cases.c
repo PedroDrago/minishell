@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   expansion_edge_cases.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 11:25:54 by pdrago            #+#    #+#             */
-/*   Updated: 2024/02/02 11:25:55 by pdrago           ###   ########.fr       */
+/*   Created: 2024/03/20 17:22:44 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:22:46 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "../includes/minishell.h"
 
-#endif
+char	*dup_value(char *arg)
+{
+	char	*value;
+
+	if (!arg[1])
+		value = ft_strdup("$");
+	else if (arg[2])
+		value = ft_strdup(&arg[2]);
+	else
+		value = ft_strdup("");
+	return (free(arg), value);
+}

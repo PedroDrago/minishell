@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:18:09 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:38:14 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 void	print_export(t_env *env, int fd_out)
 {
@@ -22,7 +33,7 @@ void	print_export(t_env *env, int fd_out)
 
 int	is_valid(char *key)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (key[++i])
@@ -33,7 +44,7 @@ int	is_valid(char *key)
 
 int	export(t_node *node, t_shell *shell, int fd_out)
 {
-	int	i;
+	int		i;
 	char	**splited;
 
 	if (split_len(node->args) == 1)
@@ -48,7 +59,7 @@ int	export(t_node *node, t_shell *shell, int fd_out)
 		if (!is_valid(splited[0]) && ++i)
 		{
 			printf("ERRO\n");
-			continue;
+			continue ;
 		}
 		if (!set_env_value(shell->env, splited[0], splited[1]))
 			return (free_split(splited), 1);

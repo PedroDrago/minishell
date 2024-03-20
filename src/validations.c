@@ -1,6 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validations.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 17:19:02 by pdrago            #+#    #+#             */
+/*   Updated: 2024/03/20 17:19:08 by pdrago           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <stdio.h>
 
 int	valid_quotes(char *prompt)
 {
@@ -19,7 +29,7 @@ int	valid_quotes(char *prompt)
 			if (double_quotes % 2 != 0)
 				single_quotes = 0;
 		}
-		else if (prompt[count] == '\"') 
+		else if (prompt[count] == '\"')
 		{
 			double_quotes++;
 			if (single_quotes % 2 != 0)
@@ -29,4 +39,29 @@ int	valid_quotes(char *prompt)
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 		return (write(2, "Minishell: Unclosed quotes\n", 27), FALSE);
 	return (TRUE);
+}
+
+int	has_invalid_characters(char **splited)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (splited[i])
+	{
+		if ((splited[i][0] == '\'' || splited[i][0] == '\"') && (++i))
+			continue ;
+		j = 0;
+		while (splited[i][j])
+		{
+			if (splited[i][j] == ';')
+				return (TRUE);
+			else if (splited[i][j] == '\\')
+				if ((size_t)j != ft_strlen(splited[i] - 1))
+					return (TRUE);
+			j++;
+		}
+		i++;
+	}
+	return (FALSE);
 }
