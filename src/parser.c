@@ -82,12 +82,8 @@ int	has_invalid_characters(char **splited)
 			if (splited[i][j] == ';')
 				return (TRUE);
 			else if (splited[i][j] == '\\')
-			{
-				if ((splited[i][j + 1] == '\"' || splited[i][j + 1] == '\'') && (++j))
-					continue;
-				else if ( (size_t) j != ft_strlen(splited[i] - 1))
+				if ( (size_t) j != ft_strlen(splited[i] - 1))
 					return (TRUE);
-			}
 			j++;
 		}
 		i++;

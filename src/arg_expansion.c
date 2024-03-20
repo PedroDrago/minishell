@@ -226,10 +226,9 @@ void	expand_node_arguments(t_node *current, t_shell *shell)
 	char **splited;
 
 	i = 0;
-	// print_split(current->args);
 	while (current->args[i])
 	{
-		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\'"), shell);
+		splited = expand_split(ft_split_charset_mod(current->args[i], "$\"\' "), shell);
 		if (!splited)
 			return ; // WARN: Malloc error
 		free(current->args[i]);
