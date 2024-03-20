@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:21 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:18:22 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:46:09 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
 			waitpid(pid, &status, 0);
 			set_exit_status(status, shell);
 			if (status > 0 && WTERMSIG(status) != SIGINT)
-				printf("%s: command not found\n", current->command);
+				printf("%s: command not found(output_redirection.c)\n", current->command);
 		}
 	}
 }

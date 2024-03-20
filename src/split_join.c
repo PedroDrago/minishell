@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:48 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:18:50 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:47:51 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	split_join_loop(char **splited, char *join, int z)
 		j = 0;
 		while (splited[i] && splited[i][j])
 		{
-			if (splited[i][j] == '\'' && (j == 0 || splited[i][j - 1] != '\\'))
+			if (splited[i][j] == '\'' && (j == 0 || splited[i][j - 1] != '\\')) // FIX: Not necessary anymore, but it is working with this
 				if (!inside_double && ++j)
 					inside_single = !inside_single;
-			if (splited[i][j] == '\"' && (j == 0 || splited[i][j - 1] != '\\'))
+			if (splited[i][j] == '\"' && (j == 0 || splited[i][j - 1] != '\\')) // FIX: Not necessary anymore, but it is working with this
 				if (!inside_single && ++j)
 					inside_double = !inside_double;
 			if (!splited[i][j])

@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:59:12 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 16:59:14 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/20 17:45:54 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current)
 	waitpid(pid, &status, 0);
 	set_exit_status(status, shell);
 	if (status > 0)
-		printf("%s: command not found\n", current->command);
+		printf("%s: command not found (Pipe.c)\n", current->command);
 }
 
 int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
