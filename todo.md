@@ -6,3 +6,4 @@
 - [ ] Malloc erros
 - [ ] input redirect
 - [ ] heredoc
+- [ ] Remove unused headers
