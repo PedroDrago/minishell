@@ -6,54 +6,87 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:09 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 01:05:01 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_result(int fd)
+char	*get_right_path(t_shell *shell, t_node *current)
 {
-	char	*gnl;
-	char	*str;
+	char	*path;
+	char	**paths_split;
+	t_env	*node;
+	int	i;
+	int	stat_return;
+	char	*value;
+	struct stat	file_info; 
 
-	gnl = get_next_line(fd);
-	str = ft_calloc(1, 1);
-	if (!str)
+	stat_return = -1;
+	path = ft_strdup(current->command);
+	node = get_env_node(shell->env, "PATH");
+	i = 0;
+	if (!node || !node->value)
+		value = ft_strdup("");
+	else
+		value = node->value;
+	paths_split = ft_split(value, ':');
+	if (!paths_split)
+		exit(1);
+	while (paths_split[i])
 	{
-		if (gnl)
-			free(gnl);
-		return ;
+		stat_return = stat(path, &file_info);
+		if (stat_return == 0)
+		{
+			if (!(file_info.st_mode & S_IXUSR))
+				exit(126);
+			return (path);
+		}
+		free(path);
+		path = ft_strjoin(paths_split[i], "/", O_NONE);
+		path = ft_strjoin(path, current->command, O_ONE);
+		i++;
 	}
-	while (gnl)
+	stat_return = stat(path, &file_info);
+	if (stat_return == 0)
 	{
-		str = ft_strjoin(str, gnl, O_BOTH);
-		gnl = get_next_line(fd);
+		if (!(file_info.st_mode & S_IXUSR))
+			exit(126);
+		return (path);
 	}
-	close(fd);
-	printf("%s", str);
-	free(str);
+	free(path);
+	exit(127);
 }
 
 int	execute_command(t_shell *shell, t_node *current)
 {
-	char	**paths;
-	char	*path;
-	int		count;
+	char *path;
 
-	execv(current->command, current->args);
-	paths = ft_split(get_env_node(shell->env, "PATH")->value, ':');
-	count = 0;
-	while (paths[count])
+	path = get_right_path(shell, current);
+	execv(path, current->args);
+	exit(1);
+}
+
+void	exec_last(t_node *current, t_shell *shell, int *yield)
+{
+	int	pid;
+
+	if (is_builtin(current->command))
+		exec_builtin(current, shell, 1);
+	else
 	{
-		path = ft_strjoin(paths[count], "/", O_NONE);
-		path = ft_strjoin(path, current->command, O_ONE);
-		execv(path, current->args);
-		free(path);
-		count++;
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(yield[0], 0);
+			close(yield[0]);
+			close(yield[1]);
+			execute_command(shell, current);
+		}
+		else
+			wait_for_child(yield, pid, shell, current);
 	}
-	free_split(paths);
-	exit(EXIT_FAILURE);
+	return ;
 }
 
 int	evaluate_pipeline(t_node *current, t_shell *shell)
@@ -65,7 +98,7 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		return (FALSE);
 	if (pipe(yield) < 0)
 		return (free(yield), FALSE);
-	while (current)
+	while (current->next)
 	{
 		if (!current->token || is_pipe(current->token))
 			yield = pipe_output(current, yield, shell);
@@ -76,10 +109,28 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		}
 		current = current->next;
 	}
+	exec_last(current, shell, yield);
 	close(yield[1]);
-	print_result(yield[0]);
+	close(yield[0]);
 	free(yield);
 	return (TRUE);
+}
+
+void	resolve_error(int status, t_node *current)
+{
+	// printf("Status Received in handler: %i\n", status);
+	if (status == 32512)
+	{
+		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(": Command not found\n", 2);
+	}
+	else if (status == 32256)
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+
 }
 
 void	evaluate_solo(t_node *current, t_shell *shell)
@@ -98,7 +149,7 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 		waitpid(pid, &status, 0);
 		set_exit_status(status, shell);
 		if (status > 0 && WTERMSIG(status) != SIGINT)
-			printf("%s: command not found\n", current->command);
+			resolve_error(status, current);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/20 17:39:00 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 01:02:44 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int			count_split(char *str);
 void		redirect_output(t_node *current, t_shell *shell, int *old_yield);
 void		exit_program(int sig);
 int			count_backslash(char *str, int start, int end);
+void	resolve_error(int status, t_node *current);
+void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current);
 
 #endif
