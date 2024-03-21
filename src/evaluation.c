@@ -6,37 +6,11 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 21:53:59 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 01:05:01 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-void	print_result(int fd)
-{
-	char	*gnl;
-	char	*str;
-
-	gnl = get_next_line(fd);
-	str = ft_calloc(1, 1);
-	if (!str)
-	{
-		if (gnl)
-			free(gnl);
-		return ;
-	}
-	while (gnl)
-	{
-		str = ft_strjoin(str, gnl, O_BOTH);
-		gnl = get_next_line(fd);
-	}
-	close(fd);
-	printf("%s", str);
-	free(str);
-}
 
 char	*get_right_path(t_shell *shell, t_node *current)
 {
@@ -93,6 +67,28 @@ int	execute_command(t_shell *shell, t_node *current)
 	exit(1);
 }
 
+void	exec_last(t_node *current, t_shell *shell, int *yield)
+{
+	int	pid;
+
+	if (is_builtin(current->command))
+		exec_builtin(current, shell, 1);
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			dup2(yield[0], 0);
+			close(yield[0]);
+			close(yield[1]);
+			execute_command(shell, current);
+		}
+		else
+			wait_for_child(yield, pid, shell, current);
+	}
+	return ;
+}
+
 int	evaluate_pipeline(t_node *current, t_shell *shell)
 {
 	int	*yield;
@@ -102,7 +98,7 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		return (FALSE);
 	if (pipe(yield) < 0)
 		return (free(yield), FALSE);
-	while (current)
+	while (current->next)
 	{
 		if (!current->token || is_pipe(current->token))
 			yield = pipe_output(current, yield, shell);
@@ -113,8 +109,9 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		}
 		current = current->next;
 	}
+	exec_last(current, shell, yield);
 	close(yield[1]);
-	print_result(yield[0]);
+	close(yield[0]);
 	free(yield);
 	return (TRUE);
 }
