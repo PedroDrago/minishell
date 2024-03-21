@@ -6,11 +6,12 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/21 01:05:01 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 19:09:14 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 char	*get_right_path(t_shell *shell, t_node *current)
 {
@@ -63,8 +64,9 @@ int	execute_command(t_shell *shell, t_node *current)
 	char *path;
 
 	path = get_right_path(shell, current);
-	execv(path, current->args);
+	execve(path, current->args, NULL);
 	exit(1);
+	return (1);
 }
 
 void	exec_last(t_node *current, t_shell *shell, int *yield)
