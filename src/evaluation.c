@@ -6,11 +6,14 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:09 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/20 21:53:59 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 void	print_result(int fd)
 {
@@ -35,25 +38,59 @@ void	print_result(int fd)
 	free(str);
 }
 
+char	*get_right_path(t_shell *shell, t_node *current)
+{
+	char	*path;
+	char	**paths_split;
+	t_env	*node;
+	int	i;
+	int	stat_return;
+	char	*value;
+	struct stat	file_info; 
+
+	stat_return = -1;
+	path = ft_strdup(current->command);
+	node = get_env_node(shell->env, "PATH");
+	i = 0;
+	if (!node || !node->value)
+		value = ft_strdup("");
+	else
+		value = node->value;
+	paths_split = ft_split(value, ':');
+	if (!paths_split)
+		exit(1);
+	while (paths_split[i])
+	{
+		stat_return = stat(path, &file_info);
+		if (stat_return == 0)
+		{
+			if (!(file_info.st_mode & S_IXUSR))
+				exit(126);
+			return (path);
+		}
+		free(path);
+		path = ft_strjoin(paths_split[i], "/", O_NONE);
+		path = ft_strjoin(path, current->command, O_ONE);
+		i++;
+	}
+	stat_return = stat(path, &file_info);
+	if (stat_return == 0)
+	{
+		if (!(file_info.st_mode & S_IXUSR))
+			exit(126);
+		return (path);
+	}
+	free(path);
+	exit(127);
+}
+
 int	execute_command(t_shell *shell, t_node *current)
 {
-	char	**paths;
-	char	*path;
-	int		count;
+	char *path;
 
-	execv(current->command, current->args);
-	paths = ft_split(get_env_node(shell->env, "PATH")->value, ':');
-	count = 0;
-	while (paths[count])
-	{
-		path = ft_strjoin(paths[count], "/", O_NONE);
-		path = ft_strjoin(path, current->command, O_ONE);
-		execv(path, current->args);
-		free(path);
-		count++;
-	}
-	free_split(paths);
-	exit(EXIT_FAILURE);
+	path = get_right_path(shell, current);
+	execv(path, current->args);
+	exit(1);
 }
 
 int	evaluate_pipeline(t_node *current, t_shell *shell)
@@ -82,6 +119,23 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 	return (TRUE);
 }
 
+void	resolve_error(int status, t_node *current)
+{
+	// printf("Status Received in handler: %i\n", status);
+	if (status == 32512)
+	{
+		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(": Command not found\n", 2);
+	}
+	else if (status == 32256)
+	{
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
+
+}
+
 void	evaluate_solo(t_node *current, t_shell *shell)
 {
 	int	pid;
@@ -98,7 +152,7 @@ void	evaluate_solo(t_node *current, t_shell *shell)
 		waitpid(pid, &status, 0);
 		set_exit_status(status, shell);
 		if (status > 0 && WTERMSIG(status) != SIGINT)
-			printf("%s: command not found\n", current->command);
+			resolve_error(status, current);
 	}
 }
 
