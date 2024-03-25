@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:45 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:37:56 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 18:58:51 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	echo(int argc, char *argv[], int fd_out)
 
 	flag = 0;
 	if (split_len(argv) <= 1)
-		return (0);
+		return (ft_putstr_fd("\n", fd_out), 0);
 	i = 1;
 	if (argv[1] && !ft_strncmp(argv[1], "-n", 3))
 		flag = i++;

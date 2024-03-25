@@ -62,15 +62,18 @@ int	fill_list(char **splited, t_list *list)
 		node = create_node();
 		if (!node)
 			return (FALSE);
-		node->command = ft_strdup(*splited);
-		splited = parse_arguments(splited, node);
-		if (!splited)
-			return (FALSE);
-		if (!(*splited))
-			node->token = NULL;
-		else
-			node->token = ft_strdup(*splited);
-		append_node(list, node);
+		if (!is_token(*splited))
+		{
+			node->command = ft_strdup(*splited);
+			splited = parse_arguments(splited, node);
+			if (!splited)
+				return (FALSE);
+			if (!(*splited))
+				node->token = NULL;
+			else
+				node->token = ft_strdup(*splited);
+			append_node(list, node);
+		}
 		if (!(*splited++))
 			return (TRUE);
 	}
@@ -90,7 +93,7 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 		return (NULL);
 	if (has_invalid_characters(splited))
 		return (free_split(splited), write(2,
-				"Minishell: Invalid Characters (; or \\) \n", 40), NULL);
+				"Minishell: Invalid Characters (; or \\) \n", 40), NULL); //FIX: Trocar write por ft_pustr_fd
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited);

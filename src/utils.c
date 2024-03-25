@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 void	set_exit_status(int status, t_shell *shell)
 {
@@ -69,14 +70,18 @@ void	free_list(t_list *list)
 void	print_list(t_list *arg)
 {
 	t_node	*tmp;
+	int	i;
 
 	tmp = arg->head;
 	while (tmp)
 	{
 		printf("command: %s\n", tmp->command);
 		printf("args: ");
-		print_split(tmp->args);
-		printf("token: %s\n", tmp->token);
+		i = 0;
+		while (tmp->args[i])
+			printf("!%s!", tmp->args[i++]);
+		printf("\ntoken: %s\n", tmp->token);
+		printf("-------------------------\n");
 		tmp = tmp->next;
 	}
 }

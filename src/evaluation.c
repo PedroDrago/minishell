@@ -6,64 +6,78 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/21 01:05:01 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 19:09:14 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
-char	*get_right_path(t_shell *shell, t_node *current)
+
+char **get_paths_split(t_shell *shell)
+{
+	char	**splited;
+	t_env	*node;
+
+	node = get_env_node(shell->env, "PATH");
+	if (!node || !node->value)
+		return (NULL);
+	splited = ft_split(node->value, ':');
+	if (!splited)
+		return (NULL);
+	return (splited);
+}
+
+char *get_current_path_str(char *path, char *command)
+{
+	char	*joined;
+
+	joined = ft_strjoin(path, "/", O_ONE);
+	if (!joined)
+		return(NULL);
+	joined = ft_strjoin(joined, command, O_ONE);
+	if (!joined)
+		return(NULL);
+	return (joined);
+}
+
+int	can_open_file(int stat_return, struct stat *file_info)
+{
+	if (stat_return < 0)
+		return (0);
+	if (!(file_info->st_mode & S_IXUSR))
+		exit(126);
+	return (1);
+	
+}
+
+char	*get_right_path(t_shell *shell, t_node *current) //FIX: Leak? Child process
 {
 	char	*path;
 	char	**paths_split;
-	t_env	*node;
 	int	i;
-	int	stat_return;
-	char	*value;
 	struct stat	file_info; 
 
-	stat_return = -1;
-	path = ft_strdup(current->command);
-	node = get_env_node(shell->env, "PATH");
 	i = 0;
-	if (!node || !node->value)
-		value = ft_strdup("");
-	else
-		value = node->value;
-	paths_split = ft_split(value, ':');
+	paths_split = get_paths_split(shell);
 	if (!paths_split)
-		exit(1);
-	while (paths_split[i])
+		return (NULL);
+	while(paths_split[i])
 	{
-		stat_return = stat(path, &file_info);
-		if (stat_return == 0)
-		{
-			if (!(file_info.st_mode & S_IXUSR))
-				exit(126);
+		path = get_current_path_str(paths_split[i++], current->command);
+		if (can_open_file(stat(path, &file_info), &file_info))
 			return (path);
-		}
-		free(path);
-		path = ft_strjoin(paths_split[i], "/", O_NONE);
-		path = ft_strjoin(path, current->command, O_ONE);
-		i++;
 	}
-	stat_return = stat(path, &file_info);
-	if (stat_return == 0)
-	{
-		if (!(file_info.st_mode & S_IXUSR))
-			exit(126);
-		return (path);
-	}
-	free(path);
 	exit(127);
 }
-
 int	execute_command(t_shell *shell, t_node *current)
 {
 	char *path;
 
 	path = get_right_path(shell, current);
-	execv(path, current->args);
+	execve(path, current->args, NULL);
 	exit(1);
 }
 
@@ -98,7 +112,9 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		return (FALSE);
 	if (pipe(yield) < 0)
 		return (free(yield), FALSE);
-	while (current->next)
+	if (!current->next)
+		return (printf("Sem nada deps de operador\n"), TRUE);
+	while (current)
 	{
 		if (!current->token || is_pipe(current->token))
 			yield = pipe_output(current, yield, shell);
@@ -107,9 +123,36 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 			redirect_output(current, shell, yield);
 			current = current->next;
 		}
+		else if (is_redirect_input(current->token))
+		{
+			if (!current->next->token)
+			{
+				redirect_input(current, shell, 1);
+				current = NULL;
+				break ;
+			}
+			redirect_input(current, shell, yield[1]);
+			current = current->next;
+		}
+		else if (is_heredoc(current->token))
+		{
+			if (!current->next->token)
+			{
+				heredoc(current, shell, 1);
+				current = NULL;
+				break ;
+			}
+			heredoc(current, shell, yield[1]);
+			current = current->next;
+			
+		}
+		if (!current->next)
+		{
+			exec_last(current, shell, yield);
+			break ;
+		}
 		current = current->next;
 	}
-	exec_last(current, shell, yield);
 	close(yield[1]);
 	close(yield[0]);
 	free(yield);

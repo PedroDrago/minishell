@@ -6,7 +6,7 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:59:12 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 21:51:39 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/03/21 18:51:11 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	execute_pipe(t_node *current, t_shell *shell,
 {
 	dup2(old_yield[0], 0);
 	dup2(new_yield[1], 1);
-	close(old_yield[0]);
 	close(old_yield[1]);
-	close(new_yield[1]);
-	close(new_yield[0]);
+	// close(old_yield[0]); WARN: No difference?
+	// close(new_yield[1]); WARN: No difference?
+	// close(new_yield[0]); WARN: No difference?
 	execute_command(shell, current);
 }
 
@@ -36,7 +36,7 @@ void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current)
 	int	status;
 
 	status = 0;
-	close(old_yield[0]);
+	// close(old_yield[0]); WARN: No difference?
 	close(old_yield[1]);
 	waitpid(pid, &status, 0);
 	set_exit_status(status, shell);
