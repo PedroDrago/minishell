@@ -93,7 +93,7 @@ t_list	*generate_list(char *prompt, t_shell *shell)
 		return (NULL);
 	if (has_invalid_characters(splited))
 		return (free_split(splited), write(2,
-				"Minishell: Invalid Characters (; or \\) \n", 40), NULL);
+				"Minishell: Invalid Characters (; or \\) \n", 40), NULL); //FIX: Trocar write por ft_pustr_fd
 	if (!fill_list(splited, list))
 		return (free_split(splited), free_list(list), NULL);
 	free_split(splited);

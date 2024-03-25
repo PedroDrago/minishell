@@ -202,7 +202,6 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	t_node	*current;
 
 	prompt_list = generate_list(prompt, shell);
-	print_list(prompt_list);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;

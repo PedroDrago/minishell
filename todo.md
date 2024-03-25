@@ -4,7 +4,6 @@
     - [ ] stderror buffer.
 - [ ] Leaks /  valgrind errors in every scenario
 - [ ] Malloc erros
-- [ ] input redirect
-- [ ] heredoc
+- [ ] Testar mais a fundo heredoc e input redirection
 - [ ] Remove unused headers
 - [ ] Norm
