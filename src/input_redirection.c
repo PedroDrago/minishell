@@ -55,6 +55,8 @@ int	heredoc(t_node *current, t_shell *shell, int fd_out)
 
 
 	pipe(file);
+	if (!current->next || !ft_strlen(current->next->command))
+		return (printf("Minishell: missing delimiter\n"), FALSE);
 	read_heredoc(file, current->next->command);
 	if (is_builtin(current->command)) // WARN: No builtin reads from stdin, so redirecting input does nothing | Also, this will segfault if current.next is null
 		return (exec_builtin(current, shell, fd_out), close(file[0]), close(file[1]), TRUE);

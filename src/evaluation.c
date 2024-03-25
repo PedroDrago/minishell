@@ -112,7 +112,7 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		return (FALSE);
 	if (pipe(yield) < 0)
 		return (free(yield), FALSE);
-	while (current->next)
+	while (current)
 	{
 		if (!current->token || is_pipe(current->token))
 			yield = pipe_output(current, yield, shell);
@@ -131,7 +131,6 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 			}
 			redirect_input(current, shell, yield[1]);
 			current = current->next;
-			
 		}
 		else if (is_heredoc(current->token))
 		{
@@ -145,12 +144,13 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 			current = current->next;
 			
 		}
-		if (!current)
+		if (!current->next)
+		{
+			exec_last(current, shell, yield);
 			break ;
+		}
 		current = current->next;
 	}
-	if (current)
-		exec_last(current, shell, yield);
 	close(yield[1]);
 	close(yield[0]);
 	free(yield);
