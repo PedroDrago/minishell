@@ -112,6 +112,8 @@ int	evaluate_pipeline(t_node *current, t_shell *shell)
 		return (FALSE);
 	if (pipe(yield) < 0)
 		return (free(yield), FALSE);
+	if (!current->next)
+		return (printf("Sem nada deps de operador\n"), TRUE);
 	while (current)
 	{
 		if (!current->token || is_pipe(current->token))
@@ -200,6 +202,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	t_node	*current;
 
 	prompt_list = generate_list(prompt, shell);
+	print_list(prompt_list);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
