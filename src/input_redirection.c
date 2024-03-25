@@ -32,19 +32,24 @@ int	is_heredoc(char *token)
 	return (FALSE);
 }
 
-void	read_heredoc(int *file, char *delimiter)
+int	read_heredoc(int *file, char *delimiter)
 {
 	char *prompt;
 	int	len;
 
 	prompt = readline("> ");
+	if (!prompt)
+		return (FALSE); // FIX: ????
 	len = ft_strlen(delimiter);
 	while (ft_strncmp(prompt, delimiter, len))
 	{
 		ft_putstr_fd(prompt, file[1]); // FIX: ctrl+D e ctrl+C?
 		ft_putstr_fd("\n", file[1]);
 		prompt = readline("> ");
+		if (!prompt)
+			return (FALSE); // FIX: ????
 	}
+	return (TRUE);
 }
 
 int	heredoc(t_node *current, t_shell *shell, int fd_out)
@@ -57,7 +62,8 @@ int	heredoc(t_node *current, t_shell *shell, int fd_out)
 	pipe(file);
 	if (!current->next || !ft_strlen(current->next->command))
 		return (printf("Minishell: missing delimiter\n"), FALSE);
-	read_heredoc(file, current->next->command);
+	if (!read_heredoc(file, current->next->command))
+		return (TRUE);
 	if (is_builtin(current->command)) // WARN: No builtin reads from stdin, so redirecting input does nothing | Also, this will segfault if current.next is null
 		return (exec_builtin(current, shell, fd_out), close(file[0]), close(file[1]), TRUE);
 	else
