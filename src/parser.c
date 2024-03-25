@@ -62,15 +62,18 @@ int	fill_list(char **splited, t_list *list)
 		node = create_node();
 		if (!node)
 			return (FALSE);
-		node->command = ft_strdup(*splited);
-		splited = parse_arguments(splited, node);
-		if (!splited)
-			return (FALSE);
-		if (!(*splited))
-			node->token = NULL;
-		else
-			node->token = ft_strdup(*splited);
-		append_node(list, node);
+		if (!is_token(*splited))
+		{
+			node->command = ft_strdup(*splited);
+			splited = parse_arguments(splited, node);
+			if (!splited)
+				return (FALSE);
+			if (!(*splited))
+				node->token = NULL;
+			else
+				node->token = ft_strdup(*splited);
+			append_node(list, node);
+		}
 		if (!(*splited++))
 			return (TRUE);
 	}
