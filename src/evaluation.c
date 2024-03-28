@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/history.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -176,13 +177,9 @@ void	exec_list(t_node *node, t_shell *shell) // NOTE: Para colocar na norma vamo
 	while (node)
 	{
 		if (!node->token)
-		{
 			exec_last(node, shell);
-		}
 		else if (is_pipe(node->token))
-		{
 			pipe_output(node, shell);
-		}
 		else if (is_redirect_output(node->token))
 		{
 			redirect_output(node, shell);
@@ -190,11 +187,13 @@ void	exec_list(t_node *node, t_shell *shell) // NOTE: Para colocar na norma vamo
 		}
 		else if (is_redirect_input(node->token))
 		{
-			redirect_input(node, shell);
+			redirect_input(node, shell); // WARN: So funciona se for a ultima parte da pipeline
 			node = node->next;
 		}
 		else if (is_heredoc(node->token))
 		{
+			heredoc(node, shell, 1); // WARN: N ta implementado ainda
+			node = node->next;
 		}
 		if (!node)
 			break ;
