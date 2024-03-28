@@ -163,8 +163,8 @@ void	wait_children(t_shell *shell)
 	set_exit_status(status, shell);
 }
 
-void	exec_list(t_node *node, t_shell *shell)
-{
+void	exec_list(t_node *node, t_shell *shell) // NOTE: Para colocar na norma vamos ter que dividir em varias subfuncoes
+{                                               //is pipe_or_single e is_any_redirection, e dentro de cada uma dessas varios ifs pra cada cenario
 	while (node)
 	{
 		if (!node->token)
@@ -213,6 +213,13 @@ t_pid_data *create_pid_data(t_node *current)
 	return (pid_data);
 }
 
+void	free_pid_data(t_pid_data *pid_data)
+{
+	free(pid_data->c_array);
+	free(pid_data->p_array);
+	free(pid_data);
+}
+
 int	evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list	*prompt_list;
@@ -223,7 +230,8 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
 	current = prompt_list->head;
-	shell->pids = create_pid_data(current); //FIX: free nessa porra
+	shell->pids = create_pid_data(current);
 	exec_list(current, shell);
+	free_pid_data(shell->pids);
 	return (TRUE);
 }
