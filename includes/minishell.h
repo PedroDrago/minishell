@@ -59,7 +59,6 @@ int			split_len(char **split);
 char		*get_cwd(void);
 t_env		*make_new_env_node(char *key, char *value);
 int			is_pipe(char *token);
-int			*pipe_output(t_node *current, int *old_yield, t_shell *shell);
 int			is_redirect_output(char *token);
 int			open_file(t_node *current);
 int			execute_command(t_shell *shell, t_node *current);

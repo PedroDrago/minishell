@@ -102,20 +102,17 @@ void	resolve_error(int status, t_node *current)
 void	exec_last(t_node *node, t_shell *shell)
 {
 	int status;
-	int pipe_fd[2];
 
 	status = -1;
 	g_pid = fork();
 	if (g_pid == 0)
 	{
 		execute_command(shell, node);
-		exit(1);
 	}
 	else
 	{
 		waitpid(g_pid, &status, 0);
 	}
-	(void) pipe_fd;
 }
 
 void	pipe_output(t_node *node, t_shell *shell)
@@ -129,14 +126,15 @@ void	pipe_output(t_node *node, t_shell *shell)
 	if (g_pid == 0)
 	{
 		dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
+		// close(pipe_fd[1]);
+		// close(pipe_fd[0]);
 		execute_command(shell, node);
 	}
 	else
 	{
 		dup2(pipe_fd[0], 0);
-		close(pipe_fd[1]);
+		// close(pipe_fd[0]);
+		// close(pipe_fd[1]);
 		waitpid(g_pid, &status, 0);
 	}
 }

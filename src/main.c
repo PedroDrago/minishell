@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int		g_pid;
 
@@ -48,6 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 	prompt = NULL;
 	while (TRUE)
 	{
+		shell->original_stdin = dup(0);
 		g_pid = 0;
 		prompt = get_prompt(shell);
 		add_history(prompt);
@@ -55,6 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		if (!evaluate_prompt(prompt, shell))
 			return (exit_safely(shell), EXIT_FAILURE);
+		dup2(shell->original_stdin, 0);
 	}
 	return (exit_safely(shell), EXIT_SUCCESS);
 }

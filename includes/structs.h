@@ -38,6 +38,7 @@ typedef struct s_shell
 {
 	int				last_status;
 	char			*prompt_string;
+	int			original_stdin;
 	t_env			*env;
 	t_list			*prompt_list;
 
