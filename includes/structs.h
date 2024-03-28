@@ -46,6 +46,13 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_pid_data
+{
+	int	size;
+	int	index;
+	pid_t	*array;
+
+} 	t_pid_data;
 typedef struct s_shell
 {
 	int				last_status;
@@ -53,8 +60,7 @@ typedef struct s_shell
 	int			original_stdin;
 	t_env			*env;
 	t_list			*prompt_list;
-	t_pid_list			*pid_list;
-
+	t_pid_data		*pids;
 }					t_shell;
 
 #endif

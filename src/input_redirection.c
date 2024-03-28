@@ -90,35 +90,34 @@ int	heredoc(t_node *current, t_shell *shell, int fd_out)
 	return (TRUE);
 }
 
-int	redirect_input(t_node *current, t_shell *shell, int fd_out)
+int	open_input_file(t_node *node)
 {
 	int	file;
-	int	pid;
-	int	status;
 
-	if (is_builtin(current->command)) // WARN: No builtin reads from stdin, so redirecting input does nothing | Also, this will segfault if current.next is null
-		return (exec_builtin(current, shell, fd_out), TRUE);
-	file = open(current->next->command, O_RDONLY);
+	if (!node->next || !node->next->command
+		|| !ft_strlen(node->next->command))
+		return (printf("minishell: Syntax error\n"), -1);
+	file = open(node->next->command, O_RDONLY);
 	if (file < 0)
-		return (ft_putstr_fd("No file or no permission\n", fd_out), FALSE); // FIX: error?
-	else
+		return (-1);
+	return (file);
+}
+
+int	redirect_input(t_node *node, t_shell *shell)
+{
+	int	file;
+
+	file = open_input_file(node);
+	if (file < 0)
+		return (FALSE); // FIX: deu merda pra abrir
+	g_pid = fork();
+	if (g_pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			dup2(file, 0);
-			dup2(fd_out, 1);
-			execute_command(shell, current);
-		}
-		else
-		{
-			status = 0;
-			close(file);
-			waitpid(pid, &status, 0);
-			set_exit_status(status, shell);
-			if (status > 0)
-				resolve_error(status, current);
-		}
+		dup2(file, 0);
+		execute_command(shell, node);
+		exit(1);
 	}
-	return (TRUE);
+	else
+		shell->pids->array[shell->pids->index++] = g_pid;
+	return (1);
 }

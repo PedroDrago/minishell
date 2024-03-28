@@ -18,3 +18,25 @@ int	is_pipe(char *token)
 		return (TRUE);
 	return (FALSE);
 }
+
+void	pipe_output(t_node *node, t_shell *shell)
+{
+	int	pipe_fd[2];
+
+	pipe(pipe_fd);
+	g_pid = fork();
+	if (g_pid == 0)
+	{
+		dup2(pipe_fd[1], 1);
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
+		execute_command(shell, node);
+		exit(1);
+	}
+	else
+	{
+		dup2(pipe_fd[0], 0);
+		close(pipe_fd[1]);
+		shell->pids->array[shell->pids->index++] = g_pid;
+	}
+}

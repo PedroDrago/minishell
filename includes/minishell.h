@@ -59,6 +59,7 @@ int			split_len(char **split);
 char		*get_cwd(void);
 t_env		*make_new_env_node(char *key, char *value);
 int			is_pipe(char *token);
+void	pipe_output(t_node *node, t_shell *shell);
 int			is_redirect_output(char *token);
 int			open_file(t_node *current);
 int			execute_command(t_shell *shell, t_node *current);
@@ -79,18 +80,14 @@ void		resolve_quotes(char c, int *in_single_quote, int *in_double_quote);
 int			is_splitable(char *str, int end, int in_single_quotes,
 				int in_double_quotes);
 int			count_split(char *str);
-void		redirect_output(t_node *current, t_shell *shell, int *old_yield);
+void	redirect_output(t_node *current, t_shell *shell);
 void		exit_program(int sig);
 int			count_backslash(char *str, int start, int end);
 void	resolve_error(int status, t_node *current);
 void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current);
 int	is_heredoc(char *token);
 int	is_redirect_input(char *token);
-int	redirect_input(t_node *current, t_shell *shell, int fd_out);
+int	redirect_input(t_node *current, t_shell *shell);
 int	heredoc(t_node *current, t_shell *shell, int fd_out);
 
-
-t_pid_node	*create_pid_node(pid_t pid);
-void	append_pid_node(t_pid_list *list, t_pid_node *node);
-t_pid_list	*create_pid_list(void);
 #endif

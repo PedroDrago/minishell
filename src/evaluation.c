@@ -84,7 +84,6 @@ int	execute_command(t_shell *shell, t_node *current)
 
 void	resolve_error(int status, t_node *current)
 {
-	// printf("Status Received in handler: %i\n", status);
 	if (status == 32512)
 	{
 		ft_putstr_fd(current->command, 2);
@@ -101,46 +100,66 @@ void	resolve_error(int status, t_node *current)
 
 void	exec_last(t_node *node, t_shell *shell)
 {
-	int pipe_fd[2];
-
 	g_pid = fork();
 	if (g_pid == 0)
 	{
 		execute_command(shell, node);
 		exit(1);
 	}
-	else
-	{
-		append_pid_node(shell->pid_list, create_pid_node(g_pid));
-	}
-	(void) pipe_fd;
+	shell->pids->array[shell->pids->index++] = g_pid;
 }
 
-void	pipe_output(t_node *node, t_shell *shell)
-{
-	int	pipe_fd[2];
 
-	pipe(pipe_fd);
-	g_pid = fork();
-	if (g_pid == 0)
+int	count_pids(t_node *node)
+{
+	int	pid_count;
+
+	pid_count = 0;
+	while (node)
 	{
-		dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		execute_command(shell, node);
+		if (!node->token)
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+		}
+		else if (is_pipe(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+		}
+		else if (is_redirect_output(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+			node = node->next;
+		}
+		else if (is_redirect_input(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+			node = node->next;
+		}
+		node = node->next;
 	}
-	else
+	return (pid_count);
+}
+
+void	wait_children(t_shell *shell)
+{
+	int	i;
+	int	status;
+
+	i = 0;
+	while (i < shell->pids->size)
 	{
-		dup2(pipe_fd[0], 0);
-		close(pipe_fd[1]);
-		append_pid_node(shell->pid_list, create_pid_node(g_pid));
+		status = -1;
+		waitpid(shell->pids->array[i++], &status, 0);
 	}
+	set_exit_status(status, shell);
 }
 
 void	exec_list(t_node *node, t_shell *shell)
 {
-	shell->pid_list = create_pid_list();
-
 	while (node)
 	{
 		if (!node->token)
@@ -151,15 +170,41 @@ void	exec_list(t_node *node, t_shell *shell)
 		{
 			pipe_output(node, shell);
 		}
+		else if (is_redirect_output(node->token))
+		{
+			redirect_output(node, shell);
+			node = node->next;
+		}
+		else if (is_redirect_input(node->token))
+		{
+			redirect_input(node, shell);
+			node = node->next;
+		}
+		else if (is_heredoc(node->token))
+		{
+		}
+		if (!node)
+			break ;
 		node = node->next;
 	}
-	t_pid_node *current = shell->pid_list->head;
-	int	status = -1;
-	while (current)
-	{
-		waitpid(current->pid, &status, 0);
-		current = current->next;
-	}
+	wait_children(shell);
+}
+
+t_pid_data *create_pid_data(t_node *current)
+{
+	t_pid_data *pid_data;
+	int	size;
+	
+	pid_data = malloc(sizeof(t_pid_data));
+	if (!pid_data)
+		return (NULL);
+	size = count_pids(current);
+	pid_data->array = malloc(sizeof(int) * size);
+	if (!pid_data->array)
+		return (NULL);
+	pid_data->size = size;
+	pid_data->index = 0;
+	return (pid_data);
 }
 
 int	evaluate_prompt(char *prompt, t_shell *shell)
@@ -172,7 +217,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
 	current = prompt_list->head;
+	shell->pids = create_pid_data(current); //FIX: free nessa porra
 	exec_list(current, shell);
-
 	return (TRUE);
 }

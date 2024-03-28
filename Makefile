@@ -1,6 +1,6 @@
 NAME = minishell
 
-MINISHELL_SRC = src/main.c src/parser.c src/parser_list.c src/evaluation.c src/shell_setting.c src/utils.c src/validations.c src/env.c src/arg_expansion.c src/output_redirection.c src/input_redirection.c src/pipe.c src/pwd.c src/echo.c src/builtins.c src/unset.c src/export.c src/cd.c src/prompt_split.c src/prompt_setup.c src/prompt_split_utils.c src/env_utils.c src/env_split.c src/split_charset.c src/split_join.c src/expansion_edge_cases.c src/pid_list.c
+MINISHELL_SRC = src/main.c src/parser.c src/parser_list.c src/evaluation.c src/shell_setting.c src/utils.c src/validations.c src/env.c src/arg_expansion.c src/output_redirection.c src/input_redirection.c src/pipe.c src/pwd.c src/echo.c src/builtins.c src/unset.c src/export.c src/cd.c src/prompt_split.c src/prompt_setup.c src/prompt_split_utils.c src/env_utils.c src/env_split.c src/split_charset.c src/split_join.c src/expansion_edge_cases.c
 MINISHELL_OBJ = $(MINISHELL_SRC:.c=.o)
 
 LIBFT = libft/libft.a
