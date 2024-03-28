@@ -44,6 +44,13 @@ void	redirect_output(t_node *node, t_shell *shell)
 	file = open_output_file(node);
 	if (file < 0)
 		return ; // FIX: deu merda pra abrir
+	if (is_builtin(node->command))
+	{
+		exec_builtin(node, shell, file);
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
+		return ;
+	}
 	g_pid = fork();
 	if (g_pid == 0)
 	{

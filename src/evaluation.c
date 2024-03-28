@@ -100,6 +100,14 @@ void	resolve_error(int status, char *command)
 
 void	exec_last(t_node *node, t_shell *shell)
 {
+
+	if (is_builtin(node->command))
+	{
+		exec_builtin(node, shell, 1);
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
+		return ;
+	}
 	g_pid = fork();
 	if (g_pid == 0)
 	{
