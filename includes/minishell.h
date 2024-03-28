@@ -89,4 +89,8 @@ int	is_redirect_input(char *token);
 int	redirect_input(t_node *current, t_shell *shell, int fd_out);
 int	heredoc(t_node *current, t_shell *shell, int fd_out);
 
+
+t_pid_node	*create_pid_node(pid_t pid);
+void	append_pid_node(t_pid_list *list, t_pid_node *node);
+t_pid_list	*create_pid_list(void);
 #endif

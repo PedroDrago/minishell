@@ -101,10 +101,8 @@ void	resolve_error(int status, t_node *current)
 
 void	exec_last(t_node *node, t_shell *shell)
 {
-	int status;
 	int pipe_fd[2];
 
-	status = -1;
 	g_pid = fork();
 	if (g_pid == 0)
 	{
@@ -113,17 +111,15 @@ void	exec_last(t_node *node, t_shell *shell)
 	}
 	else
 	{
-		waitpid(g_pid, &status, 0);
+		append_pid_node(shell->pid_list, create_pid_node(g_pid));
 	}
 	(void) pipe_fd;
 }
 
 void	pipe_output(t_node *node, t_shell *shell)
 {
-	int status;
 	int	pipe_fd[2];
 
-	status = -1;
 	pipe(pipe_fd);
 	g_pid = fork();
 	if (g_pid == 0)
@@ -137,12 +133,14 @@ void	pipe_output(t_node *node, t_shell *shell)
 	{
 		dup2(pipe_fd[0], 0);
 		close(pipe_fd[1]);
-		waitpid(g_pid, &status, 0);
+		append_pid_node(shell->pid_list, create_pid_node(g_pid));
 	}
 }
 
 void	exec_list(t_node *node, t_shell *shell)
 {
+	shell->pid_list = create_pid_list();
+
 	while (node)
 	{
 		if (!node->token)
@@ -154,6 +152,13 @@ void	exec_list(t_node *node, t_shell *shell)
 			pipe_output(node, shell);
 		}
 		node = node->next;
+	}
+	t_pid_node *current = shell->pid_list->head;
+	int	status = -1;
+	while (current)
+	{
+		waitpid(current->pid, &status, 0);
+		current = current->next;
 	}
 }
 

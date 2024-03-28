@@ -12,6 +12,18 @@
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+#include <sys/types.h>
+typedef struct s_pid_node
+{
+	pid_t	pid;
+	struct s_pid_node	*next;
+}					t_pid_node;
+
+typedef struct s_pid_list
+{
+	t_pid_node			*head;
+	t_pid_node			*tail;
+}					t_pid_list;
 
 typedef struct s_node
 {
@@ -41,6 +53,7 @@ typedef struct s_shell
 	int			original_stdin;
 	t_env			*env;
 	t_list			*prompt_list;
+	t_pid_list			*pid_list;
 
 }					t_shell;
 
