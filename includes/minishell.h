@@ -83,7 +83,7 @@ int			count_split(char *str);
 void	redirect_output(t_node *current, t_shell *shell);
 void		exit_program(int sig);
 int			count_backslash(char *str, int start, int end);
-void	resolve_error(int status, t_node *current);
+void	resolve_error(int status, char *command);
 void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current);
 int	is_heredoc(char *token);
 int	is_redirect_input(char *token);

@@ -50,7 +50,8 @@ typedef struct s_pid_data
 {
 	int	size;
 	int	index;
-	pid_t	*array;
+	pid_t	*p_array; //NOTE: pid_arrays
+	char	**c_array; // NOTE: Command arrays
 
 } 	t_pid_data;
 typedef struct s_shell

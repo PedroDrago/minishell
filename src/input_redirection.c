@@ -52,43 +52,43 @@ int	read_heredoc(int *file, char *delimiter)
 	return (TRUE);
 }
 
-int	heredoc(t_node *current, t_shell *shell, int fd_out)
-{
-	int	file[2];
-	int	pid;
-	int	status;
-
-
-	pipe(file);
-	if (!current->next || !ft_strlen(current->next->command))
-		return (printf("Minishell: missing delimiter\n"), FALSE);
-	if (!read_heredoc(file, current->next->command))
-		return (TRUE);
-	if (is_builtin(current->command)) // WARN: No builtin reads from stdin, so redirecting input does nothing | Also, this will segfault if current.next is null
-		return (exec_builtin(current, shell, fd_out), close(file[0]), close(file[1]), TRUE);
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			dup2(file[0], 0);
-			dup2(fd_out, 1);
-			close(file[1]);
-			execute_command(shell, current);
-		}
-		else
-		{
-			status = 0;
-			close(file[1]);
-			close(file[0]);
-			waitpid(pid, &status, 0);
-			set_exit_status(status, shell);
-			if (status > 0)
-				resolve_error(status, current);
-		}
-	}
-	return (TRUE);
-}
+// int	heredoc(t_node *current, t_shell *shell, int fd_out)
+// {
+	// int	file[2];
+	// int	pid;
+	// int	status;
+	//
+	//
+	// pipe(file);
+	// if (!current->next || !ft_strlen(current->next->command))
+	// 	return (printf("Minishell: missing delimiter\n"), FALSE);
+	// if (!read_heredoc(file, current->next->command))
+	// 	return (TRUE);
+	// if (is_builtin(current->command)) // WARN: No builtin reads from stdin, so redirecting input does nothing | Also, this will segfault if current.next is null
+	// 	return (exec_builtin(current, shell, fd_out), close(file[0]), close(file[1]), TRUE);
+	// else
+	// {
+	// 	pid = fork();
+	// 	if (pid == 0)
+	// 	{
+	// 		dup2(file[0], 0);
+	// 		dup2(fd_out, 1);
+	// 		close(file[1]);
+	// 		execute_command(shell, current);
+	// 	}
+	// 	else
+	// 	{
+	// 		status = 0;
+	// 		close(file[1]);
+	// 		close(file[0]);
+	// 		waitpid(pid, &status, 0);
+	// 		set_exit_status(status, shell);
+	// 		if (status > 0)
+	// 			resolve_error(status, current);
+	// 	}
+	// }
+// 	return (TRUE);
+// }
 
 int	open_input_file(t_node *node)
 {
@@ -118,6 +118,9 @@ int	redirect_input(t_node *node, t_shell *shell)
 		exit(1);
 	}
 	else
-		shell->pids->array[shell->pids->index++] = g_pid;
+	{
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
+	}
 	return (1);
 }

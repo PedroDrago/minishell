@@ -82,17 +82,17 @@ int	execute_command(t_shell *shell, t_node *current)
 	exit(1);
 }
 
-void	resolve_error(int status, t_node *current)
+void	resolve_error(int status, char *command)
 {
 	if (status == 32512)
 	{
-		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Command not found\n", 2);
 	}
 	else if (status == 32256)
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
 
@@ -106,7 +106,8 @@ void	exec_last(t_node *node, t_shell *shell)
 		execute_command(shell, node);
 		exit(1);
 	}
-	shell->pids->array[shell->pids->index++] = g_pid;
+	shell->pids->p_array[shell->pids->index] = g_pid;
+	shell->pids->c_array[shell->pids->index++] = node->command;
 }
 
 
@@ -153,7 +154,11 @@ void	wait_children(t_shell *shell)
 	while (i < shell->pids->size)
 	{
 		status = -1;
-		waitpid(shell->pids->array[i++], &status, 0);
+		waitpid(shell->pids->p_array[i], &status, 0);
+		set_exit_status(status, shell);
+		if (status > 0)
+			resolve_error(status, shell->pids->c_array[i]);
+		i++;
 	}
 	set_exit_status(status, shell);
 }
@@ -199,8 +204,9 @@ t_pid_data *create_pid_data(t_node *current)
 	if (!pid_data)
 		return (NULL);
 	size = count_pids(current);
-	pid_data->array = malloc(sizeof(int) * size);
-	if (!pid_data->array)
+	pid_data->p_array = malloc(sizeof(int) * size);
+	pid_data->c_array = malloc(sizeof(char *) * size);
+	if (!pid_data->p_array || !pid_data->c_array)
 		return (NULL);
 	pid_data->size = size;
 	pid_data->index = 0;

@@ -52,5 +52,8 @@ void	redirect_output(t_node *node, t_shell *shell)
 		exit(1);
 	}
 	else
-		shell->pids->array[shell->pids->index++] = g_pid;
+	{
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
+	}
 }
