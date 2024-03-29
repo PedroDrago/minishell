@@ -19,50 +19,32 @@ int	is_pipe(char *token)
 	return (FALSE);
 }
 
-void	execute_pipe(t_node *current, t_shell *shell,
-			int *old_yield, int *new_yield)
+void	pipe_output(t_node *node, t_shell *shell)
 {
-	dup2(old_yield[0], 0);
-	dup2(new_yield[1], 1);
-	close(old_yield[1]);
-	// close(old_yield[0]); WARN: No difference?
-	// close(new_yield[1]); WARN: No difference?
-	// close(new_yield[0]); WARN: No difference?
-	execute_command(shell, current);
-}
+	int	pipe_fd[2];
 
-void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current)
-{
-	int	status;
-
-	status = 0;
-	// close(old_yield[0]); WARN: No difference?
-	close(old_yield[1]);
-	waitpid(pid, &status, 0);
-	set_exit_status(status, shell);
-	if (status > 0)
-		resolve_error(status, current);
-}
-
-int	*pipe_output(t_node *current, int *old_yield, t_shell *shell)
-{
-	int	pid;
-	int	*new_yield;
-
-	new_yield = (int *)malloc(sizeof(int) * 2);
-	if (!new_yield)
-		return (NULL);
-	if (pipe(new_yield) < 0)
-		return (free(new_yield), NULL);
-	if (is_builtin(current->command))
-		exec_builtin(current, shell, new_yield[1]);
+	pipe(pipe_fd);
+	if (is_builtin(node->command))
+	{
+		exec_builtin(node, shell, pipe_fd[1]);
+		dup2(pipe_fd[0], 0);
+		close(pipe_fd[1]);
+		return ;
+	}
+	g_pid = fork();
+	if (g_pid == 0)
+	{
+		dup2(pipe_fd[1], 1);
+		close(pipe_fd[1]);
+		close(pipe_fd[0]);
+		execute_command(shell, node);
+		exit(1);
+	}
 	else
 	{
-		pid = fork();
-		if (pid == 0)
-			execute_pipe(current, shell, old_yield, new_yield);
-		else
-			wait_for_child(old_yield, pid, shell, current);
+		dup2(pipe_fd[0], 0);
+		close(pipe_fd[1]);
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
 	}
-	return (free(old_yield), new_yield);
 }

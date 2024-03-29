@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/history.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 
@@ -81,119 +83,147 @@ int	execute_command(t_shell *shell, t_node *current)
 	exit(1);
 }
 
-void	exec_last(t_node *current, t_shell *shell, int *yield)
+void	resolve_error(int status, char *command)
 {
-	int	pid;
-
-	if (is_builtin(current->command))
-		exec_builtin(current, shell, 1);
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			dup2(yield[0], 0);
-			close(yield[0]);
-			close(yield[1]);
-			execute_command(shell, current);
-		}
-		else
-			wait_for_child(yield, pid, shell, current);
-	}
-	return ;
-}
-
-int	evaluate_pipeline(t_node *current, t_shell *shell)
-{
-	int	*yield;
-
-	yield = (int *)malloc(sizeof(int) * 2);
-	if (!yield)
-		return (FALSE);
-	if (pipe(yield) < 0)
-		return (free(yield), FALSE);
-	if (!current->next)
-		return (printf("Sem nada deps de operador\n"), TRUE);
-	while (current)
-	{
-		if (!current->token || is_pipe(current->token))
-			yield = pipe_output(current, yield, shell);
-		else if (is_redirect_output(current->token))
-		{
-			redirect_output(current, shell, yield);
-			current = current->next;
-		}
-		else if (is_redirect_input(current->token))
-		{
-			if (!current->next->token)
-			{
-				redirect_input(current, shell, 1);
-				current = NULL;
-				break ;
-			}
-			redirect_input(current, shell, yield[1]);
-			current = current->next;
-		}
-		else if (is_heredoc(current->token))
-		{
-			if (!current->next->token)
-			{
-				heredoc(current, shell, 1);
-				current = NULL;
-				break ;
-			}
-			heredoc(current, shell, yield[1]);
-			current = current->next;
-			
-		}
-		if (!current->next)
-		{
-			exec_last(current, shell, yield);
-			break ;
-		}
-		current = current->next;
-	}
-	close(yield[1]);
-	close(yield[0]);
-	free(yield);
-	return (TRUE);
-}
-
-void	resolve_error(int status, t_node *current)
-{
-	// printf("Status Received in handler: %i\n", status);
 	if (status == 32512)
 	{
-		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Command not found\n", 2);
 	}
 	else if (status == 32256)
 	{
 		ft_putstr_fd("Minishell: ", 2);
-		ft_putstr_fd(current->command, 2);
+		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
 	}
 
 }
 
-void	evaluate_solo(t_node *current, t_shell *shell)
+void	exec_last(t_node *node, t_shell *shell)
 {
-	int	pid;
+
+	if (is_builtin(node->command))
+	{
+		exec_builtin(node, shell, 1);
+		return ;
+	}
+	g_pid = fork();
+	if (g_pid == 0)
+	{
+		execute_command(shell, node);
+		exit(1);
+	}
+	shell->pids->p_array[shell->pids->index] = g_pid;
+	shell->pids->c_array[shell->pids->index++] = node->command;
+}
+
+
+int	count_pids(t_node *node)
+{
+	int	pid_count;
+
+	pid_count = 0;
+	while (node)
+	{
+		if (!node->token)
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+		}
+		else if (is_pipe(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+		}
+		else if (is_redirect_output(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+			node = node->next;
+		}
+		else if (is_redirect_input(node->token))
+		{
+			if (!is_builtin(node->command))
+				pid_count++;
+			node = node->next;
+		}
+		node = node->next;
+	}
+	return (pid_count);
+}
+
+void	wait_children(t_shell *shell)
+{
+	int	i;
 	int	status;
 
-	if (is_builtin(current->command))
-		exec_builtin(current, shell, 1);
-	else
+	i = 0;
+	status = 0;
+	while (i < shell->pids->size)
 	{
-		pid = fork();
-		g_pid = pid;
-		if (pid == 0)
-			execute_command(shell, current);
-		waitpid(pid, &status, 0);
+		status = -1;
+		waitpid(shell->pids->p_array[i], &status, 0);
 		set_exit_status(status, shell);
-		if (status > 0 && WTERMSIG(status) != SIGINT)
-			resolve_error(status, current);
+		if (status > 0)
+			resolve_error(status, shell->pids->c_array[i]);
+		i++;
 	}
+	set_exit_status(status, shell);
+}
+
+void	exec_list(t_node *node, t_shell *shell) // NOTE: Para colocar na norma vamos ter que dividir em varias subfuncoes
+{                                               //is pipe_or_single e is_any_redirection, e dentro de cada uma dessas varios ifs pra cada cenario
+	while (node)
+	{
+		if (!node->token)
+			exec_last(node, shell);
+		else if (is_pipe(node->token))
+			pipe_output(node, shell);
+		else if (is_redirect_output(node->token))
+		{
+			redirect_output(node, shell);
+			node = node->next;
+		}
+		else if (is_redirect_input(node->token))
+		{
+			redirect_input(node, shell); // WARN: So funciona se for a ultima parte da pipeline
+			node = node->next;
+		}
+		// else if (is_heredoc(node->token))
+		// {
+		// 	heredoc(node, shell, 1); // WARN: N ta implementado ainda
+		// 	node = node->next;
+		// }
+		if (!node)
+			break ;
+		node = node->next;
+	}
+	wait_children(shell);
+}
+
+t_pid_data *create_pid_data(t_node *current)
+{
+	t_pid_data *pid_data;
+	int	size;
+	
+	pid_data = malloc(sizeof(t_pid_data));
+	if (!pid_data)
+		return (NULL);
+	size = count_pids(current);
+	pid_data->p_array = malloc(sizeof(int) * size);
+	pid_data->c_array = malloc(sizeof(char *) * size);
+	if (!pid_data->p_array || !pid_data->c_array)
+		return (NULL);
+	pid_data->size = size;
+	pid_data->index = 0;
+	return (pid_data);
+}
+
+void	free_pid_data(t_pid_data *pid_data)
+{
+	free(pid_data->c_array);
+	free(pid_data->p_array);
+	free(pid_data);
 }
 
 int	evaluate_prompt(char *prompt, t_shell *shell)
@@ -206,11 +236,8 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
 	current = prompt_list->head;
-	if (!current->token)
-		evaluate_solo(current, shell);
-	else if (!evaluate_pipeline(current, shell))
-		return (free_list(prompt_list), FALSE);
-	free_list(prompt_list);
-	shell->prompt_list = NULL;
+	shell->pids = create_pid_data(current);
+	exec_list(current, shell);
+	free_pid_data(shell->pids);
 	return (TRUE);
 }

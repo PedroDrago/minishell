@@ -7,3 +7,5 @@
 - [ ] Testar mais a fundo heredoc e input redirection
 - [ ] Remove unused headers
 - [ ] Norm
+- [ ] Não pode terminar com tokens (exceto pipe | )
+- [ ] Não pode ter dois tokens seguidos

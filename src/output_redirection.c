@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
+#include <unistd.h>
 
 int	is_redirect_output(char *token)
 {
@@ -19,58 +21,44 @@ int	is_redirect_output(char *token)
 	return (FALSE);
 }
 
-void	execute_redirection(t_node *current, t_shell *shell, int *old_yield,
-		int file)
-{
-	dup2(old_yield[0], 0);
-	dup2(file, 1);
-	close(old_yield[0]);
-	close(old_yield[1]);
-	close(file);
-	execute_command(shell, current);
-}
-
-int	open_file(t_node *current)
+int	open_output_file(t_node *node)
 {
 	int	file;
 
-	if (!current->next || !current->next->command
-		|| !ft_strlen(current->next->command))
-		return (printf("minishell: Syntax error\n"), FALSE);
-	if (!ft_strncmp(current->token, ">", 2))
-		file = open(current->next->command, O_RDWR | O_TRUNC | O_CREAT, 0664);
+	if (!node->next || !node->next->command
+		|| !ft_strlen(node->next->command))
+		return (printf("minishell: Syntax error\n"), -1);
+	if (!ft_strncmp(node->token, ">", 2))
+		file = open(node->next->command, O_RDWR | O_TRUNC | O_CREAT, 0664);
 	else
-		file = open(current->next->command, O_RDWR | O_APPEND | O_CREAT, 0664);
+		file = open(node->next->command, O_RDWR | O_APPEND | O_CREAT, 0664);
 	if (file < 0)
 		return (-1);
 	return (file);
 }
 
-void	redirect_output(t_node *current, t_shell *shell, int *old_yield)
+void	redirect_output(t_node *node, t_shell *shell)
 {
 	int	file;
-	int	pid;
-	int	status;
 
-	file = open_file(current);
+	file = open_output_file(node);
 	if (file < 0)
+		return ; // FIX: deu merda pra abrir
+	if (is_builtin(node->command))
+	{
+		exec_builtin(node, shell, file);
 		return ;
-	if (is_builtin(current->command))
-		exec_builtin(current, shell, file);
+	}
+	g_pid = fork();
+	if (g_pid == 0)
+	{
+		dup2(file, 1);
+		execute_command(shell, node);
+		exit(1);
+	}
 	else
 	{
-		pid = fork();
-		if (pid == 0)
-			execute_redirection(current, shell, old_yield, file);
-		else
-		{
-			close(old_yield[0]);
-			close(old_yield[1]);
-			close(file);
-			waitpid(pid, &status, 0);
-			set_exit_status(status, shell);
-			if (status > 0 && WTERMSIG(status) != SIGINT)
-				printf("%s: command not found(output_redirection.c)\n", current->command);
-		}
+		shell->pids->p_array[shell->pids->index] = g_pid;
+		shell->pids->c_array[shell->pids->index++] = node->command;
 	}
 }

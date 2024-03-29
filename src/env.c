@@ -108,7 +108,8 @@ t_env	*load_envs(char *envp[])
 	}
 	if (!set_env_value(env, ft_strdup("?"), ft_strdup("0")))
 		return (NULL);
-	if (!set_env_value(env, ft_strdup("OLDPWD"), NULL))
+	if (!get_env_node(env, "OLDPWD"))
+	    if (!set_env_value(env, ft_strdup("OLDPWD"), NULL))
 		return (NULL);
 	return (env);
 }

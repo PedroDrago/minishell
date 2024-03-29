@@ -35,6 +35,7 @@ void	exec_builtin(t_node *node, t_shell *shell, int fd_out)
 {
 	int	status;
 
+	status = 0;
 	if (!ft_strncmp(node->command, "echo", 5))
 		status = echo(split_len(node->args), node->args, fd_out);
 	else if (!ft_strncmp(node->command, "cd", 3))
