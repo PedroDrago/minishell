@@ -105,8 +105,6 @@ void	exec_last(t_node *node, t_shell *shell)
 	if (is_builtin(node->command))
 	{
 		exec_builtin(node, shell, 1);
-		shell->pids->p_array[shell->pids->index] = g_pid;
-		shell->pids->c_array[shell->pids->index++] = node->command;
 		return ;
 	}
 	g_pid = fork();
@@ -160,6 +158,7 @@ void	wait_children(t_shell *shell)
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < shell->pids->size)
 	{
 		status = -1;
@@ -190,11 +189,11 @@ void	exec_list(t_node *node, t_shell *shell) // NOTE: Para colocar na norma vamo
 			redirect_input(node, shell); // WARN: So funciona se for a ultima parte da pipeline
 			node = node->next;
 		}
-		else if (is_heredoc(node->token))
-		{
-			heredoc(node, shell, 1); // WARN: N ta implementado ainda
-			node = node->next;
-		}
+		// else if (is_heredoc(node->token))
+		// {
+		// 	heredoc(node, shell, 1); // WARN: N ta implementado ainda
+		// 	node = node->next;
+		// }
 		if (!node)
 			break ;
 		node = node->next;

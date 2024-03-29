@@ -47,8 +47,6 @@ void	redirect_output(t_node *node, t_shell *shell)
 	if (is_builtin(node->command))
 	{
 		exec_builtin(node, shell, file);
-		shell->pids->p_array[shell->pids->index] = g_pid;
-		shell->pids->c_array[shell->pids->index++] = node->command;
 		return ;
 	}
 	g_pid = fork();

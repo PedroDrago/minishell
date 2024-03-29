@@ -29,8 +29,6 @@ void	pipe_output(t_node *node, t_shell *shell)
 		exec_builtin(node, shell, pipe_fd[1]);
 		dup2(pipe_fd[0], 0);
 		close(pipe_fd[1]);
-		shell->pids->p_array[shell->pids->index] = g_pid;
-		shell->pids->c_array[shell->pids->index++] = node->command;
 		return ;
 	}
 	g_pid = fork();
