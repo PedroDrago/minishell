@@ -13,9 +13,7 @@ char	**get_args(char **splited_command)
 	{
 		count++;
 		i++;
-		if (!splited_command[i] || is_pipe(splited_command[i]))
-			break ;
-		while (splited_command[i] && is_token(splited_command[i]))
+		while (splited_command[i] && is_token(splited_command[i]) && !is_pipe(splited_command[i]))
 			i += 2;
 	}
 	args = malloc(sizeof(char *) * (count + 1));
@@ -26,9 +24,7 @@ char	**get_args(char **splited_command)
 	while(splited_command[i] && !is_pipe(splited_command[i]))
 	{
 		args[j++] = splited_command[i++];
-		if (!splited_command[i] || is_pipe(splited_command[i]))
-			break ;
-		while (splited_command[i] && is_token(splited_command[i]))
+		while (splited_command[i] && is_token(splited_command[i]) && !is_pipe(splited_command[i]))
 			i += 2;
 	}
 	args[j] = NULL;
