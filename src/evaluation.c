@@ -184,10 +184,15 @@ int	do_heredoc(char *delimiter, int original_fd)
 void	redirect_input(char *file)
 {
 	int	fd;
+	struct stat file_info;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		exit (127);
+	{
+		if (stat(file, &file_info) < 0)
+			exit (157);
+		exit(156);
+	}
 	dup2(fd, 0);
 }
 
@@ -386,16 +391,25 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 }
 void	resolve_error(int status, char *command)
 {
-	if (status == 32512)
+	printf("Status code received: %i\n", status);
+	if (status == 32512) // command not found (127);
 	{
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Command not found\n", 2);
 	}
-	else if (status == 32256)
+	else if (status == 32256) // no permission (126);
 	{
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
+	}
+	else if (status == 40192)
+	{
+		ft_putstr_fd("Minishell: Redirected file not found\n", 2);
+	}
+	else if (status == 39936)
+	{
+		ft_putstr_fd("Minishell: Permission for redirected file denied\n", 2);
 	}
 
 }
