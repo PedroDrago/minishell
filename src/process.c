@@ -61,6 +61,19 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	return (TRUE);
 }
 
+void	free_process_data(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while(i < shell->processes_data.size)
+	{
+		free(shell->processes_data.processes[i]->command);
+		free(shell->processes_data.processes[i]);
+		i++;
+	}
+	free(shell->processes_data.processes);
+}
 void	init_processes_data(t_list *list, t_shell *shell)
 {
 	int	i;

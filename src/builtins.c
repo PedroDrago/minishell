@@ -86,7 +86,7 @@ void	post_builtin(t_node *node, t_shell *shell, char **args, int status)
 		close(node->node_pipe[0]);
 	dup2(shell->original_stdin, 0);
 	dup2(shell->original_stdout, 1);
-	(void) args;
+	free(args);
 }
 
 void	execute_builtin(t_node *node, t_shell *shell)

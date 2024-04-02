@@ -127,6 +127,7 @@ void	prep_process(t_node *node, char ***args, t_shell *shell);
 void	post_process(pid_t pid, t_node *node, t_shell *shell);
 int	execute_node(t_node *node, t_list *list, t_shell *shell);
 void	init_processes_data(t_list *list, t_shell *shell);
+void	free_process_data(t_shell *shell);
 //prompt_setup.c
 char	*get_env_node_value(t_env *env, char *key);
 char	*get_prompt_user(char *str, t_shell *shell);

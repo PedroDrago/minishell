@@ -32,7 +32,8 @@ int	validate_list(t_list *list)
 			return (ft_putstr_fd("Minishell: Syntax error [void pipe]\n", 2), FALSE);
 		splited_command = command_split(tmp->basic_command);
 		if (!validate_splited_command(splited_command))
-			return (FALSE);
+			return ( free_split(splited_command), FALSE);
+		free_split(splited_command);
 		tmp = tmp->next;
 	}
 	return (TRUE);

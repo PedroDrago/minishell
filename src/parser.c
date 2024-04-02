@@ -78,5 +78,6 @@ t_list *parse_prompt(char *prompt)
 		i++;
 		append_node(prompt_list, node);
 	}
+	free(command_tab);
 	return (prompt_list);
 }

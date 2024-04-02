@@ -94,5 +94,6 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
+	free_process_data(shell);
 	return (TRUE);
 }
