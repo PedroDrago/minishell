@@ -30,4 +30,3 @@ char	**get_args(char **splited_command)
 	args[j] = NULL;
 	return (args);
 }
-
