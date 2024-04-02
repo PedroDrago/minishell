@@ -185,7 +185,6 @@ int	perform_redirections(char **splited_command)
 {
 	int	i;
 	int	tmp_fd;
-	struct stat	file_info; 
 	int		original_fd;
 
 	i = 0;
@@ -195,9 +194,9 @@ int	perform_redirections(char **splited_command)
 		if(is_redirect_input(splited_command[i]))
 		{
 			i++;
-			if (!can_open_file(stat(splited_command[i], &file_info), &file_info))
-				exit (127);
 			tmp_fd = open(splited_command[i], O_RDONLY);
+			if (tmp_fd < 0)
+				exit (127);
 			dup2(tmp_fd, 0);
 		}
 		else if(is_redirect_output(splited_command[i]))
@@ -205,16 +204,16 @@ int	perform_redirections(char **splited_command)
 			if (is_append(splited_command[i]))
 			{
 				i++;
-				if (!can_open_file(stat(splited_command[i], &file_info), &file_info))
-					exit (127);
 				tmp_fd= open(splited_command[i], O_RDWR | O_APPEND | O_CREAT, 0664);
+				if (tmp_fd < 0)
+					exit (127);
 			}
 			else
 			{
 				i++;
-				if (!can_open_file(stat(splited_command[i], &file_info), &file_info))
-					exit (127);
 				tmp_fd= open(splited_command[i], O_RDWR | O_TRUNC | O_CREAT, 0664);
+				if (tmp_fd < 0)
+					exit (127);
 			}
 			dup2(tmp_fd, 1);
 		}
@@ -228,6 +227,51 @@ int	perform_redirections(char **splited_command)
 	return (TRUE);
 }
 
+int	perform_builtin_redirections(char **splited_command)
+{
+	int	i;
+	int	tmp_fd;
+	int		original_fd;
+
+	i = 0;
+	original_fd = dup(0);
+	while(splited_command[i])
+	{
+		if(is_redirect_input(splited_command[i]))
+		{
+			i++;
+			tmp_fd = open(splited_command[i], O_RDONLY);
+			if (tmp_fd < 0)
+				return (127);
+			dup2(tmp_fd, 0);
+		}
+		else if(is_redirect_output(splited_command[i]))
+		{
+			if (is_append(splited_command[i]))
+			{
+				i++;
+				tmp_fd= open(splited_command[i], O_RDWR | O_APPEND | O_CREAT, 0664);
+				if (tmp_fd < 0)
+					return (127);
+			}
+			else
+			{
+				i++;
+				tmp_fd= open(splited_command[i], O_RDWR | O_TRUNC | O_CREAT, 0664);
+				if (tmp_fd < 0)
+					return (127);
+			}
+			dup2(tmp_fd, 1);
+		}
+		else if(is_heredoc(splited_command[i]))
+		{
+			i++;
+			tmp_fd = do_heredoc(splited_command[i], original_fd);
+		}
+		i++;
+	}
+	return (TRUE);
+}
 char	**get_args(char **splited_command)
 {
 	char	**args;

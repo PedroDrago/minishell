@@ -91,6 +91,7 @@ int	heredoc(t_node *current, t_shell *shell, int fd_out);
 char	**get_args(char **splited_command);
 int	perform_redirections(char **splited_command);
 int	echo(char *argv[]);
+int	perform_builtin_redirections(char **splited_command);
 
 char	**prompt_split(char *str);
 #endif

@@ -43,7 +43,7 @@ void	execute_builtin(t_node *node, t_shell *shell)
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
 	// WARN: EXPAND_ENVS()
-	perform_redirections(node->splited_command);
+	perform_builtin_redirections(node->splited_command);
 	if (!ft_strncmp(node->splited_command[0], "echo", 5))
 		echo(args);
 	else if (!ft_strncmp(node->splited_command[0], "cd", 3))
