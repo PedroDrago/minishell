@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 int	is_builtin(char *command)
 {
@@ -39,10 +40,10 @@ void	resolve_builtin_error(int status)
 	else if (status == 157)
 		ft_putstr_fd("Minishell: Redirected file not found\n", 2);
 }
-int	prep_builtin(t_node *node, char ***args) //NOTE: Yeah bitch, char pointer pointer pointer
+int	prep_builtin(t_node *node, char ***args, t_shell *shell) //NOTE: Yeah bitch, char pointer pointer pointer
 {
 	int	status;
-	// WARN: EXPAND_ENVS()
+	expand_arguments(node, shell);
 	*args = get_args(node->splited_command);
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);
@@ -62,13 +63,16 @@ void	post_builtin(t_node *node, t_shell *shell, char **args, int status)
 	if (node->prev && node->prev->has_pipe)
 		close(node->node_pipe[0]);
 	free_split(args);
+	dup2(shell->original_stdin, 0);
+	dup2(shell->original_stdout, 1);
 }
+
 void	execute_builtin(t_node *node, t_shell *shell)
 {
 	char	**args;
 	int	status;
 
-	status = prep_builtin(node, &args);
+	status = prep_builtin(node, &args, shell);
 	if (status)
 	{
 		post_builtin(node, shell, args, status);

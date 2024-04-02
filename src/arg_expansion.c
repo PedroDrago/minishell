@@ -90,14 +90,14 @@ void	expand_node_arguments(t_node *current, t_shell *shell)
 	}
 }
 
-void	expand_arguments(t_list *list, t_shell *shell)
-{
-	t_node	*current;
-
-	current = list->head;
-	while (current)
-	{
-		expand_node_arguments(current, shell);
-		current = current->next;
-	}
-}
+// void	expand_arguments(t_list *list, t_shell *shell)
+// {
+// 	t_node	*current;
+//
+// 	current = list->head;
+// 	while (current)
+// 	{
+// 		expand_node_arguments(current, shell);
+// 		current = current->next;
+// 	}
+// }

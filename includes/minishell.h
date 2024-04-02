@@ -33,7 +33,8 @@
 
 extern int	g_pid;
 
-void		expand_arguments(t_list *list, t_shell *shell);
+char	**expand_split(char **splited, t_shell *shell);
+void	expand_arguments(t_node *node, t_shell *shell);
 char		*split_join(char **splited);
 int			is_valid_arg_char(char c);
 char		**ft_split_charset_mod(char *str, char *charset);

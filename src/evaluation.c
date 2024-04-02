@@ -367,21 +367,35 @@ void	append_process(pid_t pid, t_shell *shell, char *basic_command)
 	shell->processes_data.processes[shell->processes_data.index++] = process;
 }
 
-void	prep_process(t_node *node, char ***args)
+void	expand_arguments(t_node *node, t_shell *shell)
 {
-		if (!node->splited_command)
-			exit(1);
-		// WARN: EXPAND_ENVS()
-		*args = get_args(node->splited_command);
-		if (node->has_pipe)
-		{
-			dup2(node->node_pipe[1], 1);
-		}
-		if (node->prev && node->prev->has_pipe)
-		{
-			dup2(node->node_pipe[0], 0);
-		}
-		perform_redirections(node->splited_command);
+	int		i;
+	char	**splited;
+
+	i = 0;
+	while (node->splited_command[i])
+	{
+		splited = expand_split(ft_split_charset_mod(node->splited_command[i], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
+		if (!splited)
+			return ;
+		free(node->splited_command[i]);
+		node->splited_command[i] = split_join(splited);
+		free_split(splited);
+		i++;
+	}
+}
+
+void	prep_process(t_node *node, char ***args, t_shell *shell)
+{
+	if (!node->splited_command)
+		exit(1);
+	expand_arguments(node, shell);
+	*args = get_args(node->splited_command);
+	if (node->has_pipe)
+		dup2(node->node_pipe[1], 1);
+	if (node->prev && node->prev->has_pipe)
+		dup2(node->node_pipe[0], 0);
+	perform_redirections(node->splited_command);
 }
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell)
@@ -406,7 +420,7 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
-		prep_process(node, &args);
+		prep_process(node, &args, shell);
 		execute_command(shell, node->splited_command[0], args);
 	}
 	else
