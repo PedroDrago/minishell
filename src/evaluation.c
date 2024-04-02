@@ -430,3 +430,11 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	exec_list(prompt_list, shell);
 	return (TRUE);
 }
+
+/*
+* TODO:
+* - [ ] update free_split to new list.
+* - [ ] make basic_command split before forking, maybe on the node creatin already.
+* - [ ] Execute builtins before fork() (basically the same logic but without forking)
+* - [ ] Remove deprecated fields in node, and update whole project
+* */
