@@ -70,34 +70,3 @@ char	**expand_split(char **splited, t_shell *shell)
 	}
 	return (splited);
 }
-
-void	expand_node_arguments(t_node *current, t_shell *shell)
-{
-	int		i;
-	char	**splited;
-
-	i = 0;
-	while (current->args[i])
-	{
-		splited = expand_split(ft_split_charset_mod(current->args[i],
-					"$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
-		if (!splited)
-			return ;
-		free(current->args[i]);
-		current->args[i] = split_join(splited);
-		free_split(splited);
-		i++;
-	}
-}
-
-// void	expand_arguments(t_list *list, t_shell *shell)
-// {
-// 	t_node	*current;
-//
-// 	current = list->head;
-// 	while (current)
-// 	{
-// 		expand_node_arguments(current, shell);
-// 		current = current->next;
-// 	}
-// }

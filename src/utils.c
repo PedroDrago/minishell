@@ -54,15 +54,11 @@ void	free_list(t_list *list)
 
 	while (list->head)
 	{
-		if (list->head->command)
-			free(list->head->command);
-		if (list->head->token)
-			free(list->head->token);
-		if (list->head->args)
-			free_split(list->head->args);
-		tmp = list->head;
-		list->head = list->head->next;
-		free(tmp);
+		free(list->head->basic_command);
+		free_split(list->head->splited_command);
+		tmp = list->head->next;
+		free(list->head);
+		list->head = tmp;
 	}
 	free(list);
 }

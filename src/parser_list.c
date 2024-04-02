@@ -19,9 +19,6 @@ t_node	*create_node(void)
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
-	node->command = NULL;
-	node->args = NULL;
-	node->token = NULL;
 	node->next = NULL;
 	node->prev = NULL;
 	node->has_pipe = FALSE;

@@ -36,9 +36,6 @@ typedef struct s_node
 {
 	char			*basic_command;
 	char			**splited_command;
-	char			*command; // WARN: Deprecated
-	char			**args; // WARN: Deprecated 
-	char			*token; // WARN: Deprecated
 	int			has_pipe;
 	int			node_pipe[2];
 	struct s_node	*next;

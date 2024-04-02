@@ -556,14 +556,6 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);
+	free_list(prompt_list);
 	return (TRUE);
 }
-
-/*
-* TODO:
-* - [ ] update free_split to new list.
-* - [ ] make basic_command split before forking, maybe on the node creatin already.
-* - [ ] Execute builtins before fork() (basically the same logic but without forking)
-* - [ ] Remove deprecated fields in node, and update whole project
-* - [ ] Advanced logic on `open()` using `stat()` to identify if the file does not exists or if there is no permission for the file. Current errors are weird. (grep a < test.txt) grep not found
-* */
