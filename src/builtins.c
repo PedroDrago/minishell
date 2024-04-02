@@ -13,6 +13,36 @@
 #include "../includes/minishell.h"
 #include <stdio.h>
 
+int	perform_builtin_redirections(char **splited_command)
+{
+	int	i;
+	int	status;
+	int		original_fd;
+
+	i = 0;
+	original_fd = dup(0);
+	status = 0;
+	while(splited_command[i])
+	{
+		if(is_redirect_input(splited_command[i]))
+		{
+			status = redirect_input_builtin(splited_command[++i]);
+			if (status)
+				return (status);
+		}
+		else if(is_redirect_output(splited_command[i]))
+		{
+			status = redirect_output_builtin(splited_command[++i]);
+			if (status)
+				return (status);
+		}
+		else if(is_heredoc(splited_command[i]))
+			do_heredoc(splited_command[++i], original_fd);
+		i++;
+	}
+	return (status);
+}
+
 int	is_builtin(char *command)
 {
 	if (!ft_strncmp(command, "echo", 5))
@@ -32,14 +62,6 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-
-void	resolve_builtin_error(int status)
-{
-	if (status == 156)
-		ft_putstr_fd("Minishell: Permission for redirected file denied\n", 2);
-	else if (status == 157)
-		ft_putstr_fd("Minishell: Redirected file not found\n", 2);
-}
 int	prep_builtin(t_node *node, char ***args, t_shell *shell) //NOTE: Yeah bitch, char pointer pointer pointer
 {
 	int	status;

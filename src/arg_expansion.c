@@ -70,3 +70,21 @@ char	**expand_split(char **splited, t_shell *shell)
 	}
 	return (splited);
 }
+
+void	expand_arguments(t_node *node, t_shell *shell)
+{
+	int		i;
+	char	**splited;
+
+	i = 0;
+	while (node->splited_command[i])
+	{
+		splited = expand_split(ft_split_charset_mod(node->splited_command[i], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
+		if (!splited)
+			return ;
+		free(node->splited_command[i]);
+		node->splited_command[i] = split_join(splited);
+		free_split(splited);
+		i++;
+	}
+}

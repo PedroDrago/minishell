@@ -16,24 +16,6 @@
 
 int		g_pid;
 
-void	exit_program(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_pid == 0)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void	exit_safely(t_shell *shell)
-{
-	(void) shell;
-	exit(1);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;

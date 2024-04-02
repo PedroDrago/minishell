@@ -30,70 +30,143 @@
 # include <termios.h>
 # include <unistd.h>
 
+//arg_expansion.c
+void	resolve_quotes(char c, int *in_single_quote, int *in_double_quote);
+char	*get_expanded_arg(char *arg, t_shell *shell);
+char	**expand_split(char **splited, t_shell *shell);
+void	expand_arguments(t_node *node, t_shell *shell);
+//builtins.c
+int	perform_builtin_redirections(char **splited_command);
+int	is_builtin(char *command);
+int	prep_builtin(t_node *node, char ***args, t_shell *shell);
+void	post_builtin(t_node *node, t_shell *shell, char **args, int status);
+void	execute_builtin(t_node *node, t_shell *shell);
+//cd.c
+int	cd(char *argv[], t_shell *shell);
+char	*get_home_path(t_env *env);
+//command_split.c
+char	*command_split_substr(char *str, int start, int end);
+void	do_command_split(char *str, char **splited);
+char	**command_split(char *str);
+//command_split_utils.c
+int	is_splitable(char *str, int end, int in_single_quotes, int in_double_quotes);
+int	count_split(char *str);
+int	count_backslash(char *str, int start, int end);
+//echo.c
+int	split_len(char **split);
+int	echo(char *argv[]);
+//env.c
+int	env(t_env *env);
+t_env	*get_env_node(t_env *env, char *key);
+int	insert_new_node(t_env *env, char *key, char *value);
+int	set_env_value(t_env *env, char *key, char *value);
+t_env	*load_envs(char *envp[]);
+//env_split.c
+int	do_edge_cases(char **splited, char *str, char sep);
+char	**split_keyvalue(char *str, char sep);
+//env_utils.c
+void	free_env(t_env *env);
+t_env	*make_new_env_node(char *key, char *value);
+int	fill_node(char *str, int fd, t_env *temp_env, t_env *env_head);
+t_env	*fill_env_struct(int fd);
+//error.c
+void	resolve_error(int status, char *command);
+void	resolve_builtin_error(int status);
+//evaluation.c
+int	execute_command(t_shell *shell, char *command, char **args);
+int	perform_redirections(char **splited_command);
+void	wait_children(t_shell *shell);
+int	evaluate_prompt(char *prompt, t_shell *shell);
+int	exec_list(t_list *list, t_shell *shell);
+//execution_path.c
+char **get_paths_split(t_shell *shell);
+char *get_current_path_str(char *path, char *command);
+int	can_open_file(int stat_return, struct stat *file_info);
+char	*get_right_path(t_shell *shell, char *command);
+//expansion_edge_cases.c
+char	*dup_value(char *arg);
+//export.c
+void	print_export(t_env *env, int fd_out);
+int	is_valid(char *key);
+int	export(char *argv[], t_shell *shell);
+//heredoc.c
+int	is_heredoc(char *token);
+int	do_heredoc(char *delimiter, int original_fd);
+//input_redirection.c
+int	is_redirect_input(char *token);
+int	redirect_input_builtin(char *file);
+void	redirect_input(char *file);
+//list_validations.c
+int	validate_splited_command(char **splited_command);
+int	validate_list(t_list *list);
+//exits.c
+void	exit_program(int sig);
+void	exit_safely(t_shell *shell);
+//node_args.c
+char	**get_args(char **splited_command);
+//output_redirections.c
+int	is_truncate(char *token);
+int	is_append(char *token);
+int	is_redirect_output(char *token);
+void	redirect_output(char *file);
+int	redirect_output_builtin(char *file);
+
+//parser.c
+t_node	*create_node(void);
+void	append_node(t_list *list, t_node *node);
+t_list	*create_list(void);
+t_list *parse_prompt(char *prompt);
+t_list *parse_prompt(char *prompt);
+//pipe.c
+int	setup_list_pipes(t_list *list);
+int	is_token(char *str);
+int	is_pipe(char *token);
+//process.c
+void	append_process(pid_t pid, t_shell *shell, char *basic_command);
+void	prep_process(t_node *node, char ***args, t_shell *shell);
+void	post_process(pid_t pid, t_node *node, t_shell *shell);
+int	execute_node(t_node *node, t_list *list, t_shell *shell);
+void	init_processes_data(t_list *list, t_shell *shell);
+//prompt_setup.c
+char	*get_env_node_value(t_env *env, char *key);
+char	*get_prompt_user(char *str, t_shell *shell);
+char	*get_prompt_pwd(char *str, t_shell *shell);
+char	*get_prompt_string(t_shell *shell);
+char	*get_prompt(t_shell *shell);
+//prompt_split.c
+char	*prompt_split_substr(char *str, int start, int end);
+void	do_prompt_split(char *str, char **splited);
+char	**prompt_split(char *str);
+//pwd.c
+int	pwd(void);
+//shell_setting.c
+char	*get_cwd(void);
+t_shell	*init_shell(int argc, char *argv[], char *envp[]);
+//split_charset.c
+int	is_charset(char c, char *charset);
+int	charset_split_count(char *str, char *charset);
+char	*ft_strndup(char *str, int n);
+char	**split_loop(char **splited, char *str, char *charset);
+char	**ft_split_charset_mod(char *str, char *charset);
+//split_join.c
+void	init_vars(int *j, int *z, int *single_q, int *double_q);
+int	split_str_len(char **splited);
+int	is_valid_arg_char(char c);
+void	split_join_loop(char **splited, char *join, int z);
+char	*split_join(char **splited);
+//unset.c
+void	free_node(t_env *env);
+int	remove_node(t_env **env, char *key);
+int	unset(char *argv[], t_shell *shell);
+//utils.c
+void	set_exit_status(int status, t_shell *shell);
+void	free_split(char **splited);
+void	print_split(char **argv);
+void	free_list(t_list *list);
+//validations.c
+int	valid_quotes(char *prompt);
+int	has_invalid_characters(char **splited);
 
 extern int	g_pid;
 
-char	**expand_split(char **splited, t_shell *shell);
-void	expand_arguments(t_node *node, t_shell *shell);
-char		*split_join(char **splited);
-int			is_valid_arg_char(char c);
-char		**ft_split_charset_mod(char *str, char *charset);
-char		*dup_value(char *arg);
-int	env(t_env *env);
-t_env		*get_env_node(t_env *env, char *key);
-int			set_env_value(t_env *env, char *key, char *value);
-t_env		*load_envs(char *envp[]);
-char		**split_keyvalue(char *str, char sep);
-void		free_env(t_env *env);
-t_env		*fill_env_struct(int fd);
-int	cd(char *argv[], t_shell *shell);
-int	pwd(void);
-int	export(char *argv[], t_shell *shell);
-int	unset(char *argv[], t_shell *shell);
-void		exit_safely(t_shell *shell);
-void		set_exit_status(int status, t_shell *shell);
-void		free_split(char **splited);
-void		print_split(char **argv);
-void		free_list(t_list *list);
-void		print_list(t_list *arg);
-int			split_len(char **split);
-char		*get_cwd(void);
-t_env		*make_new_env_node(char *key, char *value);
-int			is_pipe(char *token);
-void	pipe_output(t_node *node, t_shell *shell);
-int			is_redirect_output(char *token);
-int	is_redirect_input(char *token);
-int			open_file(t_node *current);
-int	execute_command(t_shell *shell, char *command, char **args);
-int			is_builtin(char *command);
-void	execute_builtin(t_node *node, t_shell *shell);
-t_list *parse_prompt(char *prompt);
-int			fill_list(char **splited, t_list *list);
-t_shell		*init_shell(int argc, char *argv[], char *envp[]);
-char		*get_prompt(t_shell *shell);
-int			valid_quotes(char *prompt);
-int			evaluate_prompt(char *prompt, t_shell *shell);
-t_node		*create_node(void);
-void		append_node(t_list *list, t_node *node);
-t_list		*create_list(void);
-char	**command_split(char *str);
-int			has_invalid_characters(char **splited);
-void		resolve_quotes(char c, int *in_single_quote, int *in_double_quote);
-int			is_splitable(char *str, int end, int in_single_quotes,
-				int in_double_quotes);
-int			count_split(char *str);
-void	redirect_output(char *file);
-void		exit_program(int sig);
-int			count_backslash(char *str, int start, int end);
-void	resolve_error(int status, char *command);
-void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current);
-int	is_heredoc(char *token);
-void	redirect_input(char *file);
-int	heredoc(t_node *current, t_shell *shell, int fd_out);
-char	**get_args(char **splited_command);
-int	perform_redirections(char **splited_command);
-int	echo(char *argv[]);
-int	perform_builtin_redirections(char **splited_command);
-
-char	**prompt_split(char *str);
 #endif
