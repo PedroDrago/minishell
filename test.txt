@@ -1,0 +1,10 @@
+<
+Makefile
+README.md
+includes
+libft
+minishell
+src
+test.txt
+testred
+todo.md

@@ -1,0 +1,14 @@
+total 296
+drwxrwxr-x 6 drago drago   4096 Apr  2 10:30 .
+drwxrwxr-x 6 drago drago   4096 Apr  2 10:12 ..
+drwxrwxr-x 8 drago drago   4096 Apr  2 10:30 .git
+-rw-rw-r-- 1 drago drago     56 Apr  2 10:12 .gitignore
+-rw-rw-r-- 1 drago drago     88 Apr  2 10:12 <
+-rw-rw-r-- 1 drago drago   1246 Apr  2 10:12 Makefile
+-rw-rw-r-- 1 drago drago   1618 Apr  2 10:12 README.md
+drwxrwxr-x 2 drago drago   4096 Apr  2 10:18 includes
+drwxrwxr-x 3 drago drago   4096 Apr  2 10:30 libft
+-rwxrwxr-x 1 drago drago 254632 Apr  2 10:30 minishell
+drwxrwxr-x 2 drago drago   4096 Apr  2 10:30 src
+-rw-rw-r-- 1 drago drago      0 Apr  2 10:30 testred
+-rw-rw-r-- 1 drago drago    796 Apr  2 10:16 todo.md

@@ -80,13 +80,13 @@ void		resolve_quotes(char c, int *in_single_quote, int *in_double_quote);
 int			is_splitable(char *str, int end, int in_single_quotes,
 				int in_double_quotes);
 int			count_split(char *str);
-void	redirect_output(t_node *current, t_shell *shell);
+void	redirect_output(char *file);
 void		exit_program(int sig);
 int			count_backslash(char *str, int start, int end);
 void	resolve_error(int status, char *command);
 void	wait_for_child(int *old_yield, int pid, t_shell *shell, t_node *current);
 int	is_heredoc(char *token);
-int	redirect_input(t_node *node, t_shell *shell);
+void	redirect_input(char *file);
 int	heredoc(t_node *current, t_shell *shell, int fd_out);
 char	**get_args(char **splited_command);
 int	perform_redirections(char **splited_command);

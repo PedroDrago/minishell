@@ -162,7 +162,6 @@ int	do_heredoc(char *delimiter, int original_fd)
 	int	len;
 
 	dup2(original_fd, 0);
-	printf("DELIMITER: %s\n", delimiter);
 	pipe(pipe_fd);
 	prompt = readline("> ");
 	if (!prompt)
@@ -181,10 +180,69 @@ int	do_heredoc(char *delimiter, int original_fd)
 	return (TRUE);
 }
 
+
+void	redirect_input(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		exit (127);
+	dup2(fd, 0);
+}
+
+void	redirect_output(char *file)
+{
+	int	tmp_fd;
+
+	if (is_append(file))
+	{
+		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
+		if (tmp_fd < 0)
+			exit (127);
+	}
+	else
+	{
+		tmp_fd= open(file, O_RDWR | O_TRUNC | O_CREAT, 0664);
+		if (tmp_fd < 0)
+			exit (127);
+	}
+	dup2(tmp_fd, 1);
+}
+
+int	redirect_input_builtin(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		return (FALSE);
+	dup2(fd, 0);
+	return (TRUE);
+}
+
+int	redirect_output_builtin(char *file)
+{
+	int	tmp_fd;
+
+	if (is_append(file))
+	{
+		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
+		if (tmp_fd < 0)
+			return (FALSE);
+	}
+	else
+	{
+		tmp_fd= open(file, O_RDWR | O_TRUNC | O_CREAT, 0664);
+		if (tmp_fd < 0)
+			return (FALSE);
+	}
+	dup2(tmp_fd, 1);
+	return (TRUE);
+}
 int	perform_redirections(char **splited_command)
 {
 	int	i;
-	int	tmp_fd;
 	int		original_fd;
 
 	i = 0;
@@ -192,36 +250,11 @@ int	perform_redirections(char **splited_command)
 	while(splited_command[i])
 	{
 		if(is_redirect_input(splited_command[i]))
-		{
-			i++;
-			tmp_fd = open(splited_command[i], O_RDONLY);
-			if (tmp_fd < 0)
-				exit (127);
-			dup2(tmp_fd, 0);
-		}
+			redirect_input(splited_command[++i]);
 		else if(is_redirect_output(splited_command[i]))
-		{
-			if (is_append(splited_command[i]))
-			{
-				i++;
-				tmp_fd= open(splited_command[i], O_RDWR | O_APPEND | O_CREAT, 0664);
-				if (tmp_fd < 0)
-					exit (127);
-			}
-			else
-			{
-				i++;
-				tmp_fd= open(splited_command[i], O_RDWR | O_TRUNC | O_CREAT, 0664);
-				if (tmp_fd < 0)
-					exit (127);
-			}
-			dup2(tmp_fd, 1);
-		}
+			redirect_output(splited_command[++i]);
 		else if(is_heredoc(splited_command[i]))
-		{
-			i++;
-			tmp_fd = do_heredoc(splited_command[i], original_fd);
-		}
+			do_heredoc(splited_command[++i], original_fd);
 		i++;
 	}
 	return (TRUE);
@@ -230,7 +263,6 @@ int	perform_redirections(char **splited_command)
 int	perform_builtin_redirections(char **splited_command)
 {
 	int	i;
-	int	tmp_fd;
 	int		original_fd;
 
 	i = 0;
@@ -239,35 +271,16 @@ int	perform_builtin_redirections(char **splited_command)
 	{
 		if(is_redirect_input(splited_command[i]))
 		{
-			i++;
-			tmp_fd = open(splited_command[i], O_RDONLY);
-			if (tmp_fd < 0)
-				return (127);
-			dup2(tmp_fd, 0);
+			if (!redirect_input_builtin(splited_command[++i]))
+				return (FALSE);
 		}
 		else if(is_redirect_output(splited_command[i]))
 		{
-			if (is_append(splited_command[i]))
-			{
-				i++;
-				tmp_fd= open(splited_command[i], O_RDWR | O_APPEND | O_CREAT, 0664);
-				if (tmp_fd < 0)
-					return (127);
-			}
-			else
-			{
-				i++;
-				tmp_fd= open(splited_command[i], O_RDWR | O_TRUNC | O_CREAT, 0664);
-				if (tmp_fd < 0)
-					return (127);
-			}
-			dup2(tmp_fd, 1);
+			if (!redirect_output_builtin(splited_command[++i]))
+				return (FALSE);
 		}
 		else if(is_heredoc(splited_command[i]))
-		{
-			i++;
-			tmp_fd = do_heredoc(splited_command[i], original_fd);
-		}
+			do_heredoc(splited_command[++i], original_fd);
 		i++;
 	}
 	return (TRUE);
@@ -322,6 +335,32 @@ void	append_process(pid_t pid, t_shell *shell, char *basic_command)
 	shell->processes_data.processes[shell->processes_data.index++] = process;
 }
 
+void	prep_process(t_node *node, char ***args)
+{
+		if (!node->splited_command)
+			exit(1);
+		// WARN: EXPAND_ENVS()
+		*args = get_args(node->splited_command);
+		if (node->has_pipe)
+		{
+			dup2(node->node_pipe[1], 1);
+		}
+		if (node->prev && node->prev->has_pipe)
+		{
+			dup2(node->node_pipe[0], 0);
+		}
+		perform_redirections(node->splited_command);
+}
+
+void	post_process(pid_t pid, t_node *node, t_shell *shell)
+{
+		if (node->has_pipe)
+			close(node->node_pipe[1]);
+		if (node->prev && node->prev->has_pipe)
+			close(node->node_pipe[0]);
+		append_process(pid, shell, node->basic_command);
+}
+
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
 	char	**args;
@@ -335,28 +374,12 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!node->splited_command)
-			exit(1);
-		args = get_args(node->splited_command);
-		if (node->has_pipe)
-		{
-			dup2(node->node_pipe[1], 1);
-		}
-		if (node->prev && node->prev->has_pipe)
-		{
-			dup2(node->node_pipe[0], 0);
-		}
-		// WARN: EXPAND_ENVS()
-		perform_redirections(node->splited_command);
+		prep_process(node, &args);
 		execute_command(shell, node->splited_command[0], args);
 	}
 	else
 	{
-		if (node->has_pipe)
-			close(node->node_pipe[1]);
-		if (node->prev && node->prev->has_pipe)
-			close(node->node_pipe[0]);
-		append_process(pid, shell, node->basic_command);
+		post_process(pid, node, shell);
 	}
 	(void) list;
 	return (TRUE);
@@ -485,4 +508,5 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 * - [ ] make basic_command split before forking, maybe on the node creatin already.
 * - [ ] Execute builtins before fork() (basically the same logic but without forking)
 * - [ ] Remove deprecated fields in node, and update whole project
+* - [ ] Advanced logic on `open()` using `stat()` to identify if the file does not exists or if there is no permission for the file. Current errors are weird. (grep a < test.txt) grep not found
 * */
