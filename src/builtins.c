@@ -113,6 +113,9 @@ void	execute_builtin(t_node *node, t_shell *shell)
 	else if (!ft_strncmp(node->splited_command[0], "env", 4))
 		env(shell->env);
 	else if (!ft_strncmp(node->splited_command[0], "exit", 5))
+	{
+		free_process_data(shell);
 		exit_safely(shell);
+	}
 	post_builtin(node, shell, args, status);
 }
