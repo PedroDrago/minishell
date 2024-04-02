@@ -42,10 +42,10 @@ void	print_split(char **argv)
 	int	i;
 
 	i = 0;
+	printf("**********SPLIT START***********\n");
 	while (argv && argv[i])
-		printf("!%s!", argv[i++]);
-	printf("\n");
-	printf("------------------------\n");
+		printf("!%s!\n", argv[i++]);
+	printf("**********SPLIT END***********\n");
 }
 
 void	free_list(t_list *list)
@@ -70,18 +70,12 @@ void	free_list(t_list *list)
 void	print_list(t_list *arg)
 {
 	t_node	*tmp;
-	int	i;
 
 	tmp = arg->head;
 	while (tmp)
 	{
-		printf("command: %s\n", tmp->command);
-		printf("args: ");
-		i = 0;
-		while (tmp->args[i])
-			printf("!%s!", tmp->args[i++]);
-		printf("\ntoken: %s\n", tmp->token);
-		printf("-------------------------\n");
+		printf("command string: %s\n", tmp->basic_command);
+		printf("Has pipe: %i\n", tmp->has_pipe);
 		tmp = tmp->next;
 	}
 }

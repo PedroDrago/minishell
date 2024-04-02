@@ -11,92 +11,29 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
-int	is_token(char *item)
+t_list *parse_prompt(char *prompt)
 {
-	if (!item)
-		return (TRUE);
-	else if (!ft_strncmp(item, "|", 2))
-		return (TRUE);
-	else if (!ft_strncmp(item, "<", 2))
-		return (TRUE);
-	else if (!ft_strncmp(item, "<<", 3))
-		return (TRUE);
-	else if (!ft_strncmp(item, ">", 2))
-		return (TRUE);
-	else if (!ft_strncmp(item, ">>", 3))
-		return (TRUE);
-	return (FALSE);
-}
-
-int	count_arg_split(char **splited)
-{
-	int	count;
-
-	count = 0;
-	while (!is_token(splited[count]))
-		count++;
-	return (count);
-}
-
-char	**parse_arguments(char **splited, t_node *node)
-{
+	t_list	*prompt_list;
+	char	**command_tab;
+	t_node	*node;
 	int	i;
 
-	i = 0;
-	node->args = malloc(sizeof(char *) * (count_arg_split(splited) + 1));
-	if (!node->args)
+
+	prompt_list = create_list();
+	if (!prompt_list)
 		return (NULL);
-	while (!is_token(*splited))
-		node->args[i++] = ft_strdup(*splited++);
-	node->args[i] = NULL;
-	return (splited);
-}
-
-int	fill_list(char **splited, t_list *list)
-{
-	t_node	*node;
-
-	while (*splited)
+	i = 0;
+	command_tab = prompt_split(prompt);
+	while(command_tab[i])
 	{
 		node = create_node();
-		if (!node)
-			return (FALSE);
-		if (!is_token(*splited))
-		{
-			node->command = ft_strdup(*splited);
-			splited = parse_arguments(splited, node);
-			if (!splited)
-				return (FALSE);
-			if (!(*splited))
-				node->token = NULL;
-			else
-				node->token = ft_strdup(*splited);
-			append_node(list, node);
-		}
-		if (!(*splited++))
-			return (TRUE);
+		node->basic_command = command_tab[i];
+		if (command_tab[i][ft_strlen(command_tab[i]) - 1] == '|')
+			node->has_pipe = TRUE;
+		i++;
+		append_node(prompt_list, node);
 	}
-	return (TRUE);
-}
-
-t_list	*generate_list(char *prompt, t_shell *shell)
-{
-	char	**splited;
-	t_list	*list;
-
-	list = create_list();
-	if (!list)
-		return (NULL);
-	splited = prompt_split(prompt);
-	if (!splited)
-		return (NULL);
-	if (has_invalid_characters(splited))
-		return (free_split(splited), write(2,
-				"Minishell: Invalid Characters (; or \\) \n", 40), NULL); //FIX: Trocar write por ft_pustr_fd
-	if (!fill_list(splited, list))
-		return (free_split(splited), free_list(list), NULL);
-	free_split(splited);
-	expand_arguments(list, shell);
-	return (list);
+	return (prompt_list);
 }

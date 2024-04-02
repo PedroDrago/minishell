@@ -19,10 +19,14 @@ t_node	*create_node(void)
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
-	node->token = NULL;
-	node->args = NULL;
 	node->command = NULL;
+	node->args = NULL;
+	node->token = NULL;
 	node->next = NULL;
+	node->prev = NULL;
+	node->has_pipe = FALSE;
+	node->node_pipe[0] = 0;
+	node->node_pipe[1] = 1;
 	return (node);
 }
 
@@ -37,6 +41,7 @@ void	append_node(t_list *list, t_node *node)
 		return ;
 	}
 	list->tail->next = node;
+	node->prev = list->tail;
 	list->tail = node;
 }
 

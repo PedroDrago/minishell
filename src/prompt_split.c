@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prompt_split.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 17:18:34 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:34 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
-char	*prompt_split_string(char *str, int start, int end)
+char	*prompt_split_substr(char *str, int start, int end)
 {
 	int		i;
 	char	*substr;
@@ -35,7 +23,7 @@ char	*prompt_split_string(char *str, int start, int end)
 	return (substr);
 }
 
-void	do_split(char *str, char **splited)
+void	do_prompt_split(char *str, char **splited)
 {
 	int	end;
 	int	start;
@@ -49,21 +37,26 @@ void	do_split(char *str, char **splited)
 	while (str[end])
 	{
 		resolve_quotes(str[end], &in_single_quotes, &in_double_quotes);
-		if (is_splitable(str, end, in_single_quotes, in_double_quotes))
+		if (str[end] == '|' && !in_single_quotes && !in_double_quotes)
 		{
-			*splited++ = prompt_split_string(str, start, end);
-			while (str[++end] && str[end] == ' ')
-				;
-			start = end;
-			if (!str[end])
-				break ;
+			*splited++ = prompt_split_substr(str, start, end);
+			if (str[end + 1] == '\0')
+			{
+				*splited = NULL;
+				return ;
+			}
+			start = ++end;
 		}
 		else
 			end++;
 	}
+	*splited++ = prompt_split_substr(str, start, end);
 	*splited = NULL;
 }
 
+//Splits the actual prompt into basic commands (split by pipe)
+//splits `ls | grep a > test.txt < test2.txt | wc`
+//into `!ls |!! grep a > test.txt < test2.txt |!! wc!`
 char	**prompt_split(char *str)
 {
 	char	**splited;
@@ -75,7 +68,7 @@ char	**prompt_split(char *str)
 	splited = malloc(sizeof(char *) * (count_split(trimmed) + 1));
 	if (!splited)
 		return (free(trimmed), NULL);
-	do_split(trimmed, splited);
+	do_prompt_split(trimmed, splited);
 	free(trimmed);
 	return (splited);
 }

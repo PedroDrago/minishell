@@ -63,10 +63,10 @@ void	pipe_output(t_node *node, t_shell *shell);
 int			is_redirect_output(char *token);
 int	is_redirect_input(char *token);
 int			open_file(t_node *current);
-int			execute_command(t_shell *shell, t_node *current);
+int	execute_command(t_shell *shell, char *command, char **args);
 int			is_builtin(char *command);
 void		exec_builtin(t_node *node, t_shell *shell, int fd_out);
-t_list		*generate_list(char *prompt, t_shell *shell);
+t_list *parse_prompt(char *prompt);
 int			fill_list(char **splited, t_list *list);
 t_shell		*init_shell(int argc, char *argv[], char *envp[]);
 char		*get_prompt(t_shell *shell);
@@ -75,7 +75,7 @@ int			evaluate_prompt(char *prompt, t_shell *shell);
 t_node		*create_node(void);
 void		append_node(t_list *list, t_node *node);
 t_list		*create_list(void);
-char		**prompt_split(char *str);
+char	**command_split(char *str);
 int			has_invalid_characters(char **splited);
 void		resolve_quotes(char c, int *in_single_quote, int *in_double_quote);
 int			is_splitable(char *str, int end, int in_single_quotes,
@@ -90,4 +90,5 @@ int	is_heredoc(char *token);
 int	redirect_input(t_node *node, t_shell *shell);
 int	heredoc(t_node *current, t_shell *shell, int fd_out);
 
+char	**prompt_split(char *str);
 #endif
