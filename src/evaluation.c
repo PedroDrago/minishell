@@ -199,18 +199,27 @@ void	redirect_input(char *file)
 void	redirect_output(char *file)
 {
 	int	tmp_fd;
+	struct stat file_info;
 
 	if (is_append(file))
 	{
 		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
 		if (tmp_fd < 0)
-			exit (127);
+		{
+			if (stat(file, &file_info) < 0)
+				exit (157);
+			exit(156);
+		}
 	}
 	else
 	{
 		tmp_fd= open(file, O_RDWR | O_TRUNC | O_CREAT, 0664);
 		if (tmp_fd < 0)
-			exit (127);
+		{
+			if (stat(file, &file_info) < 0)
+				exit (157);
+			exit(156);
+		}
 	}
 	dup2(tmp_fd, 1);
 }
@@ -218,32 +227,46 @@ void	redirect_output(char *file)
 int	redirect_input_builtin(char *file)
 {
 	int	fd;
+	struct stat file_info;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (FALSE);
+	{
+		if (stat(file, &file_info) < 0)
+			return (157);
+		return (156);
+	}
 	dup2(fd, 0);
-	return (TRUE);
+	return (0);
 }
 
 int	redirect_output_builtin(char *file)
 {
 	int	tmp_fd;
+	struct stat file_info;
 
 	if (is_append(file))
 	{
 		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
 		if (tmp_fd < 0)
-			return (FALSE);
+		{
+			if (stat(file, &file_info) < 0)
+				return (157);
+			return (156);
+		}
 	}
 	else
 	{
 		tmp_fd= open(file, O_RDWR | O_TRUNC | O_CREAT, 0664);
 		if (tmp_fd < 0)
-			return (FALSE);
+		{
+			if (stat(file, &file_info) < 0)
+				return (157);
+			return (156);
+		}
 	}
 	dup2(tmp_fd, 1);
-	return (TRUE);
+	return (0);
 }
 int	perform_redirections(char **splited_command)
 {
@@ -268,27 +291,31 @@ int	perform_redirections(char **splited_command)
 int	perform_builtin_redirections(char **splited_command)
 {
 	int	i;
+	int	status;
 	int		original_fd;
 
 	i = 0;
 	original_fd = dup(0);
+	status = 0;
 	while(splited_command[i])
 	{
 		if(is_redirect_input(splited_command[i]))
 		{
-			if (!redirect_input_builtin(splited_command[++i]))
-				return (FALSE);
+			status = redirect_input_builtin(splited_command[++i]);
+			if (status)
+				return (status);
 		}
 		else if(is_redirect_output(splited_command[i]))
 		{
-			if (!redirect_output_builtin(splited_command[++i]))
-				return (FALSE);
+			status = redirect_output_builtin(splited_command[++i]);
+			if (status)
+				return (status);
 		}
 		else if(is_heredoc(splited_command[i]))
 			do_heredoc(splited_command[++i], original_fd);
 		i++;
 	}
-	return (TRUE);
+	return (status);
 }
 char	**get_args(char **splited_command)
 {
@@ -392,6 +419,8 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 void	resolve_error(int status, char *command)
 {
 	printf("Status code received: %i\n", status);
+	//40192 file not found (redirections)
+	//39936 no permission for file (redirections)
 	if (status == 32512) // command not found (127);
 	{
 		ft_putstr_fd(command, 2);
