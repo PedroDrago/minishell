@@ -31,24 +31,37 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-void	exec_builtin(t_node *node, t_shell *shell, int fd_out)
+void	execute_builtin(t_node *node, t_shell *shell)
 {
 	int	status;
+	char	**args;
 
 	status = 0;
-	if (!ft_strncmp(node->command, "echo", 5))
-		status = echo(split_len(node->args), node->args, fd_out);
-	else if (!ft_strncmp(node->command, "cd", 3))
-		status = cd(node, shell);
-	else if (!ft_strncmp(node->command, "pwd", 4))
-		status = pwd(fd_out);
-	else if (!ft_strncmp(node->command, "export", 7))
-		status = export(node, shell, fd_out);
-	else if (!ft_strncmp(node->command, "unset", 6))
-		status = unset(node, shell);
-	else if (!ft_strncmp(node->command, "env", 4))
-		status = env(shell->env, fd_out);
-	else if (!ft_strncmp(node->command, "exit", 5))
+	args = get_args(node->splited_command);
+	if (node->has_pipe)
+		dup2(node->node_pipe[1], 1);
+	if (node->prev && node->prev->has_pipe)
+		dup2(node->node_pipe[0], 0);
+	// WARN: EXPAND_ENVS()
+	perform_redirections(node->splited_command);
+	if (!ft_strncmp(node->splited_command[0], "echo", 5))
+		echo(args);
+	else if (!ft_strncmp(node->splited_command[0], "cd", 3))
+		cd(args, shell);
+	else if (!ft_strncmp(node->splited_command[0], "pwd", 4))
+		pwd();
+	else if (!ft_strncmp(node->splited_command[0], "export", 7))
+		export(args, shell);
+	else if (!ft_strncmp(node->splited_command[0], "unset", 6))
+		unset(args, shell);
+	else if (!ft_strncmp(node->splited_command[0], "env", 4))
+		env(shell->env);
+	else if (!ft_strncmp(node->splited_command[0], "exit", 5))
 		exit_safely(shell);
 	set_exit_status(status, shell);
+	if (node->has_pipe)
+		close(node->node_pipe[1]);
+	if (node->prev && node->prev->has_pipe)
+		close(node->node_pipe[0]);
+	free_split(args);
 }

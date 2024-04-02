@@ -32,6 +32,7 @@ t_list *parse_prompt(char *prompt)
 		node->basic_command = command_tab[i];
 		if (command_tab[i][ft_strlen(command_tab[i]) - 1] == '|')
 			node->has_pipe = TRUE;
+		node->splited_command = command_split(command_tab[i]);
 		i++;
 		append_node(prompt_list, node);
 	}

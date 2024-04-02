@@ -47,16 +47,16 @@ int	remove_node(t_env **env, char *key)
 	return (0);
 }
 
-int	unset(t_node *current, t_shell *shell)
+int	unset(char *argv[], t_shell *shell)
 {
 	int	i;
 
 	i = 1;
-	while (current->args[i])
+	while (argv[i])
 	{
-		if (ft_strchr(current->args[i], '?') && ++i)
+		if (ft_strchr(argv[i], '?') && ++i)
 			continue ;
-		remove_node(&shell->env, current->args[i++]);
+		remove_node(&shell->env, argv[i++]);
 	}
 	return (0);
 }

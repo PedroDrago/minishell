@@ -35,6 +35,7 @@ typedef struct s_pid_list
 typedef struct s_node
 {
 	char			*basic_command;
+	char			**splited_command;
 	char			*command; // WARN: Deprecated
 	char			**args; // WARN: Deprecated 
 	char			*token; // WARN: Deprecated
@@ -74,6 +75,7 @@ typedef struct s_shell
 	int				last_status;
 	char			*prompt_string;
 	int			original_stdin;
+	int			original_stdout;
 	t_env			*env;
 	t_list			*prompt_list;
 	t_processes_data	processes_data;

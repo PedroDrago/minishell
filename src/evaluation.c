@@ -280,17 +280,20 @@ void	append_process(pid_t pid, t_shell *shell, char *basic_command)
 
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
-	char	**splited_command;
 	char	**args;
 	pid_t	pid;
 
+	if (is_builtin(node->splited_command[0]))
+	{
+		execute_builtin(node, shell);
+		return (TRUE);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
-		splited_command = command_split(node->basic_command);
-		if (!splited_command)
+		if (!node->splited_command)
 			exit(1);
-		args = get_args(splited_command);
+		args = get_args(node->splited_command);
 		if (node->has_pipe)
 		{
 			dup2(node->node_pipe[1], 1);
@@ -300,8 +303,8 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 			dup2(node->node_pipe[0], 0);
 		}
 		// WARN: EXPAND_ENVS()
-		perform_redirections(splited_command);
-		execute_command(shell, splited_command[0], args);
+		perform_redirections(node->splited_command);
+		execute_command(shell, node->splited_command[0], args);
 	}
 	else
 	{
@@ -407,7 +410,8 @@ void	init_processes_data(t_list *list, t_shell *shell)
 	i = 0;
 	while(tmp)
 	{
-		i++;
+		if (!is_builtin(tmp->splited_command[0]))
+			i++;
 		tmp = tmp->next;
 	}
 	shell->processes_data.processes = malloc(sizeof(t_process *) * i);
