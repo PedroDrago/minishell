@@ -13,6 +13,13 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 #include <sys/types.h>
+
+#define STD 0
+#define INPUT_FILE 1
+#define HEREDOC 2
+#define OUTPUT_FILE_TRUNCATE 3
+#define OUTPUT_FILE_APPEND 4
+
 typedef struct s_pid_node
 {
 	pid_t	pid;
@@ -27,10 +34,12 @@ typedef struct s_pid_list
 
 typedef struct s_node
 {
-	char			*command;
-	char			**args;
-	char			*token;
+	char			*basic_command;
+	char			**splited_command;
+	int			has_pipe;
+	int			node_pipe[2];
 	struct s_node	*next;
+	struct s_node	*prev;
 }					t_node;
 
 typedef struct s_list
@@ -46,22 +55,27 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_pid_data
+typedef struct s_process
 {
-	int	size;
-	int	index;
-	pid_t	*p_array; //NOTE: pid_arrays
-	char	**c_array; // NOTE: Command arrays
+	pid_t pid;
+	char	*command;
+} 	t_process;
 
-} 	t_pid_data;
+typedef struct s_processes_data
+{
+	t_process	**processes;
+	int		size;
+	int		index;
+} 	t_processes_data;
 typedef struct s_shell
 {
 	int				last_status;
 	char			*prompt_string;
 	int			original_stdin;
+	int			original_stdout;
 	t_env			*env;
 	t_list			*prompt_list;
-	t_pid_data		*pids;
+	t_processes_data	processes_data;
 }					t_shell;
 
 #endif

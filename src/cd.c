@@ -22,18 +22,18 @@ char	*get_home_path(t_env *env)
 	return (node->value);
 }
 
-int	cd(t_node *node, t_shell *shell)
+int	cd(char *argv[], t_shell *shell)
 {
 	char	*cwd;
 	char	*path;
 
-	if (split_len(node->args) > 2)
+	if (split_len(argv) > 2)
 		return (write(2, "Minishell: cd: too many arguments\n", 34), 1);
 	cwd = get_cwd();
 	if (!cwd)
 		return (1);
-	path = node->args[1];
-	if (split_len((node->args)) == 1 || !ft_strncmp(node->args[1], "~", 2))
+	path = argv[1];
+	if (split_len((argv)) == 1 || !ft_strncmp(argv[1], "~", 2))
 		path = get_home_path(shell->env);
 	if (!path)
 		return (1);

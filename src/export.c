@@ -42,23 +42,24 @@ int	is_valid(char *key)
 	return (TRUE);
 }
 
-int	export(t_node *node, t_shell *shell, int fd_out)
+int	export(char *argv[], t_shell *shell)
 {
 	int		i;
 	char	**splited;
 
-	if (split_len(node->args) == 1)
-		return (print_export(shell->env, fd_out), 1);
+	if (split_len(argv) == 1)
+		return (print_export(shell->env, 1), 1);
 	i = 1;
 	splited = NULL;
-	while (node->args[i])
+	while (argv[i])
 	{
-		splited = split_keyvalue(node->args[i], '=');
+		splited = split_keyvalue(argv[i], '=');
 		if (!splited)
 			return (1);
 		if (!is_valid(splited[0]) && ++i)
 		{
 			printf("ERRO\n");
+			ft_putstr_fd("Erro PLACEHOLDER!!!!!!\n", 1);
 			continue ;
 		}
 		if (!set_env_value(shell->env, splited[0], splited[1]))

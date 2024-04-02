@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	pwd(int fd_out)
+int	pwd(void)
 {
 	char	*buffer;
 	int		size;
@@ -29,8 +29,8 @@ int	pwd(int fd_out)
 		if (!buffer)
 			return (1);
 	}
-	ft_putstr_fd(buffer, fd_out);
-	ft_putchar_fd('\n', fd_out);
+	ft_putstr_fd(buffer, 1);
+	ft_putchar_fd('\n', 1);
 	free(buffer);
 	return (0);
 }

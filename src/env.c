@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	env(t_env *env, int fd_out)
+int	env(t_env *env)
 {
 	while (env)
 	{
@@ -23,10 +23,10 @@ int	env(t_env *env, int fd_out)
 		}
 		if (env->value)
 		{
-			ft_putstr_fd(env->key, fd_out);
-			ft_putchar_fd('=', fd_out);
-			ft_putstr_fd(env->value, fd_out);
-			ft_putchar_fd('\n', fd_out);
+			ft_putstr_fd(env->key, 1);
+			ft_putchar_fd('=', 1);
+			ft_putstr_fd(env->value, 1);
+			ft_putchar_fd('\n', 1);
 		}
 		env = env->next;
 	}

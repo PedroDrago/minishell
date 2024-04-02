@@ -16,29 +16,6 @@
 
 int		g_pid;
 
-void	exit_program(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_pid == 0)
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void	exit_safely(t_shell *shell)
-{
-	if (shell->prompt_list)
-		free_list(shell->prompt_list);
-	free_env(shell->env);
-	if (shell->prompt_string)
-		free(shell->prompt_string);
-	free(shell);
-	exit(1);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
@@ -51,6 +28,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (TRUE)
 	{
 		shell->original_stdin = dup(0);
+		shell->original_stdout = dup(1);
 		g_pid = 0;
 		prompt = get_prompt(shell);
 		add_history(prompt);
@@ -59,6 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (!evaluate_prompt(prompt, shell))
 			return (exit_safely(shell), EXIT_FAILURE);
 		dup2(shell->original_stdin, 0);
+		dup2(shell->original_stdout, 1);
 	}
 	return (exit_safely(shell), EXIT_SUCCESS);
 }

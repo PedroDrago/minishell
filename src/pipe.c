@@ -1,50 +1,42 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:59:12 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/21 18:51:11 by pdrago           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
+
+int	setup_list_pipes(t_list *list)
+{
+	t_node *tmp;
+	int	pipe_fd[2];
+
+	tmp = list->head;
+	while(tmp)
+	{
+		if (tmp->has_pipe)
+		{
+			pipe(pipe_fd);
+			tmp->node_pipe[1] = pipe_fd[1];
+			tmp->next->node_pipe[0] = pipe_fd[0]; //WARN: Needs previous validation so that tmp->next won't be NULL;
+		}
+		tmp = tmp->next;
+	}
+	return (TRUE);
+}
+
+int	is_token(char *str)
+{
+	if (!ft_strncmp(str, "<", 2))
+		return (TRUE);
+	if (!ft_strncmp(str, "<<", 3))
+		return (TRUE);
+	if (!ft_strncmp(str, ">>", 3))
+		return (TRUE);
+	if (!ft_strncmp(str, ">", 2))
+		return (TRUE);
+	if (!ft_strncmp(str, "|", 2))
+		return (TRUE);
+	return (FALSE);
+}
 
 int	is_pipe(char *token)
 {
 	if (!ft_strncmp(token, "|", 2))
 		return (TRUE);
 	return (FALSE);
-}
-
-void	pipe_output(t_node *node, t_shell *shell)
-{
-	int	pipe_fd[2];
-
-	pipe(pipe_fd);
-	if (is_builtin(node->command))
-	{
-		exec_builtin(node, shell, pipe_fd[1]);
-		dup2(pipe_fd[0], 0);
-		close(pipe_fd[1]);
-		return ;
-	}
-	g_pid = fork();
-	if (g_pid == 0)
-	{
-		dup2(pipe_fd[1], 1);
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		execute_command(shell, node);
-		exit(1);
-	}
-	else
-	{
-		dup2(pipe_fd[0], 0);
-		close(pipe_fd[1]);
-		shell->pids->p_array[shell->pids->index] = g_pid;
-		shell->pids->c_array[shell->pids->index++] = node->command;
-	}
 }
