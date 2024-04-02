@@ -14,6 +14,7 @@ void	exit_program(int sig)
 
 void	exit_safely(t_shell *shell)
 {
+	free_process_data(shell);
 	free(shell->prompt_string);
 	free_env(shell->env);
 	free(shell);
