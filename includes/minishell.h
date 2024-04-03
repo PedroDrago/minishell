@@ -38,8 +38,8 @@ void	expand_arguments(t_node *node, t_shell *shell);
 //builtins.c
 int	perform_builtin_redirections(char **splited_command, t_shell *shell);
 int	is_builtin(char *command);
-int	prep_builtin(t_node *node, char ***args, t_shell *shell);
-void	post_builtin(t_node *node, t_shell *shell, char **args, int status);
+int	prep_builtin(t_node *node, t_shell *shell);
+void	post_builtin(t_node *node, t_shell *shell, int status);
 void	execute_builtin(t_node *node, t_shell *shell);
 //cd.c
 int	cd(char *argv[], t_shell *shell);
@@ -73,7 +73,7 @@ t_env	*fill_env_struct(int fd);
 void	resolve_error(int status, char *command);
 void	resolve_builtin_error(int status);
 //evaluation.c
-int	execute_command(t_shell *shell, char *command, char **args);
+int	execute_command(t_shell *shell, char **args);
 int	perform_redirections(char **splited_command);
 void	wait_children(t_shell *shell);
 int	evaluate_prompt(char *prompt, t_shell *shell);
@@ -124,11 +124,12 @@ int	is_token(char *str);
 int	is_pipe(char *token);
 //process.c
 void	append_process(pid_t pid, t_shell *shell, char *basic_command);
-int	prep_process(t_node *node, char ***args, t_shell *shell);
+int	prep_process(t_node *node);
 void	post_process(pid_t pid, t_node *node, t_shell *shell);
 int	execute_node(t_node *node, t_list *list, t_shell *shell);
 void	init_processes_data(t_list *list, t_shell *shell);
 void	free_process_data(t_shell *shell);
+void	strip_quotes(t_node *node);
 //prompt_setup.c
 char	*get_env_node_value(t_env *env, char *key);
 char	*get_prompt_user(char *str, t_shell *shell);
@@ -165,6 +166,7 @@ void	set_exit_status(int status, t_shell *shell);
 void	free_split(char **splited);
 void	print_split(char **argv);
 void	free_list(t_list *list);
+void	print_list(t_list *arg);
 //validations.c
 int	valid_quotes(char *prompt);
 int	has_invalid_characters(char **splited);

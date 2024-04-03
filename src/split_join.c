@@ -35,12 +35,6 @@ int	split_str_len(char **splited)
 		j = 0;
 		while (splited[i][j])
 		{
-			if (splited[i][j] && splited[i][j] == '\'')
-				j++;
-			if (splited[i][j] && splited[i][j] == '\"')
-				j++;
-			if (!splited[i][j])
-				break ;
 			j++;
 			z++;
 		}
@@ -55,29 +49,15 @@ int	is_valid_arg_char(char c)
 
 void	split_join_loop(char **splited, char *join, int z)
 {
-	int	inside_double;
-	int	inside_single;
 	int	i;
 	int	j;
 
-	inside_double = 0;
-	inside_single = 0;
 	i = -1;
 	while (splited[++i])
 	{
 		j = 0;
 		while (splited[i] && splited[i][j])
-		{
-			if (splited[i][j] == '\'' && (j == 0 || splited[i][j - 1] != '\\')) // FIX: Not necessary anymore, but it is working with this
-				if (!inside_double && ++j)
-					inside_single = !inside_single;
-			if (splited[i][j] == '\"' && (j == 0 || splited[i][j - 1] != '\\')) // FIX: Not necessary anymore, but it is working with this
-				if (!inside_single && ++j)
-					inside_double = !inside_double;
-			if (!splited[i][j])
-				break ;
 			join[z++] = splited[i][j++];
-		}
 	}
 	join[z] = '\0';
 }

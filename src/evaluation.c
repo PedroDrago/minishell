@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
-int	execute_command(t_shell *shell, char *command, char **args)
+int	execute_command(t_shell *shell, char **args)
 {
 	char *path;
 
-	execve(command, args, shell->envp);
-	path = get_right_path(shell, command);
+	execve(args[0], args, shell->envp);
+	path = get_right_path(shell, args[0]);
 	execve(path, args, shell->envp);
 	exit(1);
 }
@@ -148,7 +147,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	prompt_pre_format(prompt, tmp, 0, 0);
 	prompt_list = parse_prompt(tmp);
-    free(tmp);
+	free(tmp);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;

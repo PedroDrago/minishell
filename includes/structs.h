@@ -36,6 +36,7 @@ typedef struct s_node
 {
 	char			*basic_command;
 	char			**splited_command;
+	char			**args;
 	int			has_pipe;
 	int			node_pipe[2];
 	struct s_node	*next;

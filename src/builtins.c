@@ -69,11 +69,13 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-int	prep_builtin(t_node *node, char ***args, t_shell *shell) //NOTE: Yeah bitch, char pointer pointer pointer
+int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer pointer pointer
 {
 	int	status;
+
 	expand_arguments(node, shell);
-	*args = get_args(node->splited_command);
+	node->args = get_args(node->splited_command);
+	strip_quotes(node);
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
@@ -84,7 +86,7 @@ int	prep_builtin(t_node *node, char ***args, t_shell *shell) //NOTE: Yeah bitch,
 	return (status);
 }
 
-void	post_builtin(t_node *node, t_shell *shell, char **args, int status)
+void	post_builtin(t_node *node, t_shell *shell, int status)
 {
 	set_exit_status(status, shell);
 	if (node->has_pipe)
@@ -93,30 +95,28 @@ void	post_builtin(t_node *node, t_shell *shell, char **args, int status)
 		close(node->node_pipe[0]);
 	dup2(shell->original_stdin, 0);
 	dup2(shell->original_stdout, 1);
-	free(args);
 }
 
 void	execute_builtin(t_node *node, t_shell *shell)
 {
-	char	**args;
 	int	status;
 
-	status = prep_builtin(node, &args, shell);
+	status = prep_builtin(node, shell);
 	if (status)
 	{
-		post_builtin(node, shell, args, status);
+		post_builtin(node, shell, status);
 		return ;
 	}
 	if (!ft_strncmp(node->splited_command[0], "echo", 5))
-		echo(args);
+		echo(node->args);
 	else if (!ft_strncmp(node->splited_command[0], "cd", 3))
-		cd(args, shell);
+		cd(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "pwd", 4))
 		pwd();
 	else if (!ft_strncmp(node->splited_command[0], "export", 7))
-		export(args, shell);
+		export(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "unset", 6))
-		unset(args, shell);
+		unset(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "env", 4))
 		env(shell->env);
 	else if (!ft_strncmp(node->splited_command[0], "exit", 5))
@@ -124,5 +124,5 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		free_process_data(shell);
 		exit_safely(shell);
 	}
-	post_builtin(node, shell, args, status);
+	post_builtin(node, shell, status);
 }
