@@ -148,6 +148,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 		return (FALSE);
 	prompt_pre_format(prompt, tmp);
 	prompt_list = parse_prompt(tmp);
+    free(tmp);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
