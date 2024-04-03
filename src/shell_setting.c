@@ -37,6 +37,7 @@ t_shell	*init_shell(int argc, char *argv[], char *envp[])
 	t_shell	*shell;
 
 	shell = (t_shell *)malloc(sizeof(t_shell));
+	shell->envp = envp;
 	signal(SIGINT, exit_program);
 	if (!shell)
 		exit(EXIT_FAILURE);

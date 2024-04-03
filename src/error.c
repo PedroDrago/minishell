@@ -1,9 +1,12 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 void	resolve_error(int status, char *command)
 {
 	//40192 file not found (redirections)
 	//39936 no permission for file (redirections)
+	if (status == 2)
+		g_sig = SIGINT;
 	if (status == 32512) // command not found (127);
 	{
 		ft_putstr_fd(command, 2);

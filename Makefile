@@ -7,7 +7,7 @@ MINISHELL_OBJ = $(MINISHELL_SRC:.c=.o)
 LIBFT = libft/libft.a
 
 CC = clang
-FLAGS = -Wall -Wextra -Werror -ggdb3
+FLAGS = -Wall -Wextra -Werror
 INCLUDES = -lreadline
 
 RED=\e[31m

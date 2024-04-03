@@ -2,20 +2,32 @@
 
 void	exit_program(int sig)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	if (g_pid == 0)
+	static int	process = 0;
+
+	if (sig == SIGUSR2)
+		process = 1;
+	if (sig == SIGUSR1)
+		process = 0;
+	g_sig = sig;
+	if (g_sig == SIGINT)
 	{
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if(!process)
+		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		else
+			write(1, "\n", 1);
 	}
 }
 
 void	exit_safely(t_shell *shell)
 {
+	ft_putstr_fd("Algo\n", 2);
 	free(shell->prompt_string);
 	free_env(shell->env);
 	free(shell);
-	exit(1);
+	exit(0);
 }

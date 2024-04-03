@@ -11,21 +11,15 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <fcntl.h>
-#include <readline/history.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 int	execute_command(t_shell *shell, char *command, char **args)
 {
 	char *path;
 
+	execve(command, args, shell->envp);
 	path = get_right_path(shell, command);
-	execve(path, args, NULL);
+	execve(path, args, shell->envp);
 	exit(1);
 }
 
@@ -43,7 +37,11 @@ int	perform_redirections(char **splited_command)
 		else if(is_redirect_output(splited_command[i]))
 			redirect_output(splited_command[++i]);
 		else if(is_heredoc(splited_command[i]))
-			do_heredoc(splited_command[++i], original_fd);
+	        {
+			if (!do_heredoc(splited_command[++i], original_fd))
+			    return (FALSE);
+			
+		}
 		i++;
 	}
 	return (TRUE);
@@ -80,16 +78,81 @@ int	exec_list(t_list *list, t_shell *shell)
 	return (TRUE);
 }
 
+int    str_token_cmp(char *item) // NEWFEATURE
+{
+    if (!item)
+        return (1);
+    else if (!ft_strncmp(item, "|", 1))
+        return (1);
+    else if (!ft_strncmp(item, "<<", 2))
+        return (2);
+    else if (!ft_strncmp(item, "<", 1))
+        return (1);
+    else if (!ft_strncmp(item, ">>", 2))
+        return (2);
+    else if (!ft_strncmp(item, ">", 1))
+        return (1);
+    return (0);
+}
+
+int        count_new_prompt_size(char *str) // NEWFEATURE
+{
+    int    count;
+
+    count = 0;
+    while (str && *str)
+    {
+        if (ft_strchr("\"><|", *str++))
+            count++;
+        count++;
+    }
+    return (count);
+}
+
+char    *prompt_pre_format(char *prompt, char *new_str) // NEWFEATURE
+{
+    int i;
+    int j;
+    int    diff;
+    int    quotes;
+
+    i = 0;
+    j = 0;
+    quotes = 0;
+    while (prompt[j])
+    {
+        if (prompt[j] == '\"')
+            quotes = !quotes;
+        diff = str_token_cmp(&prompt[j]);
+        if (!quotes && diff)
+        {
+            new_str[i++] = ' ';
+            while(diff-- > 0)
+                new_str[i++] = prompt[j++];
+            new_str[i++] = ' ';
+            continue;
+        }
+        new_str[i++] = prompt[j++];
+    }
+    new_str[i] = '\0';
+    return new_str;
+}
+
 int	evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list	*prompt_list;
+	char	*tmp;
 
-	prompt_list = parse_prompt(prompt);
+	tmp = malloc(sizeof(char) * (count_new_prompt_size(prompt) + 1));
+	if (!tmp)
+		return (FALSE);
+	prompt_pre_format(prompt, tmp);
+	prompt_list = parse_prompt(tmp);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
 	if (!validate_list(prompt_list))
-		return (TRUE);
+		return (TRUE); //WARN: free alguma coisa
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);

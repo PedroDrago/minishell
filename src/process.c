@@ -1,4 +1,7 @@
 #include "../includes/minishell.h"
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void	append_process(pid_t pid, t_shell *shell, char *basic_command)
 {
@@ -15,7 +18,7 @@ void	append_process(pid_t pid, t_shell *shell, char *basic_command)
 	shell->processes_data.processes[shell->processes_data.index++] = process;
 }
 
-void	prep_process(t_node *node, char ***args, t_shell *shell)
+int	prep_process(t_node *node, char ***args, t_shell *shell)
 {
 	if (!node->splited_command)
 		exit(1);
@@ -25,7 +28,7 @@ void	prep_process(t_node *node, char ***args, t_shell *shell)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
-	perform_redirections(node->splited_command);
+	return (perform_redirections(node->splited_command));
 }
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell)
@@ -47,10 +50,12 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 		execute_builtin(node, shell);
 		return (TRUE);
 	}
+	kill(getpid(), SIGUSR2);
 	pid = fork();
 	if (pid == 0)
 	{
-		prep_process(node, &args, shell);
+		if (!prep_process(node, &args, shell))
+			exit(2);
 		execute_command(shell, node->splited_command[0], args);
 	}
 	else
