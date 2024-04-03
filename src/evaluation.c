@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   evaluation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/21 19:09:14 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/03 15:30:00 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,22 +109,22 @@ int        count_new_prompt_size(char *str) // NEWFEATURE
     return (count);
 }
 
-char    *prompt_pre_format(char *prompt, char *new_str) // NEWFEATURE
+char    *prompt_pre_format(char *prompt, char *new_str, int i, int j) // NEWFEATURE
 {
-    int i;
-    int j;
-    int    diff;
-    int    quotes;
+    int	diff;
+    int	quotes;
+	int	d_quotes;
 
-    i = 0;
-    j = 0;
     quotes = 0;
+	d_quotes = 0;
     while (prompt[j])
     {
-        if (prompt[j] == '\"')
-            quotes = !quotes;
-        diff = str_token_cmp(&prompt[j]);
-        if (!quotes && diff)
+        if (prompt[j] == '\"' && !quotes)
+		    d_quotes = !d_quotes;
+		if (prompt[j] == '\'' && !d_quotes)
+			quotes = !quotes;
+		diff = str_token_cmp(&prompt[j]);
+        if (!d_quotes && !quotes && diff)
         {
             new_str[i++] = ' ';
             while(diff-- > 0)
@@ -146,7 +146,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	tmp = malloc(sizeof(char) * (count_new_prompt_size(prompt) + 1));
 	if (!tmp)
 		return (FALSE);
-	prompt_pre_format(prompt, tmp);
+	prompt_pre_format(prompt, tmp, 0, 0);
 	prompt_list = parse_prompt(tmp);
     free(tmp);
 	if (!prompt_list)
