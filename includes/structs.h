@@ -76,6 +76,7 @@ typedef struct s_shell
 	t_env			*env;
 	t_list			*prompt_list;
 	t_processes_data	processes_data;
+	char			**envp;
 }					t_shell;
 
 #endif

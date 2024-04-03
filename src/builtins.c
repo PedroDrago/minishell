@@ -11,13 +11,14 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
+#include <sys/wait.h>
 
-int	perform_builtin_redirections(char **splited_command)
+int	perform_builtin_redirections(char **splited_command, t_shell *shell)
 {
 	int	i;
 	int	status;
 	int		original_fd;
+	int		pid;
 
 	i = 0;
 	original_fd = dup(0);
@@ -37,7 +38,13 @@ int	perform_builtin_redirections(char **splited_command)
 				return (status);
 		}
 		else if(is_heredoc(splited_command[i]))
-			do_heredoc(splited_command[++i], original_fd);
+		{
+			pid = fork();
+			if (pid == 0)
+				do_heredoc_builtin(splited_command[++i], original_fd);
+			waitpid(pid, &status, 0);
+			(void) shell;
+		}
 		i++;
 	}
 	return (status);
@@ -71,7 +78,7 @@ int	prep_builtin(t_node *node, char ***args, t_shell *shell) //NOTE: Yeah bitch,
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
-	status = perform_builtin_redirections(node->splited_command);
+	status = perform_builtin_redirections(node->splited_command, shell);
 	if (status)
 		resolve_builtin_error(status);
 	return (status);

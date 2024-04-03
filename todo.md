@@ -9,3 +9,5 @@
 - [ ] Saida do shell esta problematica, tanto com exit quanto com `CTRL+d`. Segfaults em alguns cenarios.
 - [ ] Talvez refazer todas as funcoes/structs de processos/pids, ta muito confuso (remover comando da mensagem de erro simplificaria muito esse processo)
 - [ ] Segfault: builtin rediectionado para arquivo e pipe depois: `pwd > arquivo.txt | wc`
+- [ ] local exec
+- [ ] `|`
