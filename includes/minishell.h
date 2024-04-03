@@ -170,6 +170,8 @@ void	print_list(t_list *arg);
 //validations.c
 int	valid_quotes(char *prompt);
 int	has_invalid_characters(char **splited);
+//quote_split.c
+char	**quote_split(char *str);
 
 extern int	g_sig;
 

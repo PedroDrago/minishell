@@ -48,9 +48,6 @@ void	strip_quotes(t_node *node)
 	while(node->args[i])
 	{
 
-		ft_putstr_fd("ANTES: ", 2);
-		ft_putstr_fd(node->args[i], 2);
-		ft_putstr_fd("\n", 2);
 		if (node->args[i][0] == '\'' || node->args[i][0] == '\"')
 		{
 			tmp = node->args[i];
@@ -61,9 +58,6 @@ void	strip_quotes(t_node *node)
 			free(tmp);
 			tmp = NULL;
 		}
-		ft_putstr_fd("DEPOIS: ", 2);
-		ft_putstr_fd(node->args[i], 2);
-		ft_putstr_fd("\n", 2);
 		i++;
 	}
 }
@@ -77,9 +71,8 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 		return (TRUE);
 	}
 	kill(getpid(), SIGUSR2);
-	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
-	strip_quotes(node);
+	expand_arguments(node, shell);
 	pid = fork();
 	if (pid == 0)
 	{

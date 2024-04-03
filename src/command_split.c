@@ -64,9 +64,6 @@ void	do_command_split(char *str, char **splited)
 	*splited = NULL;
 }
 
-//Split each basic command into words/blocks (split by space, preserving spaces in quotes)
-//splits `ls < test.txt > test2.txt |`
-//into `!ls!!<!!test.txt!!>!!test2.txt!!|!`
 char	**command_split(char *str)
 {
 	char	**splited;

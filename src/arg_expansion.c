@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 void	resolve_quotes(char c, int *in_single_quote, int *in_double_quote)
 {
@@ -71,20 +72,39 @@ char	**expand_split(char **splited, t_shell *shell)
 	return (splited);
 }
 
+
+//"      $HOME      asdasd asda"
 void	expand_arguments(t_node *node, t_shell *shell)
 {
 	int		i;
+	int		j;
 	char	**splited;
+	char	**arg_splited;
 
 	i = 0;
-	while (node->splited_command[i])
+	//"ls"-"$HOME"
+	while (node->args[i])
 	{
-		splited = expand_split(ft_split_charset_mod(node->splited_command[i], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
-		if (!splited)
-			return ;
-		free(node->splited_command[i]);
-		node->splited_command[i] = split_join(splited);
-		free_split(splited);
+		printf("Arg: %s\n", node->args[i]);
+		splited = quote_split(node->args[i]);
+		printf("Quote splited arg: \n");
+		print_split(splited);
+		j = 0;
+		while (splited && splited[j])
+		{
+			printf("Quote splited solo arg: %s\n", splited[j]);
+			arg_splited = expand_split(ft_split_charset_mod(splited[j], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
+			if (!arg_splited)
+				return ;
+			free(splited[j]);
+			splited[j] = split_join(arg_splited);
+			printf("Joined Quote splited solo arg: %s\n", splited[j]);
+			free_split(arg_splited);
+			j++;
+		}
+		free(node->args[i]);
+		node->args[i] = split_join(splited);
 		i++;
 	}
+	free_split(splited);
 }
