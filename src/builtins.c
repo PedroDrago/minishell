@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:37:50 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:16:47 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 {
 	int	status;
 
-	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
+	expand_arguments(node, shell);
 	strip_quotes(node);
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);

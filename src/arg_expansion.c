@@ -72,6 +72,24 @@ char	**expand_split(char **splited, t_shell *shell)
 	return (splited);
 }
 
+void	str_unquote(char **str)
+{
+	int j;
+
+	j = 0;
+	if (*str[0] == '\"' || *str[0] == '\'')
+	{
+		ft_memmove(str[j], (const void *)(&str[j][1]), ft_strlen(str[j]));
+		while (str[j] && str[j++])
+		 	;
+		if (j > 1)
+		{
+		 	j--;
+
+		 	str[j][0] = '\0';
+		}
+	}
+}
 
 //"      $HOME      asdasd asda"
 void	expand_arguments(t_node *node, t_shell *shell)
@@ -82,29 +100,22 @@ void	expand_arguments(t_node *node, t_shell *shell)
 	char	**arg_splited;
 
 	i = 0;
-	//"ls"-"$HOME"
 	while (node->args[i])
 	{
-		printf("Arg: %s\n", node->args[i]);
 		splited = quote_split(node->args[i]);
-		printf("Quote splited arg: \n");
-		print_split(splited);
 		j = 0;
 		while (splited && splited[j])
 		{
-			printf("Quote splited solo arg: %s\n", splited[j]);
 			arg_splited = expand_split(ft_split_charset_mod(splited[j], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
 			if (!arg_splited)
 				return ;
+			str_unquote(arg_splited);
 			free(splited[j]);
-			splited[j] = split_join(arg_splited);
-			printf("Joined Quote splited solo arg: %s\n", splited[j]);
+			splited[j++] = split_join(arg_splited);
 			free_split(arg_splited);
-			j++;
 		}
 		free(node->args[i]);
-		node->args[i] = split_join(splited);
-		i++;
+		node->args[i++] = split_join(splited);
 	}
 	free_split(splited);
 }
