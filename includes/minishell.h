@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/03/21 01:02:44 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/05 13:25:39 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	redirect_input_builtin(char *file);
 void	redirect_input(char *file);
 //list_validations.c
 int	validate_splited_command(char **splited_command);
-int	validate_list(t_list *list);
+int	validate_list(t_shell *shell, t_list *list);
 //exits.c
 void	exit_program(int sig);
 void	exit_safely(t_shell *shell);
