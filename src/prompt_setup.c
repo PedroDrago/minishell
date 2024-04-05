@@ -72,12 +72,5 @@ char	*get_prompt(t_shell *shell)
 	prompt = readline(get_prompt_string(shell));
 	if (prompt == NULL)
 		exit_safely(shell);
-	while (prompt[ft_strlen(prompt) - (!!ft_strlen(prompt) * 1)] == '\\')
-	{
-		prompt[ft_strlen(prompt) - 1] = '\0';
-		prompt = ft_strjoin(prompt, readline("> "), O_NONE);
-		if (prompt == NULL)
-			exit_safely(shell);
-	}
 	return (prompt);
 }
