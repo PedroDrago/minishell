@@ -73,9 +73,6 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 {
 	int	status;
 
-	node->args = get_args(node->splited_command);
-	expand_arguments(node, shell);
-	strip_quotes(node);
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
@@ -121,8 +118,11 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		env(shell->env);
 	else if (!ft_strncmp(node->splited_command[0], "exit", 5))
 	{
-		free_process_data(shell);
-		exit_safely(shell);
+		if (!node->prev && !node->next)
+		{
+			free_process_data(shell);
+			exit_safely(shell);
+		}
 	}
 	post_builtin(node, shell, status);
 }

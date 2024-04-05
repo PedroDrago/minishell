@@ -38,41 +38,18 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell)
 		append_process(pid, shell, node->basic_command);
 }
 
-void	strip_quotes(t_node *node)
-{
-	int	i;
-	char	*tmp;
-
-	i = 0;
-	tmp = NULL;
-	while(node->args[i])
-	{
-
-		if (node->args[i][0] == '\'' || node->args[i][0] == '\"')
-		{
-			tmp = node->args[i];
-			if (ft_strlen(node->args[i]) > 2)
-				node->args[i] = ft_strndup(&node->args[i][1], ft_strlen(node->args[i]) - 2);
-			else
-				node->args[i] = ft_strdup("");
-			free(tmp);
-			tmp = NULL;
-		}
-		i++;
-	}
-}
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
 	pid_t	pid;
 
+	node->args = get_args(node->splited_command);
+	expand_arguments(node, shell);
 	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
 		execute_builtin(node, shell);
 		return (TRUE);
 	}
 	kill(getpid(), SIGUSR2);
-	node->args = get_args(node->splited_command);
-	expand_arguments(node, shell);
 	pid = fork();
 	if (pid == 0)
 	{
