@@ -6,20 +6,22 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 15:15:38 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:06:58 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	execute_command(t_shell *shell, char **args)
+int    execute_command(t_shell *shell, char **args)
 {
-	char *path;
+    char    *path;
 
-	execve(args[0], args, shell->envp);
-	path = get_right_path(shell, args[0]);
-	execve(path, args, shell->envp);
-	exit(1);
+    execve(args[0], args, shell->envp);
+    if (args[0] && args[0][0] == '.')
+        exit(127);
+    path = get_right_path(shell, args[0]);
+    execve(path, args, shell->envp);
+    exit(1);
 }
 
 int	perform_redirections(char **splited_command)
