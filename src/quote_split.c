@@ -31,10 +31,8 @@ int    count_quote_split(char *str)
     count = 0;
     while(str[i])
     {
-        if (str[i] == '\'')
-            i = get_next_quote(str, i, '\'');
-        else if (str[i] == '\"')
-            i = get_next_quote(str, i, '\"');
+        if (str[i] == '\'' || str[i] == '\"')
+            i = get_next_quote(str, i, str[i]);
         else
             i = get_next_end(str, i);
         count++;
@@ -54,10 +52,8 @@ void    do_quote_split(char *str, char **splited)
     end = 0;
     while(str[end])
     {
-        if (str[end] == '\'')
-            end = get_next_quote(str, end, '\'');
-        else if (str[end] == '\"')
-            end = get_next_quote(str, end, '\"');
+        if (str[end] == '\'' || str[end] == '\"')
+            end = get_next_quote(str, end, str[end]);
         else
             end = get_next_end(str, end);
         *splited++ = command_split_substr(str, start, end);
