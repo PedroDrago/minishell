@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/03 15:30:00 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/05 15:15:38 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	wait_children(t_shell *shell)
 	{
 		status = -1;
 		waitpid(shell->processes_data.processes[i]->pid, &status, 0);
+		
 		set_exit_status(status, shell);
 		if (status > 0)
 			resolve_error(status, shell->processes_data.processes[i]->command);
@@ -102,7 +103,7 @@ int        count_new_prompt_size(char *str) // NEWFEATURE
     while (str && *str)
     {
         if (ft_strchr("\"><|", *str++))
-            count++;
+            count += 2;
         count++;
     }
     return (count);
@@ -142,6 +143,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	t_list	*prompt_list;
 	char	*tmp;
 
+	prompt_list = NULL;
 	tmp = malloc(sizeof(char) * (count_new_prompt_size(prompt) + 1));
 	if (!tmp)
 		return (FALSE);
@@ -151,7 +153,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	if (!validate_list(prompt_list))
+	if (!validate_list(shell, prompt_list))
 		return (TRUE); //WARN: free alguma coisa
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);

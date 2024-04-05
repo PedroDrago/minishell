@@ -65,7 +65,7 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
 	pid_t	pid;
 
-	if (is_builtin(node->splited_command[0]))
+	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
 		execute_builtin(node, shell);
 		return (TRUE);
