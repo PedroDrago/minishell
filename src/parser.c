@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:25 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:25 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/05 14:58:51 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include <stdio.h>
 
@@ -19,11 +20,14 @@ t_node	*create_node(void)
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)
 		return (NULL);
-	node->next = NULL;
-	node->prev = NULL;
+	node->basic_command = NULL;
+	node->splited_command = NULL;
+	node->args = NULL;
 	node->has_pipe = FALSE;
 	node->node_pipe[0] = 0;
 	node->node_pipe[1] = 1;
+	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -72,7 +76,10 @@ t_list *parse_prompt(char *prompt)
 		node = create_node();
 		node->basic_command = command_tab[i];
 		if (command_tab[i][ft_strlen(command_tab[i]) - 1] == '|')
+		{
 			node->has_pipe = TRUE;
+			command_tab[i][ft_strlen(command_tab[i]) - 1] = '\0';
+		}
 		node->splited_command = command_split(command_tab[i]);
 		i++;
 		append_node(prompt_list, node);

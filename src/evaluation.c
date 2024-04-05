@@ -3,24 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   evaluation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/21 19:09:14 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/05 17:06:58 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
-int	execute_command(t_shell *shell, char *command, char **args)
+int    execute_command(t_shell *shell, char **args)
 {
-	char *path;
+    char    *path;
 
-	execve(command, args, shell->envp);
-	path = get_right_path(shell, command);
-	execve(path, args, shell->envp);
-	exit(1);
+    execve(args[0], args, shell->envp);
+    if (args[0] && args[0][0] == '.')
+        exit(127);
+    path = get_right_path(shell, args[0]);
+    execve(path, args, shell->envp);
+    exit(1);
 }
 
 int	perform_redirections(char **splited_command)
@@ -57,6 +58,7 @@ void	wait_children(t_shell *shell)
 	{
 		status = -1;
 		waitpid(shell->processes_data.processes[i]->pid, &status, 0);
+		
 		set_exit_status(status, shell);
 		if (status > 0)
 			resolve_error(status, shell->processes_data.processes[i]->command);
@@ -103,28 +105,28 @@ int        count_new_prompt_size(char *str) // NEWFEATURE
     while (str && *str)
     {
         if (ft_strchr("\"><|", *str++))
-            count++;
+            count += 2;
         count++;
     }
     return (count);
 }
 
-char    *prompt_pre_format(char *prompt, char *new_str) // NEWFEATURE
+char    *prompt_pre_format(char *prompt, char *new_str, int i, int j) // NEWFEATURE
 {
-    int i;
-    int j;
-    int    diff;
-    int    quotes;
+    int	diff;
+    int	quotes;
+	int	d_quotes;
 
-    i = 0;
-    j = 0;
     quotes = 0;
+	d_quotes = 0;
     while (prompt[j])
     {
-        if (prompt[j] == '\"')
-            quotes = !quotes;
-        diff = str_token_cmp(&prompt[j]);
-        if (!quotes && diff)
+        if (prompt[j] == '\"' && !quotes)
+		    d_quotes = !d_quotes;
+		if (prompt[j] == '\'' && !d_quotes)
+			quotes = !quotes;
+		diff = str_token_cmp(&prompt[j]);
+        if (!d_quotes && !quotes && diff)
         {
             new_str[i++] = ' ';
             while(diff-- > 0)
@@ -143,16 +145,17 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	t_list	*prompt_list;
 	char	*tmp;
 
+	prompt_list = NULL;
 	tmp = malloc(sizeof(char) * (count_new_prompt_size(prompt) + 1));
 	if (!tmp)
 		return (FALSE);
-	prompt_pre_format(prompt, tmp);
+	prompt_pre_format(prompt, tmp, 0, 0);
 	prompt_list = parse_prompt(tmp);
-    free(tmp);
+	free(tmp);
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	if (!validate_list(prompt_list))
+	if (!validate_list(shell, prompt_list))
 		return (TRUE); //WARN: free alguma coisa
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);

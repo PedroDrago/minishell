@@ -54,7 +54,7 @@ int	do_heredoc_builtin(char *delimiter, int original_fd)
 	pipe(pipe_fd);
 	prompt = readline("> ");
 	if (!prompt)
-		return (FALSE); // FIX: ????
+			exit(1); // FIX: ????
 	len = ft_strlen(delimiter);
 	while (ft_strncmp(prompt, delimiter, len + 1))
 	{
@@ -62,7 +62,7 @@ int	do_heredoc_builtin(char *delimiter, int original_fd)
 		ft_putstr_fd("\n", pipe_fd[1]);
 		prompt = readline("> ");
 		if (!prompt)
-			return (FALSE); // FIX: ????
+			exit(1); // FIX: ????
 	}
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[1]);

@@ -44,8 +44,13 @@ void	print_split(char **argv)
 	i = 0;
 	printf("**********SPLIT START***********\n");
 	while (argv && argv[i])
-		printf("!%s!\n", argv[i++]);
-	printf("**********SPLIT END***********\n");
+	{
+		ft_putstr_fd("!", 2);
+		ft_putstr_fd(argv[i], 2);
+		ft_putstr_fd("!", 2);
+		i++;
+	}
+	printf("\n**********SPLIT END***********\n");
 }
 
 void	free_list(t_list *list)
@@ -56,6 +61,7 @@ void	free_list(t_list *list)
 	{
 		free(list->head->basic_command);
 		free_split(list->head->splited_command);
+		free_split(list->head->args);
 		tmp = list->head->next;
 		free(list->head);
 		list->head = tmp;
@@ -70,8 +76,11 @@ void	print_list(t_list *arg)
 	tmp = arg->head;
 	while (tmp)
 	{
-		printf("command string: %s\n", tmp->basic_command);
-		printf("Has pipe: %i\n", tmp->has_pipe);
+		ft_putstr_fd("Basic Command: \n", 2);
+		ft_putstr_fd(tmp->basic_command, 2);
+		ft_putstr_fd("\nHAS PIPE: \n", 2);
+		ft_putnbr_fd(tmp->has_pipe, 2);
+		ft_putstr_fd("\n", 2);
 		tmp = tmp->next;
 	}
 }

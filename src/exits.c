@@ -25,7 +25,6 @@ void	exit_program(int sig)
 
 void	exit_safely(t_shell *shell)
 {
-	ft_putstr_fd("Algo\n", 2);
 	free(shell->prompt_string);
 	free_env(shell->env);
 	free(shell);
