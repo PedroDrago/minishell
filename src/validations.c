@@ -93,8 +93,7 @@ int	validate_prompt(char *prompt, t_shell *shell)
 {
 	if (!prompt || !ft_strlen(prompt))
 		return (FALSE);
-	if (!validate_quotes(prompt) || !validate_tokens(prompt)
-		|| !validate_characters(prompt))
+	if (!validate_quotes(prompt) || !validate_tokens(prompt))
 	{
 		set_exit_status(2, shell);
 		return (FALSE);
