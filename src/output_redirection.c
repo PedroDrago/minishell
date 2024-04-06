@@ -15,12 +15,12 @@ int	is_redirect_output(char *token)
 	return (is_truncate(token) || is_append(token));
 }
 
-void	redirect_output(char *file)
+void	redirect_output(char *redirection, char *file)
 {
 	int	tmp_fd;
 	struct stat file_info;
 
-	if (is_append(file))
+	if (is_append(redirection))
 	{
 		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
 		if (tmp_fd < 0)
@@ -44,12 +44,12 @@ void	redirect_output(char *file)
 }
 
 
-int	redirect_output_builtin(char *file)
+int	redirect_output_builtin(char *redirection, char *file)
 {
 	int	tmp_fd;
 	struct stat file_info;
 
-	if (is_append(file))
+	if (is_append(redirection))
 	{
 		tmp_fd= open(file, O_RDWR | O_APPEND | O_CREAT, 0664);
 		if (tmp_fd < 0)

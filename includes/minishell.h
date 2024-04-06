@@ -110,8 +110,8 @@ char	**get_args(char **splited_command);
 int	is_truncate(char *token);
 int	is_append(char *token);
 int	is_redirect_output(char *token);
-void	redirect_output(char *file);
-int	redirect_output_builtin(char *file);
+void	redirect_output(char *redirection, char *file);
+int	redirect_output_builtin(char *redirection, char *file);
 
 //parser.c
 t_node	*create_node(void);

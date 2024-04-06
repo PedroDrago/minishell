@@ -36,7 +36,10 @@ int	perform_redirections(char **splited_command)
 		if(is_redirect_input(splited_command[i]))
 			redirect_input(splited_command[++i]);
 		else if(is_redirect_output(splited_command[i]))
-			redirect_output(splited_command[++i]);
+		{
+			redirect_output(splited_command[i], splited_command[i + 1]);
+			i++;
+		}
 		else if(is_heredoc(splited_command[i]))
 	        {
 			if (!do_heredoc(splited_command[++i], original_fd))

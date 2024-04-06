@@ -33,7 +33,8 @@ int	perform_builtin_redirections(char **splited_command, t_shell *shell)
 		}
 		else if(is_redirect_output(splited_command[i]))
 		{
-			status = redirect_output_builtin(splited_command[++i]);
+			status = redirect_output_builtin(splited_command[i], splited_command[i + 1]);
+			i++;
 			if (status)
 				return (status);
 		}
