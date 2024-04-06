@@ -2,6 +2,6 @@
 
 - [ ] Expandir variaveis no heredoc.
 - [ ] Remove unused headers
-- [ ] heredoc ta quebrado, output n sai
+- [ ] heredoc do bash expande variaveis, vamos fazer no nosso?
 - [ ] Norm
 - [ ] valgrind
