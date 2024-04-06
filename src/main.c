@@ -14,29 +14,24 @@
 #include <readline/readline.h>
 #include <signal.h>
 #include <stdio.h>
+#include <term.h>
 #include <unistd.h>
 
 int		g_sig;
 
-int	validate_edge_tokens(t_shell *shell, char *str)
+void	pre_prompt(t_shell *shell)
 {
-	(void)shell;
-	while (*str)
-	{
-		if (ft_strchr("|<>\"\'", *str))
-			break;
-		if (!ft_strchr("|<> \t\a\b\n\v\f\r", *str))
-			return (TRUE);
-		str++;
-	}
-	if (!ft_strncmp(str, "||", 2))
-		ft_putstr_fd("bash: syntax error near unexpected token `||'\n", 2);
-	else if (!ft_strncmp(str, "|", 1))
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-	else
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-	set_exit_status(2, shell);
-	return (FALSE);
+	rl_replace_line("", 0);
+	kill(getpid(), SIGUSR1);
+	shell->original_stdin = dup(0);
+	shell->original_stdout = dup(1);
+	g_sig = -1;
+}
+
+void	post_prompt(t_shell *shell)
+{
+	dup2(shell->original_stdin, 0);
+	dup2(shell->original_stdout, 1);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -52,21 +47,13 @@ int	main(int argc, char *argv[], char *envp[])
 	signal(SIGUSR2, exit_program);
 	while (TRUE)
 	{
-		rl_replace_line("", 0);
-		kill(getpid(), SIGUSR1);
-		shell->original_stdin = dup(0);
-		shell->original_stdout = dup(1);
-		g_sig = -1;
+		pre_prompt(shell);
 		prompt = get_prompt(shell);
 		add_history(prompt);
-		if (!prompt || !ft_strlen(prompt) || !valid_quotes(prompt))
-			continue ;
-		if (!validate_edge_tokens(shell, prompt))
+		if (!validate_prompt(prompt, shell))
 			continue ;
 		if (!evaluate_prompt(prompt, shell))
 			return (exit_safely(shell), EXIT_FAILURE);
-		dup2(shell->original_stdin, 0);
-		dup2(shell->original_stdout, 1);
 	}
 	return (exit_safely(shell), EXIT_SUCCESS);
 }
