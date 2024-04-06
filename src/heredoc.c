@@ -39,7 +39,6 @@ int	do_heredoc(char *delimiter, int original_fd)
 	}
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[1]);
-	exit(1);
 	return (TRUE);
 }
 
