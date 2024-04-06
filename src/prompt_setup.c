@@ -68,9 +68,14 @@ char	*get_prompt_string(t_shell *shell)
 char	*get_prompt(t_shell *shell)
 {
 	char	*prompt;
+	char	*tmp;
 
 	prompt = readline(get_prompt_string(shell));
 	if (prompt == NULL)
 		exit_safely(shell);
+	add_history(prompt);
+	tmp = prompt;
+	prompt = ft_strtrim(prompt, " ");
+	free(tmp);
 	return (prompt);
 }

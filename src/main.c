@@ -49,7 +49,6 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		pre_prompt(shell);
 		prompt = get_prompt(shell);
-		add_history(prompt);
 		if (!validate_prompt(prompt, shell))
 			continue ;
 		if (!evaluate_prompt(prompt, shell))

@@ -155,12 +155,11 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	if (!validate_list(shell, prompt_list))
-		return (TRUE); //WARN: free alguma coisa
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
 	free_process_data(shell);
+	free(prompt);
 	return (TRUE);
 }

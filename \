@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 int	validate_quotes(char *prompt)
 {
@@ -58,7 +57,6 @@ int	validate_edge_tokens(char *str)
 			return (TRUE);
 		str++;
 	}
-	ft_putstr_fd("[EDGE TOKENS]", 2);
 	if (!ft_strncmp(str, "||", 2))
 		ft_putstr_fd("Minishell: syntax error near unexpected token `||'\n", 2);
 	else if (!ft_strncmp(str, "|", 1))
@@ -75,21 +73,13 @@ int	is_token_char(char c)
 
 int	print_double_token_error(char c)
 {
-	ft_putstr_fd("[DOUBLE TOKEN] Minishell: syntax error near unexpected token `", 2), ft_putchar_fd(c, 2), ft_putstr_fd("'\n", 2);
+	ft_putstr_fd("Minishell: syntax error near unexpected token `", 2), ft_putchar_fd(c, 2), ft_putstr_fd("'\n", 2);
 	return (FALSE);
 }
 
 int	validate_unresolved_tokens(char *prompt)
 {
-	char	last;
-
-	last = prompt[ft_strlen(prompt) - 1];
-	if (is_token_char(last))
-	{
-		ft_putstr_fd("[UNRESOLVED TOKEN] Minishell: syntax error near unexpected token `", 2), ft_putchar_fd(last, 2), ft_putstr_fd("'\n", 2);
-		return (FALSE);
-	}
-	return (TRUE);
+	return (!is_token_char(prompt[ft_strlen(prompt) - 1]));
 }
 
 int	validate_double_tokens(char *prompt)
@@ -125,10 +115,9 @@ int	validate_double_tokens(char *prompt)
 
 int	print_invalid_characters_error(char c)
 {
-	ft_putstr_fd("[INVALID CHARACTERS] Minishell: syntax error: Invalid character:`", 2), ft_putchar_fd(c, 2), ft_putstr_fd("'\n", 2);
+	ft_putstr_fd("Minishell: syntax error: Invalid character:`", 2), ft_putchar_fd(c, 2), ft_putstr_fd("'\n", 2);
 	return (FALSE);
 }
-
 int	validate_characters(char *prompt)
 {
 	int	i;
