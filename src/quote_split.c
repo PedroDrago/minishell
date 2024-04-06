@@ -76,18 +76,3 @@ char	**quote_split(char *str)
 	do_quote_split(str, splited);
 	return (splited);
 }
-
-// int main(int argc, char *argv[])
-// {
-// 	while (1)
-// 	{
-// 		char **splited = quote_split(readline("$ "));
-// 		int i = 0;
-// 		while (splited[i])
-// 		{
-// 			printf("!%s!", splited[i++]);
-// 		}
-// 			printf("\n");
-// 	}
-// 	return 0;
-// }
