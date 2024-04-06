@@ -12,6 +12,27 @@
 
 #include "../includes/minishell.h"
 #include <stdlib.h>
+#include <sys/stat.h>
+
+void	resolve_errors(char *command)
+{
+    struct stat file_info;
+
+    ft_putstr_fd("Minishell: ", 2);
+    ft_putstr_fd(command, 2);
+    if (stat(command, &file_info) < 0)
+    {
+	ft_putstr_fd(": No such file or directory\n", 2);
+	exit(127);
+    }
+    if (!(file_info.st_mode & S_IXUSR))
+    {
+	ft_putstr_fd(": Permission denied\n", 2);
+	exit(126);
+    }
+    ft_putstr_fd(": Can't be executed by this shell\n", 2);
+    exit(2);
+}
 
 int    execute_command(t_shell *shell, char **args)
 {
@@ -19,7 +40,7 @@ int    execute_command(t_shell *shell, char **args)
 
     execve(args[0], args, shell->envp);
     if (args[0] && args[0][0] == '.')
-        exit(127); //FIX: print error here
+	resolve_errors(args[0]);
     path = get_right_path(shell, args[0]);
     execve(path, args, shell->envp);
     exit(1);
