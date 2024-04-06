@@ -41,7 +41,6 @@ int	perform_redirections(char **splited_command)
 	        {
 			if (!do_heredoc(splited_command[++i], original_fd))
 			    return (FALSE);
-			
 		}
 		i++;
 	}
