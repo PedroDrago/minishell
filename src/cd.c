@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 char	*get_home_path(t_env *env)
 {
@@ -37,7 +38,8 @@ int	cd(char *argv[], t_shell *shell)
 		path = get_home_path(shell->env);
 	if (!path)
 		return (1);
-	chdir(path);
+	if (chdir(path) < 0)
+		perror("Minishell: cd");
 	if (!set_env_value(shell->env, "OLDPWD", cwd))
 		return (free(cwd), 1);
 	free(cwd);
