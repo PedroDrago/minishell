@@ -69,9 +69,6 @@ void	free_env(t_env *env);
 t_env	*make_new_env_node(char *key, char *value);
 int	fill_node(char *str, int fd, t_env *temp_env, t_env *env_head);
 t_env	*fill_env_struct(int fd);
-//error.c
-void	resolve_error(int status, char *command);
-void	resolve_builtin_error(int status);
 //evaluation.c
 int	execute_command(t_shell *shell, char **args);
 int	perform_redirections(char **splited_command);
@@ -112,7 +109,6 @@ int	is_append(char *token);
 int	is_redirect_output(char *token);
 void	redirect_output(char *redirection, char *file);
 int	redirect_output_builtin(char *redirection, char *file);
-
 //parser.c
 t_node	*create_node(void);
 void	append_node(t_list *list, t_node *node);
