@@ -81,7 +81,7 @@ int	exec_list(t_list *list, t_shell *shell);
 //execution_path.c
 char **get_paths_split(t_shell *shell);
 char *get_current_path_str(char *path, char *command);
-int	can_open_file(int stat_return, struct stat *file_info);
+int	can_open_file(int stat_return, struct stat *file_info, char *command);
 char	*get_right_path(t_shell *shell, char *command);
 //expansion_edge_cases.c
 char	*dup_value(char *arg);

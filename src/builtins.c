@@ -79,8 +79,6 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
 	status = perform_builtin_redirections(node->splited_command, shell);
-	if (status)
-		resolve_builtin_error(status);
 	return (status);
 }
 

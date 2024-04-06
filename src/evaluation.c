@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdlib.h>
 
 int    execute_command(t_shell *shell, char **args)
 {
@@ -18,7 +19,7 @@ int    execute_command(t_shell *shell, char **args)
 
     execve(args[0], args, shell->envp);
     if (args[0] && args[0][0] == '.')
-        exit(127);
+        exit(127); //FIX: print error here
     path = get_right_path(shell, args[0]);
     execve(path, args, shell->envp);
     exit(1);
@@ -60,10 +61,7 @@ void	wait_children(t_shell *shell)
 	{
 		status = -1;
 		waitpid(shell->processes_data.processes[i]->pid, &status, 0);
-		
-		set_exit_status(status, shell);
-		if (status > 0)
-			resolve_error(status, shell->processes_data.processes[i]->command);
+		set_exit_status(WEXITSTATUS(status), shell);
 		i++;
 	}
 }
