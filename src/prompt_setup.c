@@ -41,7 +41,6 @@ char	*get_prompt_pwd(char *str, t_shell *shell)
 	char	*pwd;
 	char	*home;
 
-	pwd = get_env_node(shell->env, "PWD")->value;
 	pwd = get_env_node_value(shell->env, "PWD");
 	if (!pwd)
 		pwd = ".";
