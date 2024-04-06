@@ -72,7 +72,8 @@ void	init_processes_data(t_list *list, t_shell *shell)
 	tmp = list->head;
 	while(tmp)
 	{
-		i++;
+		if (!is_builtin(tmp->splited_command[0]))
+			i++;
 		tmp = tmp->next;
 	}
 	shell->pids.array = malloc(sizeof(pid_t) * i);
