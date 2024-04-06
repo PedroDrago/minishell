@@ -19,6 +19,7 @@
 
 int		g_sig;
 
+
 void	pre_prompt(t_shell *shell)
 {
 	rl_replace_line("", 0);
@@ -45,6 +46,7 @@ int	main(int argc, char *argv[], char *envp[])
 	prompt = NULL;
 	signal(SIGUSR1, exit_program);
 	signal(SIGUSR2, exit_program);
+	signal(SIGQUIT, SIG_IGN);
 	while (TRUE)
 	{
 		pre_prompt(shell);
