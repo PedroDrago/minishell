@@ -43,7 +43,10 @@ int    execute_command(t_shell *shell, char **args)
 	resolve_errors(args[0]);
     path = get_right_path(shell, args[0]);
     execve(path, args, shell->envp);
-    exit(1);
+    ft_putstr_fd("Minishell: ", 2);
+    ft_putstr_fd(args[0], 2);
+    ft_putstr_fd(": No such file or directory\n", 2);
+    exit(127);
 }
 
 int	perform_redirections(char **splited_command)
