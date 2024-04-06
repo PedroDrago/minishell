@@ -65,6 +65,6 @@ int	do_heredoc_builtin(char *delimiter, int original_fd)
 	}
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[1]);
-	exit(1);
+	exit(0);
 	return (TRUE);
 }
