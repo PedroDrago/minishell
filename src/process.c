@@ -3,20 +3,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	append_process(pid_t pid, t_shell *shell, char *basic_command)
-{
-	t_process	*process;
-	char	**splited;
-
-	process = malloc(sizeof(t_process));
-	if (!process)
-		exit(1);
-	process->pid = pid;
-	splited = command_split(basic_command);
-	process->command = ft_strdup(splited[0]);
-	free_split(splited);
-	shell->processes_data.processes[shell->processes_data.index++] = process;
-}
 
 int	prep_process(t_node *node)
 {
@@ -35,7 +21,7 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell)
 			close(node->node_pipe[1]);
 		if (node->prev && node->prev->has_pipe)
 			close(node->node_pipe[0]);
-		append_process(pid, shell, node->basic_command);
+		append_process(pid, shell);
 }
 
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
@@ -65,33 +51,31 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	return (TRUE);
 }
 
+void	append_process(pid_t pid, t_shell *shell)
+{
+	shell->pids.array[shell->pids.index++] = pid;
+}
+
 void	free_process_data(t_shell *shell)
 {
-	int	i;
-
-	i = 0;
-	while(i < shell->processes_data.size)
-	{
-		free(shell->processes_data.processes[i]->command);
-		free(shell->processes_data.processes[i]);
-		i++;
-	}
-	free(shell->processes_data.processes);
+	free(shell->pids.array);
+	shell->pids.index = 0;
+	shell->pids.size = 0;
 }
+
 void	init_processes_data(t_list *list, t_shell *shell)
 {
 	int	i;
 	t_node *tmp;
 
-	tmp = list->head;
 	i = 0;
+	tmp = list->head;
 	while(tmp)
 	{
-		if (!is_builtin(tmp->splited_command[0]))
-			i++;
+		i++;
 		tmp = tmp->next;
 	}
-	shell->processes_data.processes = malloc(sizeof(t_process *) * i);
-	shell->processes_data.size = i;
-	shell->processes_data.index = 0;
+	shell->pids.array = malloc(sizeof(pid_t) * i);
+	shell->pids.size = i;
+	shell->pids.index = 0;
 }

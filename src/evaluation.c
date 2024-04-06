@@ -57,10 +57,10 @@ void	wait_children(t_shell *shell)
 	int	status;
 
 	i = 0;
-	while (i < shell->processes_data.size)
+	while (i < shell->pids.size)
 	{
 		status = -1;
-		waitpid(shell->processes_data.processes[i]->pid, &status, 0);
+		waitpid(shell->pids.array[i], &status, 0);
 		set_exit_status(WEXITSTATUS(status), shell);
 		i++;
 	}

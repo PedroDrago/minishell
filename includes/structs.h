@@ -63,18 +63,13 @@ typedef struct s_validation
 	int	token_last;
 } 	t_validation;
 
-typedef struct s_process
+typedef struct s_pids
 {
-	pid_t pid;
-	char	*command;
-} 	t_process;
-
-typedef struct s_processes_data
-{
-	t_process	**processes;
-	int		size;
-	int		index;
-} 	t_processes_data;
+	pid_t	*array;
+	int	size;
+	int	index;
+	
+} 	t_pids;
 typedef struct s_shell
 {
 	int				last_status;
@@ -83,7 +78,7 @@ typedef struct s_shell
 	int			original_stdout;
 	t_env			*env;
 	t_list			*prompt_list;
-	t_processes_data	processes_data;
+	t_pids			pids;
 	char			**envp;
 }					t_shell;
 

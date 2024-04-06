@@ -124,7 +124,7 @@ int	setup_list_pipes(t_list *list);
 int	is_token(char *str);
 int	is_pipe(char *token);
 //process.c
-void	append_process(pid_t pid, t_shell *shell, char *basic_command);
+void	append_process(pid_t pid, t_shell *shell);
 int	prep_process(t_node *node);
 void	post_process(pid_t pid, t_node *node, t_shell *shell);
 int	execute_node(t_node *node, t_list *list, t_shell *shell);
