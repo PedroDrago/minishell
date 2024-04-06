@@ -56,6 +56,13 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_validation
+{
+	int	in_single_quotes;
+	int	in_double_quotes;
+	int	token_last;
+} 	t_validation;
+
 typedef struct s_process
 {
 	pid_t pid;

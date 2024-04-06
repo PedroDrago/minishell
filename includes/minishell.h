@@ -50,7 +50,7 @@ void	do_command_split(char *str, char **splited);
 char	**command_split(char *str);
 //command_split_utils.c
 int	is_splitable(char *str, int end, int in_single_quotes, int in_double_quotes);
-int	count_split(char *str);
+int	count_command_split(char *str);
 int	count_backslash(char *str, int start, int end);
 //echo.c
 int	split_len(char **split);
@@ -100,6 +100,7 @@ void	redirect_input(char *file);
 //list_validations.c
 int	validate_splited_command(char **splited_command);
 int	validate_list(t_shell *shell, t_list *list);
+int	validate_prompt(char *prompt, t_shell *shell);
 //exits.c
 void	exit_program(int sig);
 void	exit_safely(t_shell *shell);
@@ -168,6 +169,7 @@ void	print_split(char **argv);
 void	free_list(t_list *list);
 void	print_list(t_list *arg);
 //validations.c
+int	has_double_token(char *prompt);
 int	valid_quotes(char *prompt);
 int	has_invalid_characters(char **splited);
 //quote_split.c
