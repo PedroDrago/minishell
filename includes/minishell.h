@@ -174,7 +174,12 @@ int	valid_quotes(char *prompt);
 int	has_invalid_characters(char **splited);
 //quote_split.c
 char	**quote_split(char *str);
-
+//double_token_validation.c
+int	validate_double_tokens(char *prompt);
+void	init_flags(t_validation *flags, int *count);
+int	is_token_char(char c);
+//character_validation.c
+int	validate_characters(char *prompt);
 extern int	g_sig;
 
 #endif
