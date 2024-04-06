@@ -25,6 +25,7 @@ void	pre_prompt(t_shell *shell)
 	kill(getpid(), SIGUSR1);
 	shell->original_stdin = dup(0);
 	shell->original_stdout = dup(1);
+	g_sig = -1;
 }
 
 void	post_prompt(t_shell *shell)
