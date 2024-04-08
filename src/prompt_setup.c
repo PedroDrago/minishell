@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 char	*get_env_node_value(t_env *env, char *key)
 {
@@ -40,7 +41,6 @@ char	*get_prompt_pwd(char *str, t_shell *shell)
 	char	*pwd;
 	char	*home;
 
-	pwd = get_env_node(shell->env, "PWD")->value;
 	pwd = get_env_node_value(shell->env, "PWD");
 	if (!pwd)
 		pwd = ".";
@@ -68,9 +68,14 @@ char	*get_prompt_string(t_shell *shell)
 char	*get_prompt(t_shell *shell)
 {
 	char	*prompt;
+	char	*tmp;
 
 	prompt = readline(get_prompt_string(shell));
 	if (prompt == NULL)
 		exit_safely(shell);
+	add_history(prompt);
+	tmp = prompt;
+	prompt = ft_strtrim(prompt, " ");
+	free(tmp);
 	return (prompt);
 }

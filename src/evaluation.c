@@ -11,6 +11,28 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdlib.h>
+#include <sys/stat.h>
+
+void	resolve_errors(char *command)
+{
+    struct stat file_info;
+
+    ft_putstr_fd("Minishell: ", 2);
+    ft_putstr_fd(command, 2);
+    if (stat(command, &file_info) < 0)
+    {
+	ft_putstr_fd(": No such file or directory\n", 2);
+	exit(127);
+    }
+    if (!(file_info.st_mode & S_IXUSR))
+    {
+	ft_putstr_fd(": Permission denied\n", 2);
+	exit(126);
+    }
+    ft_putstr_fd(": Can't be executed by this shell\n", 2);
+    exit(2);
+}
 
 int    execute_command(t_shell *shell, char **args)
 {
@@ -18,10 +40,13 @@ int    execute_command(t_shell *shell, char **args)
 
     execve(args[0], args, shell->envp);
     if (args[0] && args[0][0] == '.')
-        exit(127);
+	resolve_errors(args[0]);
     path = get_right_path(shell, args[0]);
     execve(path, args, shell->envp);
-    exit(1);
+    ft_putstr_fd("Minishell: ", 2);
+    ft_putstr_fd(args[0], 2);
+    ft_putstr_fd(": No such file or directory\n", 2);
+    exit(127);
 }
 
 int	perform_redirections(char **splited_command)
@@ -36,12 +61,14 @@ int	perform_redirections(char **splited_command)
 		if(is_redirect_input(splited_command[i]))
 			redirect_input(splited_command[++i]);
 		else if(is_redirect_output(splited_command[i]))
-			redirect_output(splited_command[++i]);
+		{
+			redirect_output(splited_command[i], splited_command[i + 1]);
+			i++;
+		}
 		else if(is_heredoc(splited_command[i]))
 	        {
 			if (!do_heredoc(splited_command[++i], original_fd))
 			    return (FALSE);
-			
 		}
 		i++;
 	}
@@ -54,14 +81,11 @@ void	wait_children(t_shell *shell)
 	int	status;
 
 	i = 0;
-	while (i < shell->processes_data.size)
+	while (i < shell->pids.size)
 	{
 		status = -1;
-		waitpid(shell->processes_data.processes[i]->pid, &status, 0);
-		
-		set_exit_status(status, shell);
-		if (status > 0)
-			resolve_error(status, shell->processes_data.processes[i]->command);
+		waitpid(shell->pids.array[i], &status, 0);
+		set_exit_status(WEXITSTATUS(status), shell);
 		i++;
 	}
 }
@@ -155,12 +179,11 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	if (!validate_list(shell, prompt_list))
-		return (TRUE); //WARN: free alguma coisa
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
 	free_process_data(shell);
+	free(prompt);
 	return (TRUE);
 }

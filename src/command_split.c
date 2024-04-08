@@ -17,18 +17,14 @@ char	*command_split_substr(char *str, int start, int end)
 	int		i;
 	char	*substr;
 
-	substr = malloc(sizeof(char) * (end - start + 2 - count_backslash(str,
-					start, end)));
+	substr = malloc(sizeof(char) * (end - start + 2));
 	if (!substr)
 		return (NULL);
 	i = 0;
 	while (start <= end)
 	{
-		if (str[start] != '\\')
-		{
-			substr[i] = str[start];
-			i++;
-		}
+		substr[i] = str[start];
+		i++;
 		start++;
 	}
 	substr[i] = '\0';
@@ -72,7 +68,7 @@ char	**command_split(char *str)
 	trimmed = ft_strtrim(str, " ");
 	if (!trimmed)
 		return (NULL);
-	splited = malloc(sizeof(char *) * (count_split(trimmed) + 1));
+	splited = malloc(sizeof(char *) * (count_command_split(trimmed) + 1));
 	if (!splited)
 		return (free(trimmed), NULL);
 	do_command_split(trimmed, splited);

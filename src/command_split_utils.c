@@ -18,7 +18,7 @@ int	is_splitable(char *str, int end, int in_single_quotes, int in_double_quotes)
 		&& (!in_single_quotes && !in_double_quotes));
 }
 
-int	count_split(char *str)
+int	count_command_split(char *str)
 {
 	int	end;
 	int	count;
@@ -42,20 +42,6 @@ int	count_split(char *str)
 		}
 		else
 			end++;
-	}
-	return (count);
-}
-
-int	count_backslash(char *str, int start, int end)
-{
-	int	count;
-
-	count = 0;
-	while (start <= end)
-	{
-		if (str[start] == '\\')
-			count++;
-		start++;
 	}
 	return (count);
 }

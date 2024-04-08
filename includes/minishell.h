@@ -50,7 +50,7 @@ void	do_command_split(char *str, char **splited);
 char	**command_split(char *str);
 //command_split_utils.c
 int	is_splitable(char *str, int end, int in_single_quotes, int in_double_quotes);
-int	count_split(char *str);
+int	count_command_split(char *str);
 int	count_backslash(char *str, int start, int end);
 //echo.c
 int	split_len(char **split);
@@ -69,9 +69,6 @@ void	free_env(t_env *env);
 t_env	*make_new_env_node(char *key, char *value);
 int	fill_node(char *str, int fd, t_env *temp_env, t_env *env_head);
 t_env	*fill_env_struct(int fd);
-//error.c
-void	resolve_error(int status, char *command);
-void	resolve_builtin_error(int status);
 //evaluation.c
 int	execute_command(t_shell *shell, char **args);
 int	perform_redirections(char **splited_command);
@@ -81,7 +78,7 @@ int	exec_list(t_list *list, t_shell *shell);
 //execution_path.c
 char **get_paths_split(t_shell *shell);
 char *get_current_path_str(char *path, char *command);
-int	can_open_file(int stat_return, struct stat *file_info);
+int	can_open_file(int stat_return, struct stat *file_info, char *command);
 char	*get_right_path(t_shell *shell, char *command);
 //expansion_edge_cases.c
 char	*dup_value(char *arg);
@@ -100,6 +97,7 @@ void	redirect_input(char *file);
 //list_validations.c
 int	validate_splited_command(char **splited_command);
 int	validate_list(t_shell *shell, t_list *list);
+int	validate_prompt(char *prompt, t_shell *shell);
 //exits.c
 void	exit_program(int sig);
 void	exit_safely(t_shell *shell);
@@ -109,9 +107,8 @@ char	**get_args(char **splited_command);
 int	is_truncate(char *token);
 int	is_append(char *token);
 int	is_redirect_output(char *token);
-void	redirect_output(char *file);
-int	redirect_output_builtin(char *file);
-
+void	redirect_output(char *redirection, char *file);
+int	redirect_output_builtin(char *redirection, char *file);
 //parser.c
 t_node	*create_node(void);
 void	append_node(t_list *list, t_node *node);
@@ -123,7 +120,7 @@ int	setup_list_pipes(t_list *list);
 int	is_token(char *str);
 int	is_pipe(char *token);
 //process.c
-void	append_process(pid_t pid, t_shell *shell, char *basic_command);
+void	append_process(pid_t pid, t_shell *shell);
 int	prep_process(t_node *node);
 void	post_process(pid_t pid, t_node *node, t_shell *shell);
 int	execute_node(t_node *node, t_list *list, t_shell *shell);
@@ -168,11 +165,17 @@ void	print_split(char **argv);
 void	free_list(t_list *list);
 void	print_list(t_list *arg);
 //validations.c
+int	has_double_token(char *prompt);
 int	valid_quotes(char *prompt);
 int	has_invalid_characters(char **splited);
 //quote_split.c
 char	**quote_split(char *str);
-
+//double_token_validation.c
+int	validate_double_tokens(char *prompt);
+void	init_flags(t_validation *flags, int *count);
+int	is_token_char(char c);
+//character_validation.c
+int	validate_characters(char *prompt);
 extern int	g_sig;
 
 #endif

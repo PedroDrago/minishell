@@ -1,13 +1,11 @@
 # To-do
 
-- [ ] Norm
-- [ ] Dar free na porra toda que precisa.
-- [ ] Expandir variaveis no heredoc.
-- [ ] rever sistema de signals.
-- [ ] Double prompt quando da ctrl+c em um comando como cat, grep etc. Isso se da por conta dos multiplos waits acredito eu. Quando recebermos ctrl+c temos que dar kill em todos os pids filhos??? seila.
 - [ ] Remove unused headers
-- [ ] Saida do shell esta problematica, tanto com exit quanto com `CTRL+d`. Segfaults em alguns cenarios.
-- [ ] Talvez refazer todas as funcoes/structs de processos/pids, ta muito confuso (remover comando da mensagem de erro simplificaria muito esse processo)
-- [ ] Segfault: builtin rediectionado para arquivo e pipe depois: `pwd > arquivo.txt | wc`
-- [ ] local exec
-- [ ] `|`
+- [ ] heredoc do bash expande variaveis, vamos fazer isso no nosso? (N pede explicitamente na ficha)
+- [ ] Norm
+- [ ] valgrind
+- [ ] `unset PWD` da merda por causa do prompt bonito. Mas pelo que investiguei é pq dentro de `cd` quando atualizamos PWD, usamos a referencia de uma variavel que deps toma free, e ai fode tudo. So que se a gnt dupar vai leakar. Eu ainda n entendo mto bem quando que nossos values de env sao dupados e quando n sao. Eu sinto que da pra provocar diversos segfaults usando `env`, `export` e `unset` por conta do jeito que umas variaveis sao dupadas e outras n, mas posso estar enganado, so consegui reproduzir com o PWD ent pd set que só retirar o prompt bonito resolve.
+
+# Baseado na ficha de avaliacao
+- [ ] `Check if multiple tries of the same redirections fail.` acredito que nosso comportamento se enquadre nisso. Mas, talvez valha conversarmos sobre o que isso quer dizer.
+- [ ] `Check that $ is interpreted as an environment variable.` Não entendi muito bem.

@@ -116,6 +116,6 @@ void	expand_arguments(t_node *node, t_shell *shell)
 		}
 		free(node->args[i]);
 		node->args[i++] = split_join(splited);
+		free_split(splited);
 	}
-	free_split(splited);
 }
