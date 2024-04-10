@@ -57,6 +57,7 @@ char	*get_right_path(t_shell *shell, char *command) //FIX: Leak? Child process
 		path = get_current_path_str(paths_split[i++], command);
 		if (can_open_file(stat(path, &file_info), &file_info, command))
 			return (path);
+		free(path);
 	}
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": Command not found\n", 2);
