@@ -1,0 +1,3801 @@
+==1153358== Memcheck, a memory error detector
+==1153358== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1153358== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1153358== Command: ./minishell
+==1153358== Parent PID: 1153188
+==1153358== 
+==1153360== 
+==1153360== HEAP SUMMARY:
+==1153360==     in use at exit: 215,165 bytes in 438 blocks
+==1153360==   total heap usage: 768 allocs, 330 frees, 238,556 bytes allocated
+==1153360== 
+==1153360== 2 bytes in 1 blocks are still reachable in loss record 1 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F2EB: ft_strdup (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10AB5B: load_envs (env.c:109)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strdup
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 2 bytes in 1 blocks are still reachable in loss record 2 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F2EB: ft_strdup (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10AB6D: load_envs (env.c:109)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strdup
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 4 bytes in 1 blocks are still reachable in loss record 3 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10D05E: init_processes_data (process.c:79)
+==1153360==    by 0x10B7BD: evaluate_prompt (evaluation.c:183)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:init_processes_data
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 8 bytes in 1 blocks are still reachable in loss record 4 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48977F6: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4897E0D: rl_expand_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48871BF: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8 bytes in 1 blocks are still reachable in loss record 5 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x496D58E: strdup (strdup.c:42)
+==1153360==    by 0x4B0AD17: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 12 bytes in 1 blocks are still reachable in loss record 6 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A3F28: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153360== 13 bytes in 1 blocks are still reachable in loss record 7 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4898BF5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 14 bytes in 1 blocks are still reachable in loss record 8 of 85
+==1153360==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B04272: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 15 bytes in 1 blocks are still reachable in loss record 9 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x496D58E: strdup (strdup.c:42)
+==1153360==    by 0x4B088AE: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 16 bytes in 1 blocks are still reachable in loss record 10 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4892B26: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 16 bytes in 1 blocks are still reachable in loss record 11 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10CA63: create_list (parser.c:53)
+==1153360==    by 0x10CAA8: parse_prompt (parser.c:69)
+==1153360==    by 0x10B774: evaluate_prompt (evaluation.c:177)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:create_list
+   fun:parse_prompt
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 16 bytes in 1 blocks are still reachable in loss record 12 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10A51F: command_split (command_split.c:71)
+==1153360==    by 0x10CBAE: parse_prompt (parser.c:83)
+==1153360==    by 0x10B774: evaluate_prompt (evaluation.c:177)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:command_split
+   fun:parse_prompt
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 16 bytes in 1 blocks are still reachable in loss record 13 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10C56A: get_args (node_args.c:19)
+==1153360==    by 0x10CEBD: execute_node (process.c:31)
+==1153360==    by 0x10B42D: exec_list (evaluation.c:100)
+==1153360==    by 0x10B7D0: evaluate_prompt (evaluation.c:184)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:get_args
+   fun:execute_node
+   fun:exec_list
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 18 bytes in 1 blocks are still reachable in loss record 14 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x496D58E: strdup (strdup.c:42)
+==1153360==    by 0x4AFC377: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4AFEBF8: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153360== 20 bytes in 1 blocks are still reachable in loss record 15 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4895D8B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48986C9: rl_parse_and_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4898B6C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_parse_and_bind
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 16 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10AED0: make_new_env_node (env_utils.c:35)
+==1153360==    by 0x10AAE0: load_envs (env.c:100)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:make_new_env_node
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 17 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10AED0: make_new_env_node (env_utils.c:35)
+==1153360==    by 0x10A995: insert_new_node (env.c:57)
+==1153360==    by 0x10AA16: set_env_value (env.c:72)
+==1153360==    by 0x10AB82: load_envs (env.c:109)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:make_new_env_node
+   fun:insert_new_node
+   fun:set_env_value
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 18 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x49E5124: tsearch (tsearch.c:337)
+==1153360==    by 0x4B00D6E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:tsearch
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 19 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A1B1D: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A3F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 20 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A1B39: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A3F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 21 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F720: ft_strtrim (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10D328: get_prompt (prompt_setup.c:78)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strtrim
+   fun:get_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 22 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10A339: command_split_substr (command_split.c:20)
+==1153360==    by 0x10A43C: do_command_split (command_split.c:50)
+==1153360==    by 0x10A550: command_split (command_split.c:74)
+==1153360==    by 0x10CBAE: parse_prompt (parser.c:83)
+==1153360==    by 0x10B774: evaluate_prompt (evaluation.c:177)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:command_split_substr
+   fun:do_command_split
+   fun:command_split
+   fun:parse_prompt
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 24 bytes in 1 blocks are still reachable in loss record 23 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10DD3A: split_join (split_join.c:69)
+==1153360==    by 0x109A31: expand_arguments (arg_expansion.c:118)
+==1153360==    by 0x10CED8: execute_node (process.c:32)
+==1153360==    by 0x10B42D: exec_list (evaluation.c:100)
+==1153360==    by 0x10B7D0: evaluate_prompt (evaluation.c:184)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:split_join
+   fun:expand_arguments
+   fun:execute_node
+   fun:exec_list
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 25 bytes in 1 blocks are still reachable in loss record 24 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10D367: prompt_split_substr (prompt_split.c:8)
+==1153360==    by 0x10D4E2: do_prompt_split (prompt_split.c:49)
+==1153360==    by 0x10D590: prompt_split (prompt_split.c:64)
+==1153360==    by 0x10CAD0: parse_prompt (parser.c:73)
+==1153360==    by 0x10B774: evaluate_prompt (evaluation.c:177)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:prompt_split_substr
+   fun:do_prompt_split
+   fun:prompt_split
+   fun:parse_prompt
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 30 bytes in 1 blocks are still reachable in loss record 25 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFE624: _nc_home_terminfo (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4AFEBE2: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_home_terminfo
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 46 bytes in 1 blocks are still reachable in loss record 26 of 85
+==1153360==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0816F: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153360== 46 bytes in 1 blocks are still reachable in loss record 27 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFCFDE: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 48 bytes in 1 blocks are still reachable in loss record 28 of 85
+==1153360==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFE833: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 56 bytes in 1 blocks are still reachable in loss record 29 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10C965: create_node (parser.c:20)
+==1153360==    by 0x10CADE: parse_prompt (parser.c:76)
+==1153360==    by 0x10B774: evaluate_prompt (evaluation.c:177)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:create_node
+   fun:parse_prompt
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 59 bytes in 1 blocks are still reachable in loss record 30 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F507: ft_strjoin (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10D239: get_prompt_pwd (prompt_setup.c:51)
+==1153360==    by 0x10D2AD: get_prompt_string (prompt_setup.c:63)
+==1153360==    by 0x10D2DF: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_strjoin
+   fun:get_prompt_pwd
+   fun:get_prompt_string
+   fun:get_prompt
+   fun:main
+}
+==1153360== 59 bytes in 1 blocks are still reachable in loss record 31 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48871E3: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 59 bytes in 1 blocks are still reachable in loss record 32 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4897C7F: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4897E0D: rl_expand_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48871BF: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 64 bytes in 1 blocks are still reachable in loss record 33 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10D700: init_shell (shell_setting.c:39)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:init_shell
+   fun:main
+}
+==1153360== 78 bytes in 1 blocks are still reachable in loss record 34 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD04B: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 93 bytes in 1 blocks are still reachable in loss record 35 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x496D58E: strdup (strdup.c:42)
+==1153360==    by 0x4B00D54: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 94 bytes in 1 blocks are still reachable in loss record 36 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B0095B: _nc_tparm_analyze (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B00C62: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_tparm_analyze
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 99 bytes in 1 blocks are still reachable in loss record 37 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFE79A: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 112 bytes in 1 blocks are still reachable in loss record 38 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F1FB: ft_split (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10B859: get_paths_split (execution_path.c:11)
+==1153360==    by 0x10B9A3: get_right_path (execution_path.c:52)
+==1153360==    by 0x10B19F: execute_command (evaluation.c:44)
+==1153360==    by 0x10CF66: execute_node (process.c:44)
+==1153360==    by 0x10B42D: exec_list (evaluation.c:100)
+==1153360==    by 0x10B7D0: evaluate_prompt (evaluation.c:184)
+==1153360==    by 0x10C4B0: main (main.c:56)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_split
+   fun:get_paths_split
+   fun:get_right_path
+   fun:execute_command
+   fun:execute_node
+   fun:exec_list
+   fun:evaluate_prompt
+   fun:main
+}
+==1153360== 156 bytes in 1 blocks are still reachable in loss record 39 of 85
+==1153360==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08197: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153360== 168 bytes in 1 blocks are still reachable in loss record 40 of 85
+==1153360==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B00CCD: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 256 bytes in 1 blocks are still reachable in loss record 41 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A1E49: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A212C: rl_replace_line (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10C371: pre_prompt (main.c:25)
+==1153360==    by 0x10C476: main (main.c:52)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   fun:rl_extend_line_buffer
+   fun:rl_replace_line
+   fun:pre_prompt
+   fun:main
+}
+==1153360== 608 bytes in 1 blocks are still reachable in loss record 42 of 85
+==1153360==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B0837E: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153360== 608 bytes in 1 blocks are still reachable in loss record 43 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD119: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 760 bytes in 1 blocks are still reachable in loss record 44 of 85
+==1153360==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B08819: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 862 bytes in 66 blocks are still reachable in loss record 45 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F7B8: ft_substr (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10AD82: split_keyvalue (env_split.c:49)
+==1153360==    by 0x10AAA7: load_envs (env.c:95)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_substr
+   fun:split_keyvalue
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 940 bytes in 1 blocks are still reachable in loss record 46 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B08287: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 47 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894C7B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 48 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894C8B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 49 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894CA2: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 50 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894CBB: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 51 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894DC5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 52 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894DDA: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 53 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894DE8: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,024 bytes in 1 blocks are still reachable in loss record 54 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4894DF6: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,536 bytes in 1 blocks are still reachable in loss record 55 of 85
+==1153360==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AB491: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888877: rl_add_funmap_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48888C8: rl_initialize_funmap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A2C: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:xrealloc
+   fun:rl_add_funmap_entry
+   fun:rl_initialize_funmap
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 1,560 bytes in 65 blocks are still reachable in loss record 56 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10AED0: make_new_env_node (env_utils.c:35)
+==1153360==    by 0x10A995: insert_new_node (env.c:57)
+==1153360==    by 0x10AA16: set_env_value (env.c:72)
+==1153360==    by 0x10AB16: load_envs (env.c:104)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:make_new_env_node
+   fun:insert_new_node
+   fun:set_env_value
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 1,664 bytes in 1 blocks are still reachable in loss record 57 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4B07ACD: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153360== 2,032 bytes in 1 blocks are still reachable in loss record 58 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A6419: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 2,240 bytes in 140 blocks are still reachable in loss record 59 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4888822: rl_add_funmap_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48888C8: rl_initialize_funmap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A2C: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_add_funmap_entry
+   fun:rl_initialize_funmap
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 3,904 bytes in 1 blocks are still reachable in loss record 60 of 85
+==1153360==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B081B5: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153360== 3,904 bytes in 1 blocks are still reachable in loss record 61 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFCFFF: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 3,907 bytes in 66 blocks are still reachable in loss record 62 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x10F7B8: ft_substr (in /nfs/homes/pdrago/minishell/minishell)
+==1153360==    by 0x10AE02: split_keyvalue (env_split.c:56)
+==1153360==    by 0x10AAA7: load_envs (env.c:95)
+==1153360==    by 0x10D74B: init_shell (shell_setting.c:45)
+==1153360==    by 0x10C416: main (main.c:43)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:ft_substr
+   fun:split_keyvalue
+   fun:load_envs
+   fun:init_shell
+   fun:main
+}
+==1153360== 4,016 bytes in 1 blocks are still reachable in loss record 63 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A3FD6: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,080 bytes in 1 blocks are still reachable in loss record 64 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A63F9: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 65 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 66 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 67 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 68 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 69 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A84: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 70 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 4,112 bytes in 1 blocks are still reachable in loss record 71 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 7,952 bytes in 1 blocks are still reachable in loss record 72 of 85
+==1153360==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x4AFBC97: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4AFD3AF: _nc_find_type_entry (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x4AFFE4C: tgetstr_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153360==    by 0x48A621A: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_find_type_entry
+   fun:tgetstr_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 73 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 74 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 75 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 76 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 77 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 78 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A84: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 79 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 80 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 81 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892AD2: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 8,224 bytes in 2 blocks are still reachable in loss record 82 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892AE1: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 12,336 bytes in 3 blocks are still reachable in loss record 83 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892914: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 12,336 bytes in 3 blocks are still reachable in loss record 84 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892914: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== 28,784 bytes in 7 blocks are still reachable in loss record 85 of 85
+==1153360==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153360==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x489899E: rl_parse_and_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4898B6C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153360==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153360==    by 0x10C482: main (main.c:53)
+==1153360== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_parse_and_bind
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153360== LEAK SUMMARY:
+==1153360==    definitely lost: 0 bytes in 0 blocks
+==1153360==    indirectly lost: 0 bytes in 0 blocks
+==1153360==      possibly lost: 0 bytes in 0 blocks
+==1153360==    still reachable: 215,165 bytes in 438 blocks
+==1153360==         suppressed: 0 bytes in 0 blocks
+==1153360== 
+==1153360== For lists of detected and suppressed errors, rerun with: -s
+==1153360== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1153358== 
+==1153358== HEAP SUMMARY:
+==1153358==     in use at exit: 208,344 bytes in 225 blocks
+==1153358==   total heap usage: 739 allocs, 514 frees, 237,808 bytes allocated
+==1153358== 
+==1153358== 8 bytes in 1 blocks are still reachable in loss record 1 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x496D58E: strdup (strdup.c:42)
+==1153358==    by 0x4B0AD17: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8 bytes in 1 blocks are still reachable in loss record 2 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB491: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4897626: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4897E0D: rl_expand_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48871BF: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 12 bytes in 1 blocks are still reachable in loss record 3 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A3F28: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153358== 13 bytes in 1 blocks are still reachable in loss record 4 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4898BF5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 14 bytes in 1 blocks are still reachable in loss record 5 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B04272: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 15 bytes in 1 blocks are still reachable in loss record 6 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x496D58E: strdup (strdup.c:42)
+==1153358==    by 0x4B088AE: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 16 bytes in 1 blocks are still reachable in loss record 7 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4892B26: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 18 bytes in 1 blocks are still reachable in loss record 8 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x496D58E: strdup (strdup.c:42)
+==1153358==    by 0x4AFC377: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4AFEBF8: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153358== 20 bytes in 1 blocks are still reachable in loss record 9 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4895D8B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48986C9: rl_parse_and_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4898B6C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_parse_and_bind
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 24 bytes in 1 blocks are still reachable in loss record 10 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x49E5124: tsearch (tsearch.c:337)
+==1153358==    by 0x4B00D6E: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:tsearch
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 24 bytes in 1 blocks are still reachable in loss record 11 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A1B1D: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A3F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153358== 24 bytes in 1 blocks are still reachable in loss record 12 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A1B39: alloc_history_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A3F65: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:alloc_history_entry
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153358== 30 bytes in 1 blocks are still reachable in loss record 13 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFE624: _nc_home_terminfo (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4AFEBE2: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_home_terminfo
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 46 bytes in 1 blocks are still reachable in loss record 14 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0816F: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153358== 46 bytes in 1 blocks are still reachable in loss record 15 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFCFDE: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 48 bytes in 1 blocks are still reachable in loss record 16 of 66
+==1153358==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFE833: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 59 bytes in 1 blocks are still reachable in loss record 17 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48871E3: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 59 bytes in 1 blocks are still reachable in loss record 18 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48975F2: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4897E0D: rl_expand_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48871BF: rl_set_prompt (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CCF: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_expand_prompt
+   fun:rl_set_prompt
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 78 bytes in 1 blocks are still reachable in loss record 19 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD04B: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 93 bytes in 1 blocks are still reachable in loss record 20 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x496D58E: strdup (strdup.c:42)
+==1153358==    by 0x4B00D54: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 94 bytes in 1 blocks are still reachable in loss record 21 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B0095B: _nc_tparm_analyze (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B00C62: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_tparm_analyze
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 99 bytes in 1 blocks are still reachable in loss record 22 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFE79A: _nc_first_db (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08696: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_first_db
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 156 bytes in 1 blocks are still reachable in loss record 23 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08197: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153358== 168 bytes in 1 blocks are still reachable in loss record 24 of 66
+==1153358==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B00CCD: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B04098: _nc_tiparm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC7D: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AD09: _nc_trim_sgr0 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B096A8: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_tiparm
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_trim_sgr0
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 256 bytes in 1 blocks are still reachable in loss record 25 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A1E49: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A212C: rl_replace_line (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10C371: pre_prompt (main.c:25)
+==1153358==    by 0x10C476: main (main.c:52)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   fun:rl_extend_line_buffer
+   fun:rl_replace_line
+   fun:pre_prompt
+   fun:main
+}
+==1153358== 608 bytes in 1 blocks are still reachable in loss record 26 of 66
+==1153358==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B0837E: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153358== 608 bytes in 1 blocks are still reachable in loss record 27 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD119: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 760 bytes in 1 blocks are still reachable in loss record 28 of 66
+==1153358==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B08819: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 940 bytes in 1 blocks are still reachable in loss record 29 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B08287: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 30 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894C7B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 31 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894C8B: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 32 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894CA2: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 33 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB4A7: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894CBB: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894D67: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xrealloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 34 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894DC5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 35 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894DDA: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 36 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894DE8: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,024 bytes in 1 blocks are still reachable in loss record 37 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4894DF6: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489DC7E: rl_redisplay (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888458: readline_internal_setup (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CF8: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_redisplay
+   fun:readline_internal_setup
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,536 bytes in 1 blocks are still reachable in loss record 38 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AB491: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888877: rl_add_funmap_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48888C8: rl_initialize_funmap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A2C: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:xrealloc
+   fun:rl_add_funmap_entry
+   fun:rl_initialize_funmap
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 1,664 bytes in 1 blocks are still reachable in loss record 39 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4B07ACD: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+}
+==1153358== 2,032 bytes in 1 blocks are still reachable in loss record 40 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A6419: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 2,240 bytes in 140 blocks are still reachable in loss record 41 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4888822: rl_add_funmap_entry (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48888C8: rl_initialize_funmap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A2C: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_add_funmap_entry
+   fun:rl_initialize_funmap
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 3,904 bytes in 1 blocks are still reachable in loss record 42 of 66
+==1153358==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFD6CC: _nc_doalloc (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B081B5: _nc_read_termtype (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0852A: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0AC40: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B086BB: _nc_read_entry2 (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08711: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B08866: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   fun:_nc_doalloc
+   fun:_nc_read_termtype
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_read_entry2
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+}
+==1153358== 3,904 bytes in 1 blocks are still reachable in loss record 43 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFCFFF: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B0887D: _nc_setupterm (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4B094C9: tgetent_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A61CD: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_setupterm
+   fun:tgetent_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,016 bytes in 1 blocks are still reachable in loss record 44 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A3FD6: add_history (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D30A: get_prompt (prompt_setup.c:76)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,080 bytes in 1 blocks are still reachable in loss record 45 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A63F9: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 46 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 47 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 48 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 49 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E5A: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 50 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A84: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 51 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 4,112 bytes in 1 blocks are still reachable in loss record 52 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489294C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 7,952 bytes in 1 blocks are still reachable in loss record 53 of 66
+==1153358==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x4AFBC97: ??? (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4AFD3AF: _nc_find_type_entry (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x4AFFE4C: tgetstr_sp (in /usr/lib/x86_64-linux-gnu/libtinfo.so.6.3)
+==1153358==    by 0x48A621A: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   obj:/usr/lib/x86_64-linux-gnu/libtinfo.so.6.3
+   fun:_nc_find_type_entry
+   fun:tgetstr_sp
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 54 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A631F: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 55 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 56 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A632B: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 57 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5DD5: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 58 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A5E47: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x48A6337: _rl_init_terminal_io (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A0F: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:_rl_init_terminal_io
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 59 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A84: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 60 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 61 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489293D: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 62 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892AD2: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 8,224 bytes in 2 blocks are still reachable in loss record 63 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892AE1: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 12,336 bytes in 3 blocks are still reachable in loss record 64 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892914: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A93: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 12,336 bytes in 3 blocks are still reachable in loss record 65 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489275D: rl_bind_keyseq_if_unbound_in_map (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892914: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892AB8: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_bind_keyseq_if_unbound_in_map
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== 28,784 bytes in 7 blocks are still reachable in loss record 66 of 66
+==1153358==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1153358==    by 0x48AABAC: xmalloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887251: rl_make_bare_keymap (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4887B6A: rl_generic_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x489899E: rl_parse_and_bind (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4898B6C: ??? (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892A38: rl_initialize (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x4892CD4: readline (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.1)
+==1153358==    by 0x10D2E7: get_prompt (prompt_setup.c:73)
+==1153358==    by 0x10C482: main (main.c:53)
+==1153358== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:rl_make_bare_keymap
+   fun:rl_generic_bind
+   fun:rl_parse_and_bind
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.8.1
+   fun:rl_initialize
+   fun:readline
+   fun:get_prompt
+   fun:main
+}
+==1153358== LEAK SUMMARY:
+==1153358==    definitely lost: 0 bytes in 0 blocks
+==1153358==    indirectly lost: 0 bytes in 0 blocks
+==1153358==      possibly lost: 0 bytes in 0 blocks
+==1153358==    still reachable: 208,344 bytes in 225 blocks
+==1153358==         suppressed: 0 bytes in 0 blocks
+==1153358== 
+==1153358== For lists of detected and suppressed errors, rerun with: -s
+==1153358== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
