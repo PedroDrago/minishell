@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:19:02 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/10 22:25:34 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/11 13:02:10 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,7 @@ int	validate_tokens(char *prompt)
 int	validate_prompt(char *prompt, t_shell *shell)
 {
 	if (!prompt || !ft_strlen(prompt))
-	{
-		if (prompt)
-			free(prompt);
 		return (FALSE);
-	}
 	if (!validate_quotes(prompt) || !validate_tokens(prompt))
 	{
 		set_exit_status(2, shell);

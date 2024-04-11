@@ -29,6 +29,7 @@ void	free_before_safely_exit(t_shell *shell)
 	free(shell->prompt_string);
 	free_env(shell->env);
 	free(shell);
+	rl_clear_history();
 }
 
 void	exit_safely(t_shell *shell)
@@ -36,5 +37,6 @@ void	exit_safely(t_shell *shell)
 	free(shell->prompt_string);
 	free_env(shell->env);
 	free(shell);
+	rl_clear_history();
 	exit(0);
 }
