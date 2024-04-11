@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 17:06:58 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/10 21:59:46 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!tmp)
 		return (FALSE);
 	prompt_pre_format(prompt, tmp, 0, 0);
+	free(prompt);
 	prompt_list = parse_prompt(tmp);
 	free(tmp);
 	if (!prompt_list)
@@ -184,6 +185,5 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
 	free_process_data(shell);
-	free(prompt);
 	return (TRUE);
 }

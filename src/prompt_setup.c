@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_setup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:32 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:18:32 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/10 21:11:26 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char	*get_prompt(t_shell *shell)
 	if (prompt == NULL)
 		exit_safely(shell);
 	add_history(prompt);
+	if (!ft_strlen(prompt))
+		return (prompt);
 	tmp = prompt;
 	prompt = ft_strtrim(prompt, " ");
 	free(tmp);
