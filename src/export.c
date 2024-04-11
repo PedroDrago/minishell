@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:09 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:14 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/11 20:36:54 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_valid(char *key)
 
 	i = -1;
 	while (key[++i])
-		if (!ft_isalnum(key[i]) && key[i] != '_')
+		if ((!ft_isalnum(key[i]) && key[i] != '_') || key[i] == '=')
 			return (FALSE);
 	return (TRUE);
 }
@@ -56,10 +56,10 @@ int	export(char *argv[], t_shell *shell)
 		splited = split_keyvalue(argv[i], '=');
 		if (!splited)
 			return (1);
-		if (!is_valid(splited[0]) && ++i)
+		if ((!is_valid(splited[0]) || ft_isdigit(splited[0][0])) && ++i)
 		{
-			printf("ERRO\n");
-			ft_putstr_fd("Erro PLACEHOLDER!!!!!!\n", 1);
+			ft_putstr_fd("not a valid identifier\n", 2);
+			set_exit_status(1, shell);
 			continue ;
 		}
 		if (!set_env_value(shell->env, splited[0], splited[1]))
