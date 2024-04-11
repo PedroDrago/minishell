@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:32 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/10 21:11:26 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:20:53 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,11 @@ char	*get_prompt(t_shell *shell)
 		exit_safely(shell);
 	add_history(prompt);
 	if (!ft_strlen(prompt))
-		return (prompt);
+	{
+		tmp = ft_strdup(prompt);
+		free(prompt);
+		return (tmp);
+	}
 	tmp = prompt;
 	prompt = ft_strtrim(prompt, " ");
 	free(tmp);

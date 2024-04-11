@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/05 13:25:39 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:10:50 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	validate_prompt(char *prompt, t_shell *shell);
 //exits.c
 void	exit_program(int sig);
 void	exit_safely(t_shell *shell);
+void	free_before_safely_exit(t_shell *shell);
 //node_args.c
 char	**get_args(char **splited_command);
 //output_redirections.c
