@@ -6,14 +6,14 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/12 09:51:29 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:54:33 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-int	perform_builtin_redirections(char **splited_command, t_shell *shell)
+int	perform_builtin_redirections(char **splited_command)
 {
 	int	i;
 	int	status;
@@ -44,7 +44,6 @@ int	perform_builtin_redirections(char **splited_command, t_shell *shell)
 			if (pid == 0)
 				do_heredoc_builtin(splited_command[++i], original_fd);
 			waitpid(pid, &status, 0);
-			(void) shell;
 		}
 		i++;
 	}
@@ -70,7 +69,7 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer pointer pointer
+int	prep_builtin(t_node *node) //NOTE: Yeah bitch, char pointer pointer pointer
 {
 	int	status;
 
@@ -78,7 +77,7 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
-	status = perform_builtin_redirections(node->splited_command, shell);
+	status = perform_builtin_redirections(node->splited_command);
 	return (status);
 }
 
@@ -94,7 +93,7 @@ void	post_builtin(t_node *node, t_shell *shell)
 
 void	execute_builtin(t_node *node, t_shell *shell)
 {
-	if (prep_builtin(node, shell))
+	if (prep_builtin(node))
 		return (post_builtin(node, shell));
 	set_exit_status(0, shell);
 	if (!ft_strncmp(node->splited_command[0], "echo", 5))
