@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 22:40:11 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:51:29 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ int	perform_builtin_redirections(char **splited_command, t_shell *shell)
 {
 	int	i;
 	int	status;
-	int		original_fd;
-	int		pid;
+	int	original_fd;
+	int	pid;
 
 	i = 0;
 	original_fd = dup(0);
 	status = 0;
-	while(splited_command[i])
+	while (splited_command[i])
 	{
-		if(is_redirect_input(splited_command[i]))
+		if (is_redirect_input(splited_command[i]))
 		{
 			status = redirect_input_builtin(splited_command[++i]);
 			if (status)
 				return (status);
 		}
-		else if(is_redirect_output(splited_command[i]))
+		else if (is_redirect_output(splited_command[i]))
 		{
-			status = redirect_output_builtin(splited_command[i], splited_command[i + 1]);
-			i++;
-			if (status)
+			status = redirect_output_builtin(splited_command[i],
+					splited_command[i + 1]);
+			if (++i && status)
 				return (status);
 		}
 		else if(is_heredoc(splited_command[i]))
@@ -82,10 +82,8 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 	return (status);
 }
 
-void	post_builtin(t_node *node, t_shell *shell, int status)
+void	post_builtin(t_node *node, t_shell *shell)
 {
-	(void)status;
-//	set_exit_status(status, shell);
 	if (node->has_pipe)
 		close(node->node_pipe[1]);
 	if (node->prev && node->prev->has_pipe)
@@ -96,14 +94,8 @@ void	post_builtin(t_node *node, t_shell *shell, int status)
 
 void	execute_builtin(t_node *node, t_shell *shell)
 {
-	int	status;
-
-	status = prep_builtin(node, shell);
-	if (status)
-	{
-		post_builtin(node, shell, status);
-		return ;
-	}
+	if (prep_builtin(node, shell))
+		return (post_builtin(node, shell));
 	set_exit_status(0, shell);
 	if (!ft_strncmp(node->splited_command[0], "echo", 5))
 		echo(node->args);
@@ -117,13 +109,11 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		unset(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "env", 4))
 		env(shell->env);
-	else if (!ft_strncmp(node->splited_command[0], "exit", 5))
+	else if (!ft_strncmp(node->splited_command[0], "exit", 5)
+		&& (!node->prev && !node->next))
 	{
-		if (!node->prev && !node->next)
-		{
 			free_process_data(shell);
 			builtin_exit(shell, node);
-		}
 	}
-	post_builtin(node, shell, status);
+	post_builtin(node, shell);
 }

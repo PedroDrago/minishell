@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/12 00:17:16 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/12 09:31:17 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	expand_arguments(t_node *node, t_shell *shell);
 int		perform_builtin_redirections(char **splited_command, t_shell *shell);
 int		is_builtin(char *command);
 int		prep_builtin(t_node *node, t_shell *shell);
-void	post_builtin(t_node *node, t_shell *shell, int status);
+void	post_builtin(t_node *node, t_shell *shell);
 void	execute_builtin(t_node *node, t_shell *shell);
 void	builtin_exit(t_shell *shell, t_node *node);
 //cd.c
