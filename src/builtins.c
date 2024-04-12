@@ -6,14 +6,14 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/12 10:16:49 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:38:31 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-void	perform_builtin_redirections(char **splited_com, int *status, int original_fd) // Como remover 4 linhas disso aqui?
+void	perform_builtin_redirections(char **splited_com, int *status, int original_fd)
 {
 	while (*splited_com)
 	{
@@ -59,7 +59,7 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-int	prep_builtin(t_node *node) //NOTE: Yeah bitch, char pointer pointer pointer
+int	prep_builtin(t_node *node)
 {
 	int	status;
 	int original_fd;
