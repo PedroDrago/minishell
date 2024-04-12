@@ -6,14 +6,15 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/12 10:38:31 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/12 10:41:18 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
 
-void	perform_builtin_redirections(char **splited_com, int *status, int original_fd)
+void	perform_builtin_redirections(char **splited_com, int *status,
+	int original_fd)
 {
 	while (*splited_com)
 	{
@@ -29,7 +30,7 @@ void	perform_builtin_redirections(char **splited_com, int *status, int original_
 			if (++splited_com && status)
 				return ;
 		}
-		else if(is_heredoc(*splited_com))
+		else if (is_heredoc(*splited_com))
 		{
 			*status = fork();
 			if (*status == 0)
@@ -62,7 +63,7 @@ int	is_builtin(char *command)
 int	prep_builtin(t_node *node)
 {
 	int	status;
-	int original_fd;
+	int	original_fd;
 
 	status = 0;
 	original_fd = dup(0);
@@ -104,8 +105,8 @@ void	execute_builtin(t_node *node, t_shell *shell)
 	else if (!ft_strncmp(node->splited_command[0], "exit", 5)
 		&& (!node->prev && !node->next))
 	{
-			free_process_data(shell);
-			builtin_exit(shell, node);
+		free_process_data(shell);
+		builtin_exit(shell, node);
 	}
 	post_builtin(node, shell);
 }
