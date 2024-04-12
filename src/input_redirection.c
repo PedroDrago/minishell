@@ -18,7 +18,9 @@ int	redirect_input_builtin(char *file)
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(file, 2);
 		if (stat(file, &file_info) < 0)
+		{
 			ft_putstr_fd(": No such file or directory\n", 2);
+		}
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
 		return(1);

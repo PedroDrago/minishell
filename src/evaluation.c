@@ -46,8 +46,9 @@ int	execute_command(t_shell *shell, char **args)
 	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(args[0], 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
+	set_exit_status(1, shell);
 	free_before_safely_exit(shell);
-	exit(127);
+	exit(1);
 }
 
 int	perform_redirections(char **splited_command)
