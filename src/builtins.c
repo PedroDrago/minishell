@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 19:42:57 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:40:11 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		if (!node->prev && !node->next)
 		{
 			free_process_data(shell);
-			exit_safely(shell);
+			builtin_exit(shell, node);
 		}
 	}
 	post_builtin(node, shell, status);

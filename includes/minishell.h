@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/10 22:10:50 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:40:46 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	is_builtin(char *command);
 int	prep_builtin(t_node *node, t_shell *shell);
 void	post_builtin(t_node *node, t_shell *shell, int status);
 void	execute_builtin(t_node *node, t_shell *shell);
+void	builtin_exit(t_shell *shell, t_node *node);
 //cd.c
 int	cd(char *argv[], t_shell *shell);
 char	*get_home_path(t_env *env);
@@ -100,7 +101,7 @@ int	validate_list(t_shell *shell, t_list *list);
 int	validate_prompt(char *prompt, t_shell *shell);
 //exits.c
 void	exit_program(int sig);
-void	exit_safely(t_shell *shell);
+void	exit_safely(t_shell *shell, unsigned char status);
 void	free_before_safely_exit(t_shell *shell);
 //node_args.c
 char	**get_args(char **splited_command);
