@@ -68,13 +68,13 @@ int	is_valid_lli(char *status)
 	signal = 1;
 	if (!status)
 		return (0);
-	if (ft_strlen(status) > 19)
-		return (0);
 	while ((*status >= '\t' && *status <= '\r') || *status == ' ')
 		status++;
 	if (*status == '-' || *status == '+')
-		if (*status == '-')
+		if (*status++ == '-')
 			signal *= -1;
+	if (ft_strlen(status) > 19)
+		return (0);
 	while (ft_isdigit(*status) && total < max_lli)
 		total = total * 10 + (*status++ - '0');
 	if (total > max_lli)
@@ -128,11 +128,11 @@ void	builtin_exit(t_shell *shell, t_node *node)
 			exit_safely(shell, ft_atolli_mod(node->args[1]));
 	ft_putstr_fd("minishell: exit: ", 2);
 	ft_putstr_fd(node->args[1], 2);
-	if (!is_numeric && len == 2)
-		{
+	if (len == 2 && (!is_numeric || !is_valid_lli(node->args[1])))
+	{
 		ft_putstr_fd(": numeric argument required\n", 2);
 		exit_safely(shell, 2);
-		}
+	}
 	if (!is_numeric)
 	{
 		ft_putstr_fd(": numeric argument required\n", 2);
