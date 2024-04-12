@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:05 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 17:06:58 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:10:13 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int    execute_command(t_shell *shell, char **args)
     ft_putstr_fd("Minishell: ", 2);
     ft_putstr_fd(args[0], 2);
     ft_putstr_fd(": No such file or directory\n", 2);
+	free_before_safely_exit(shell);
     exit(127);
 }
 
@@ -174,6 +175,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!tmp)
 		return (FALSE);
 	prompt_pre_format(prompt, tmp, 0, 0);
+	free(prompt);
 	prompt_list = parse_prompt(tmp);
 	free(tmp);
 	if (!prompt_list)
@@ -184,6 +186,5 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
 	free_process_data(shell);
-	free(prompt);
 	return (TRUE);
 }

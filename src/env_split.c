@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:49 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:17:50 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/11 20:27:57 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	do_edge_cases(char **splited, char *str, char sep)
 {
+	if (*str == sep)
+	{
+		splited[0] = ft_strdup(str);
+		splited[1] = NULL;
+		splited[2] = NULL;
+		return (TRUE);
+	}
 	if (!ft_strchr(str, sep))
 	{
 		splited[0] = ft_strdup(str);

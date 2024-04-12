@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 14:54:38 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:40:11 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	prep_builtin(t_node *node, t_shell *shell) //NOTE: Yeah bitch, char pointer 
 
 void	post_builtin(t_node *node, t_shell *shell, int status)
 {
-	set_exit_status(status, shell);
+	(void)status;
+//	set_exit_status(status, shell);
 	if (node->has_pipe)
 		close(node->node_pipe[1]);
 	if (node->prev && node->prev->has_pipe)
@@ -103,6 +104,7 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		post_builtin(node, shell, status);
 		return ;
 	}
+	set_exit_status(0, shell);
 	if (!ft_strncmp(node->splited_command[0], "echo", 5))
 		echo(node->args);
 	else if (!ft_strncmp(node->splited_command[0], "cd", 3))
@@ -120,7 +122,7 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		if (!node->prev && !node->next)
 		{
 			free_process_data(shell);
-			exit_safely(shell);
+			builtin_exit(shell, node);
 		}
 	}
 	post_builtin(node, shell, status);

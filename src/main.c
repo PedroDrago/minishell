@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 15:39:56 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/11 22:07:07 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ int	main(int argc, char *argv[], char *envp[])
 		pre_prompt(shell);
 		prompt = get_prompt(shell);
 		if (!validate_prompt(prompt, shell))
+		{
+			free(prompt);
 			continue ;
+		}
 		if (!evaluate_prompt(prompt, shell))
-			return (exit_safely(shell), EXIT_FAILURE);
+			return (exit_safely(shell, 1), EXIT_FAILURE);
 	}
-	return (exit_safely(shell), EXIT_SUCCESS);
+	return (exit_safely(shell, 0), EXIT_SUCCESS);
 }

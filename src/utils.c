@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:59 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:38:48 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/04/11 22:06:36 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	set_exit_status(int status, t_shell *shell)
 
 	status_string = ft_itoa(status);
 	if (!status_string)
-		exit_safely(shell);
+		exit_safely(shell, 1);
 	if (!set_env_value(shell->env, "?", status_string))
-		exit_safely(shell);
+		exit_safely(shell, 1);
 	free(status_string);
 }
 
