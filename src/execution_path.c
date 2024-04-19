@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include <stdio.h>
 
 char **get_paths_split(t_shell *shell)
 {
@@ -27,7 +28,7 @@ char *get_current_path_str(char *path, char *command)
 	return (joined);
 }
 
-int	can_open_file(int stat_return, struct stat *file_info, char *command)
+int	can_open_file(int stat_return, struct stat *file_info, char *command, t_shell *shell)
 {
 	if (stat_return < 0)
 		return (0);
@@ -36,6 +37,7 @@ int	can_open_file(int stat_return, struct stat *file_info, char *command)
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(command, 2);
 		ft_putstr_fd(": Permission denied\n", 2);
+		free_before_safely_exit(shell);
 		exit(126);
 	}
 	return (1);
@@ -56,7 +58,7 @@ char	*get_right_path(t_shell *shell, char *command) //FIX: Leak? Child process
 	while(paths_split[i])
 	{
 		path = get_current_path_str(paths_split[i++], command);
-		if (can_open_file(stat(path, &file_info), &file_info, command))
+		if (can_open_file(stat(path, &file_info), &file_info, command, shell))
 			return (path);
 		free(path);
 	}
