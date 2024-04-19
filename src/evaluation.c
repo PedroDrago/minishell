@@ -38,6 +38,8 @@ int	execute_command(t_shell *shell, char **args)
 {
 	char	*path;
 
+	if (!args[0])
+		exit(0);
 	execve(args[0], args, shell->envp);
 	if (args[0] && args[0][0] == '.')
 		resolve_errors(args[0]);
