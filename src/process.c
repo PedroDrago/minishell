@@ -56,8 +56,8 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
 	pid_t	pid;
 
-	node->args = get_args(node->splited_command);
 	expand_arguments(node, shell);
+	node->args = get_args(node->splited_command);
 	remove_empty_args(node);
 	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
