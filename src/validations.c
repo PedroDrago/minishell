@@ -46,7 +46,7 @@ int	validate_edge_tokens(char *str)
 {
 	while (*str)
 	{
-		if (ft_strchr("|<>\"\'", *str))
+		if (ft_strchr("|<>", *str))
 			break ;
 		if (!ft_strchr("|<> \t\a\b\n\v\f\r", *str))
 			return (TRUE);

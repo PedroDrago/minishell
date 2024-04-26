@@ -24,12 +24,41 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell)
 		append_process(pid, shell);
 }
 
+void	remove_empty_args(t_node *node)
+{
+	int	i;
+	int	j;
+	int	emptys;
+	char	**new_args;
+
+	i = -1;
+	emptys = 0;
+	while(node->args[++i])
+		if (ft_strlen(node->args[i]) == 0)
+			emptys++;
+	new_args = malloc(sizeof(char *) * (i - emptys + 1));
+	if (!new_args)
+		exit(1);
+	i = 0;
+	j = 0;
+	while(node->args[i])
+	{
+		if (ft_strlen(node->args[i]) == 0 && ++i)
+			continue;
+		new_args[j++] = ft_strdup(node->args[i++]);
+	}
+	new_args[j] = NULL;
+	free_split(node->args);
+	node->args = new_args;
+}
+
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
 {
 	pid_t	pid;
 
-	node->args = get_args(node->splited_command);
 	expand_arguments(node, shell);
+	node->args = get_args(node->splited_command);
+	remove_empty_args(node);
 	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
 		execute_builtin(node, shell);

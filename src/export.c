@@ -58,7 +58,7 @@ int	export(char *argv[], t_shell *shell)
 			return (1);
 		if ((!is_valid(splited[0]) || ft_isdigit(splited[0][0])) && ++i)
 		{
-			ft_putstr_fd("not a valid identifier\n", 2);
+			ft_putstr_fd(" not a valid identifier\n", 2);
 			set_exit_status(1, shell);
 			continue ;
 		}

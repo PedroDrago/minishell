@@ -91,7 +91,6 @@ void	str_unquote(char **str)
 	}
 }
 
-//"      $HOME      asdasd asda"
 void	expand_arguments(t_node *node, t_shell *shell)
 {
 	int		i;
@@ -100,9 +99,9 @@ void	expand_arguments(t_node *node, t_shell *shell)
 	char	**arg_splited;
 
 	i = 0;
-	while (node->args[i])
+	while (node->splited_command[i])
 	{
-		splited = quote_split(node->args[i]);
+		splited = quote_split(node->splited_command[i]);
 		j = 0;
 		while (splited && splited[j])
 		{
@@ -114,8 +113,8 @@ void	expand_arguments(t_node *node, t_shell *shell)
 			splited[j++] = split_join(arg_splited);
 			free_split(arg_splited);
 		}
-		free(node->args[i]);
-		node->args[i++] = split_join(splited);
+		free(node->splited_command[i]);
+		node->splited_command[i++] = split_join(splited);
 		free_split(splited);
 	}
 }

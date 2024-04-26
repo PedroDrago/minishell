@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-void	resolve_errors(char *command)
+void	resolve_errors(char *command, t_shell *shell)
 {
 	struct stat	file_info;
 
@@ -23,14 +23,23 @@ void	resolve_errors(char *command)
 	if (stat(command, &file_info) < 0)
 	{
 		ft_putstr_fd(": No such file or directory\n", 2);
+		free_before_safely_exit(shell);
 		exit(127);
 	}
 	if (!(file_info.st_mode & S_IXUSR))
 	{
 		ft_putstr_fd(": Permission denied\n", 2);
+		free_before_safely_exit(shell);
+		exit(126);
+	}
+	if (S_ISDIR(file_info.st_mode))
+	{
+		ft_putstr_fd(": Is a directory\n", 2);
+		free_before_safely_exit(shell);
 		exit(126);
 	}
 	ft_putstr_fd(": Can't be executed by this shell\n", 2);
+	free_before_safely_exit(shell);
 	exit(2);
 }
 
@@ -38,9 +47,14 @@ int	execute_command(t_shell *shell, char **args)
 {
 	char	*path;
 
+	if (!args[0])
+	{
+		free_before_safely_exit(shell);
+		exit(0);
+	}
 	execve(args[0], args, shell->envp);
-	if (args[0] && args[0][0] == '.')
-		resolve_errors(args[0]);
+	if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
+		resolve_errors(args[0], shell);
 	path = get_right_path(shell, args[0]);
 	execve(path, args, shell->envp);
 	ft_putstr_fd("Minishell: ", 2);
