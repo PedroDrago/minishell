@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
 int	prep_process(t_node *node)
 {
 	if (!node->splited_command)
@@ -17,23 +16,23 @@ int	prep_process(t_node *node)
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell)
 {
-		if (node->has_pipe)
-			close(node->node_pipe[1]);
-		if (node->prev && node->prev->has_pipe)
-			close(node->node_pipe[0]);
-		append_process(pid, shell);
+	if (node->has_pipe)
+		close(node->node_pipe[1]);
+	if (node->prev && node->prev->has_pipe)
+		close(node->node_pipe[0]);
+	append_process(pid, shell);
 }
 
 void	remove_empty_args(t_node *node)
 {
-	int	i;
-	int	j;
-	int	emptys;
+	int		i;
+	int		j;
+	int		emptys;
 	char	**new_args;
 
 	i = -1;
 	emptys = 0;
-	while(node->args[++i])
+	while (node->args[++i])
 		if (ft_strlen(node->args[i]) == 0)
 			emptys++;
 	new_args = malloc(sizeof(char *) * (i - emptys + 1));
@@ -41,10 +40,10 @@ void	remove_empty_args(t_node *node)
 		exit(1);
 	i = 0;
 	j = 0;
-	while(node->args[i])
+	while (node->args[i])
 	{
 		if (ft_strlen(node->args[i]) == 0 && ++i)
-			continue;
+			continue ;
 		new_args[j++] = ft_strdup(node->args[i++]);
 	}
 	new_args[j] = NULL;
@@ -94,12 +93,12 @@ void	free_process_data(t_shell *shell)
 
 void	init_processes_data(t_list *list, t_shell *shell)
 {
-	int	i;
-	t_node *tmp;
+	int		i;
+	t_node	*tmp;
 
 	i = 0;
 	tmp = list->head;
-	while(tmp)
+	while (tmp)
 	{
 		if (!is_builtin(tmp->splited_command[0]))
 			i++;

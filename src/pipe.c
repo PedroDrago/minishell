@@ -2,11 +2,11 @@
 
 int	setup_list_pipes(t_list *list)
 {
-	t_node *tmp;
-	int	pipe_fd[2];
+	t_node	*tmp;
+	int		pipe_fd[2];
 
 	tmp = list->head;
-	while(tmp)
+	while (tmp)
 	{
 		if (tmp->has_pipe)
 		{

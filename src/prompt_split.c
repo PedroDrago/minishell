@@ -19,15 +19,11 @@ char	*prompt_split_substr(char *str, int start, int end)
 	return (substr);
 }
 
-void	do_prompt_split(char *str, char **splited)
+void	do_prompt_split(char *str, char **splited, int start, int end)
 {
-	int	end;
-	int	start;
 	int	in_double_quotes;
 	int	in_single_quotes;
 
-	end = 0;
-	start = 0;
 	in_double_quotes = 0;
 	in_single_quotes = 0;
 	while (str[end])
@@ -54,14 +50,18 @@ char	**prompt_split(char *str)
 {
 	char	**splited;
 	char	*trimmed;
+	int		start;
+	int		end;
 
+	start = 0;
+	end = 0;
 	trimmed = ft_strtrim(str, " ");
 	if (!trimmed)
 		return (NULL);
 	splited = malloc(sizeof(char *) * (count_command_split(trimmed) + 1));
 	if (!splited)
 		return (free(trimmed), NULL);
-	do_prompt_split(trimmed, splited);
+	do_prompt_split(trimmed, splited, start, end);
 	free(trimmed);
 	return (splited);
 }

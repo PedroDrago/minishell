@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/12 10:17:12 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:38:31 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ char	*get_prompt_string(t_shell *shell);
 char	*get_prompt(t_shell *shell);
 //prompt_split.c
 char	*prompt_split_substr(char *str, int start, int end);
-void	do_prompt_split(char *str, char **splited);
+void	do_prompt_split(char *str, char **splited, int start, int end);
 char	**prompt_split(char *str);
 //pwd.c
 int		pwd(void);
