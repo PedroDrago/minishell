@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 14:38:31 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:25:40 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char	*get_expanded_arg(char *arg, t_shell *shell);
 char	**expand_split(char **splited, t_shell *shell);
 void	expand_arguments(t_node *node, t_shell *shell);
 //builtins.c
-void		perform_builtin_redirections(char **splited_com, int *status, int original_fd);
+void	perform_builtin_redirections(char **splited_com, int *status,
+			int original_fd);
 int		is_builtin(char *command);
 int		prep_builtin(t_node *node);
 void	post_builtin(t_node *node, t_shell *shell);
@@ -80,7 +81,8 @@ int		exec_list(t_list *list, t_shell *shell);
 //execution_path.c
 char	**get_paths_split(t_shell *shell);
 char	*get_current_path_str(char *path, char *command);
-int	can_open_file(int stat_return, struct stat *file_info, char *command, t_shell *shell);
+int		can_open_file(int stat_return, struct stat *file_info,
+			char *command, t_shell *shell);
 char	*get_right_path(t_shell *shell, char *command);
 //expansion_edge_cases.c
 char	*dup_value(char *arg);

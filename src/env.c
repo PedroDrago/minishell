@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/10 18:15:12 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:32:17 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_env	*load_envs(char *envp[])
 	if (!set_env_value(env, ft_strdup("?"), ft_strdup("0")))
 		return (NULL);
 	if (!get_env_node(env, "OLDPWD"))
-	    if (!set_env_value(env, ft_strdup("OLDPWD"), NULL))
+		if (!set_env_value(env, ft_strdup("OLDPWD"), NULL))
 			return (NULL);
 	return (env);
 }

@@ -9,8 +9,8 @@ int	is_redirect_input(char *token)
 
 int	redirect_input_builtin(char *file)
 {
-	int	fd;
-	struct stat file_info;
+	int			fd;
+	struct stat	file_info;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -23,7 +23,7 @@ int	redirect_input_builtin(char *file)
 		}
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
-		return(1);
+		return (1);
 	}
 	dup2(fd, 0);
 	return (0);
@@ -31,8 +31,8 @@ int	redirect_input_builtin(char *file)
 
 void	redirect_input(char *file)
 {
-	int	fd;
-	struct stat file_info;
+	int			fd;
+	struct stat	file_info;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

@@ -18,9 +18,9 @@ void	sighandler(int sig)
 
 int	do_heredoc(char *delimiter, int original_fd)
 {
-	int	pipe_fd[2];
-	char *prompt;
-	int	len;
+	int		pipe_fd[2];
+	char	*prompt;
+	int		len;
 
 	signal(SIGINT, sighandler);
 	dup2(original_fd, 0);
@@ -44,16 +44,16 @@ int	do_heredoc(char *delimiter, int original_fd)
 
 int	do_heredoc_builtin(char *delimiter, int original_fd)
 {
-	int	pipe_fd[2];
-	char *prompt;
-	int	len;
+	int		pipe_fd[2];
+	char	*prompt;
+	int		len;
 
 	signal(SIGINT, sighandler);
 	dup2(original_fd, 0);
 	pipe(pipe_fd);
 	prompt = readline("> ");
 	if (!prompt)
-			exit(1); // FIX: ????
+		exit(1); // FIX: ????
 	len = ft_strlen(delimiter);
 	while (ft_strncmp(prompt, delimiter, len + 1))
 	{

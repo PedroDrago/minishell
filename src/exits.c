@@ -11,7 +11,7 @@ void	exit_program(int sig)
 	g_sig = sig;
 	if (g_sig == SIGINT)
 	{
-		if(!process)
+		if (!process)
 		{
 			write(1, "\n", 1);
 			rl_on_new_line();
@@ -25,7 +25,6 @@ void	exit_program(int sig)
 
 void	free_before_safely_exit(t_shell *shell)
 {
-	free_list(shell->prompt_list);
 	free_process_data(shell);
 	free(shell->prompt_string);
 	free_env(shell->env);
@@ -83,10 +82,9 @@ int	is_valid_lli(char *status)
 	if (total == max_lli && signal == 1)
 		return (0);
 	return (1);
-	
 }
 
-int		is_numeric_argument(char *str)
+int	is_numeric_argument(char *str)
 {
 	int	space_flag;
 

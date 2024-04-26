@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-char **get_paths_split(t_shell *shell)
+char	**get_paths_split(t_shell *shell)
 {
 	char	**splited;
 	t_env	*node;
@@ -15,20 +15,21 @@ char **get_paths_split(t_shell *shell)
 	return (splited);
 }
 
-char *get_current_path_str(char *path, char *command)
+char	*get_current_path_str(char *path, char *command)
 {
 	char	*joined;
 
 	joined = ft_strjoin(path, "/", O_ONE);
 	if (!joined)
-		return(NULL);
+		return (NULL);
 	joined = ft_strjoin(joined, command, O_ONE);
 	if (!joined)
-		return(NULL);
+		return (NULL);
 	return (joined);
 }
 
-int	can_open_file(int stat_return, struct stat *file_info, char *command, t_shell *shell)
+int	can_open_file(int stat_return, struct stat *file_info,
+	char *command, t_shell *shell)
 {
 	if (stat_return < 0)
 		return (0);
@@ -43,19 +44,18 @@ int	can_open_file(int stat_return, struct stat *file_info, char *command, t_shel
 	return (1);
 }
 
-
-char	*get_right_path(t_shell *shell, char *command) //FIX: Leak? Child process
+char	*get_right_path(t_shell *shell, char *command) //FIX: Leak?Childprocess
 {
-	char	*path;
-	char	**paths_split;
-	int	i;
-	struct stat	file_info; 
+	char		*path;
+	char		**paths_split;
+	int			i;
+	struct stat	file_info;
 
 	i = 0;
 	paths_split = get_paths_split(shell);
 	if (!paths_split)
 		return (NULL);
-	while(paths_split[i])
+	while (paths_split[i])
 	{
 		path = get_current_path_str(paths_split[i++], command);
 		if (can_open_file(stat(path, &file_info), &file_info, command, shell))

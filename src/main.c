@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 22:07:07 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:53:30 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <unistd.h>
 
 int		g_sig;
-
 
 void	pre_prompt(t_shell *shell)
 {
