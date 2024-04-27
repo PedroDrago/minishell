@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:39:12 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:25:43 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,13 @@ t_env			*fill_env_struct(int fd);
 //evaluation.c
 int				execute_command(t_shell *shell, char **args);
 int				perform_redirections(char **splited_command);
-void			wait_children(t_shell *shell);
 int				evaluate_prompt(char *prompt, t_shell *shell);
 int				exec_list(t_list *list, t_shell *shell);
+//evaluation_utils.c
+int				str_token_cmp(char *item);
+int				count_new_prompt_size(char *str);
+char			*prompt_pre_format(char *prompt, char *new_str, int i, int j);
+void			wait_children(t_shell *shell);
 //execution_path.c
 char			**get_paths_split(t_shell *shell);
 char			*get_current_path_str(char *path, char *command);
