@@ -12,16 +12,12 @@
 
 #include "../includes/minishell.h"
 #include <signal.h>
-#include <stdio.h>
 #include <unistd.h>
 
 int	prep_process(t_node *node, t_shell *shell)
 {
 	if (!node->splited_command)
-	{
-		exit_safely(shell, 1);
-		/*exit(1);*/
-	}
+		return (FALSE);
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
@@ -38,7 +34,7 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell)
 	append_process(pid, shell);
 }
 
-int	execute_node(t_node *node, t_list *list, t_shell *shell)
+int	execute_node(t_node *node, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -56,16 +52,13 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	{
 		if (!prep_process(node, shell))
 		{
+			free_process_data(shell);
 			exit_safely(shell, 2);
-			/*exit(2);*/
 		}
 		execute_command(shell, node->args);
 	}
 	else
-	{
 		post_process(pid, node, shell);
-	}
-	(void) list;
 	return (TRUE);
 }
 
@@ -83,8 +76,7 @@ void	init_processes_data(t_list *list, t_shell *shell)
 	tmp = list->head;
 	while (tmp)
 	{
-		if (!is_builtin(tmp->splited_command[0]))
-			i++;
+		i++;
 		tmp = tmp->next;
 	}
 	shell->pids.array = malloc(sizeof(pid_t) * i);

@@ -57,7 +57,6 @@ void	redirect_input(char *file, t_shell *shell)
 			ft_putstr_fd(": Permission denied\n", 2);
 		free_process_data(shell);
 		exit_safely(shell, 1);
-		/*exit(1);*/
 	}
 	dup2(fd, 0);
 }

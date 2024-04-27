@@ -85,3 +85,18 @@ void	builtin_exit(t_shell *shell, t_node *node)
 	ft_putstr_fd(": too many arguments\n", 2);
 	exit_safely(shell, 1);
 }
+
+void	set_builtin_exit_status(t_node *node, t_shell *shell, int status)
+{
+	int	pid;
+
+	post_builtin(node, shell);
+	pid = fork();
+	if (pid == 0)
+	{
+		free_process_data(shell);
+		exit_safely(shell, status);
+	}
+	else
+		append_process(pid, shell);
+}

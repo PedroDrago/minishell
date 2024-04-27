@@ -42,16 +42,13 @@ void	redirect_output(char *redirection, char *file, t_shell *shell)
 	if (tmp_fd < 0)
 	{
 		if (mode == O_APPEND)
-			perror("[OUT APPEND] Minishell");
+			perror("Minishell");
 		if (mode == O_TRUNC)
-			perror("[OUT RED] Minishell");
+			perror("Minishell");
+		free_process_data(shell);
 		if (stat(file, &file_info) < 0)
-		{
 			exit_safely(shell, 157);
-			/*exit (157);*/
-		}
 		exit_safely(shell, 1);
-		/*exit(1);*/
 	}
 	dup2(tmp_fd, 1);
 }
@@ -72,9 +69,9 @@ int	redirect_output_builtin(char *redirection, char *file)
 		if (stat(file, &file_info) < 0)
 			return (157);
 		if (mode == O_APPEND)
-			perror("[OUT APPEND BUILTIN] Minishell");
+			perror("Minishell");
 		if (mode == O_TRUNC)
-			perror("[OUT RED BUILTIN] Minishell");
+			perror("Minishell");
 		return (1);
 	}
 	dup2(tmp_fd, 1);

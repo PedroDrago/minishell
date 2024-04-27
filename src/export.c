@@ -42,15 +42,28 @@ int	is_valid(char *key)
 	return (TRUE);
 }
 
+void	init_export_vars(int *i, char ***splited, int *status)
+{
+	*status = 0;
+	*i = 1;
+	*splited = NULL;
+}
+
+void	set_invalid_identifier(int *status)
+{
+	ft_putstr_fd(" not a valid identifier\n", 2);
+	*status = 1;
+}
+
 int	export(char *argv[], t_shell *shell)
 {
 	int		i;
 	char	**splited;
+	int		status;
 
 	if (split_len(argv) == 1)
 		return (print_export(shell->env, 1), 1);
-	i = 1;
-	splited = NULL;
+	init_export_vars(&i, &splited, &status);
 	while (argv[i])
 	{
 		splited = split_keyvalue(argv[i], '=');
@@ -58,15 +71,15 @@ int	export(char *argv[], t_shell *shell)
 			return (1);
 		if ((!is_valid(splited[0]) || ft_isdigit(splited[0][0])) && ++i)
 		{
-			ft_putstr_fd(" not a valid identifier\n", 2);
-			set_exit_status(1, shell);
+			set_invalid_identifier(&status);
 			continue ;
 		}
 		if (!set_env_value(shell->env, splited[0], splited[1]))
 			return (free_split(splited), 1);
+		status = 0;
 		i++;
 	}
 	if (splited)
 		free(splited);
-	return (0);
+	return (status);
 }

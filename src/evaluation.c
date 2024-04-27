@@ -96,7 +96,7 @@ int	exec_list(t_list *list, t_shell *shell)
 	tmp = list->head;
 	while (tmp)
 	{
-		execute_node(tmp, list, shell);
+		execute_node(tmp, shell);
 		tmp = tmp->next;
 	}
 	wait_children(shell);

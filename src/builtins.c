@@ -12,9 +12,10 @@
 
 #include "../includes/minishell.h"
 #include <sys/wait.h>
+#include <unistd.h>
 
 void	perform_builtin_redirections(char **splited_com, int *status,
-	int original_fd)
+	int original_fd, t_shell *shell)
 {
 	while (*splited_com)
 	{
@@ -34,7 +35,7 @@ void	perform_builtin_redirections(char **splited_com, int *status,
 		{
 			*status = fork();
 			if (*status == 0)
-				do_heredoc_builtin(*(++splited_com), original_fd);
+				do_heredoc_builtin(*(++splited_com), original_fd, shell);
 			waitpid(*status, status, 0);
 		}
 		++splited_com;
@@ -60,7 +61,7 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-int	prep_builtin(t_node *node)
+int	prep_builtin(t_node *node, t_shell *shell)
 {
 	int	status;
 	int	original_fd;
@@ -71,7 +72,8 @@ int	prep_builtin(t_node *node)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
-	perform_builtin_redirections(node->splited_command, &status, original_fd);
+	perform_builtin_redirections(node->splited_command, &status,
+		original_fd, shell);
 	return (status);
 }
 
@@ -85,7 +87,7 @@ void	post_builtin(t_node *node, t_shell *shell)
 	if (node->prev && node->prev->has_pipe)
 	{
 		file = get_next_line(node->node_pipe[0]);
-		while(file)
+		while (file)
 		{
 			free(file);
 			file = get_next_line(node->node_pipe[0]);
@@ -98,26 +100,28 @@ void	post_builtin(t_node *node, t_shell *shell)
 
 void	execute_builtin(t_node *node, t_shell *shell)
 {
-	if (prep_builtin(node))
-		return (post_builtin(node, shell));
-	set_exit_status(0, shell);
-	if (!ft_strncmp(node->splited_command[0], "echo", 5))
-		echo(node->args);
+	int	status;
+
+	status = prep_builtin(node, shell);
+	if (status)
+		;
+	else if (!ft_strncmp(node->splited_command[0], "echo", 5))
+		status = echo(node->args);
 	else if (!ft_strncmp(node->splited_command[0], "cd", 3))
-		cd(node->args, shell);
+		status = cd(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "pwd", 4))
-		pwd();
+		status = pwd();
 	else if (!ft_strncmp(node->splited_command[0], "export", 7))
-		export(node->args, shell);
+		status = export(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "unset", 6))
-		unset(node->args, shell);
+		status = unset(node->args, shell);
 	else if (!ft_strncmp(node->splited_command[0], "env", 4))
-		env(shell->env);
+		status = env(shell->env);
 	else if (!ft_strncmp(node->splited_command[0], "exit", 5)
 		&& (!node->prev && !node->next))
 	{
 		free_process_data(shell);
 		builtin_exit(shell, node);
 	}
-	post_builtin(node, shell);
+	set_builtin_exit_status(node, shell, status);
 }

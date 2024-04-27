@@ -56,12 +56,10 @@ int	cd(char *argv[], t_shell *shell)
 {
 	char	*cwd;
 	char	*path;
+	int		status;
 
 	if (split_len(argv) > 2)
-	{
-		set_exit_status(1, shell);
 		return (write(2, "Minishell: cd: too many arguments\n", 34), 1);
-	}
 	cwd = get_cwd();
 	if (!cwd)
 		return (1);
@@ -70,12 +68,13 @@ int	cd(char *argv[], t_shell *shell)
 		path = get_home_path(shell->env);
 	if (!path)
 		return (1);
+	status = 0;
 	if (chdir(path) < 0)
 	{
 		perror("Minishell: cd");
-		set_exit_status(1, shell);
+		status = 1;
 	}
 	set_pwd_envs(shell->env, cwd);
 	free(cwd);
-	return (0);
+	return (status);
 }
