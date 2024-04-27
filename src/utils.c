@@ -59,14 +59,18 @@ void	free_list(t_list *list)
 
 	while (list->head)
 	{
-		free(list->head->basic_command);
-		free_split(list->head->splited_command);
-		free_split(list->head->args);
+		if (list->head->basic_command)
+			free(list->head->basic_command);
+		if (list->head->splited_command)
+			free_split(list->head->splited_command);
+		if (list->head->args)
+			free_split(list->head->args);
 		tmp = list->head->next;
 		free(list->head);
 		list->head = tmp;
 	}
-	free(list);
+	if (list)
+		free(list);
 }
 
 void	print_list(t_list *arg)
