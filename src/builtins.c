@@ -77,10 +77,21 @@ int	prep_builtin(t_node *node)
 
 void	post_builtin(t_node *node, t_shell *shell)
 {
+	char	*file;
+
+	file = NULL;
 	if (node->has_pipe)
 		close(node->node_pipe[1]);
 	if (node->prev && node->prev->has_pipe)
+	{
+		file = get_next_line(node->node_pipe[0]);
+		while(file)
+		{
+			free(file);
+			file = get_next_line(node->node_pipe[0]);
+		}
 		close(node->node_pipe[0]);
+	}
 	dup2(shell->original_stdin, 0);
 	dup2(shell->original_stdout, 1);
 }
