@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 19:11:32 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 19:32:17 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:42:48 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_env	*load_envs(char *envp[])
 	env = NULL;
 	while (envp && *envp)
 	{
-		args = split_keyvalue(*envp, '=');
+		args = split_keyvalue(*envp++, '=');
 		if (!args)
 			return (NULL);
 		if (!env)
@@ -103,7 +103,6 @@ t_env	*load_envs(char *envp[])
 		}
 		else if (!set_env_value(env, args[0], args[1]))
 			return (NULL);
-		envp++;
 		free(args);
 	}
 	if (!set_env_value(env, ft_strdup("?"), ft_strdup("0")))

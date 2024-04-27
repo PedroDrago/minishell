@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
+/*   Updated: 2024/04/26 20:07:45 by rafaelro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
@@ -21,34 +33,6 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell)
 	if (node->prev && node->prev->has_pipe)
 		close(node->node_pipe[0]);
 	append_process(pid, shell);
-}
-
-void	remove_empty_args(t_node *node)
-{
-	int		i;
-	int		j;
-	int		emptys;
-	char	**new_args;
-
-	i = -1;
-	emptys = 0;
-	while (node->args[++i])
-		if (ft_strlen(node->args[i]) == 0)
-			emptys++;
-	new_args = malloc(sizeof(char *) * (i - emptys + 1));
-	if (!new_args)
-		exit(1);
-	i = 0;
-	j = 0;
-	while (node->args[i])
-	{
-		if (ft_strlen(node->args[i]) == 0 && ++i)
-			continue ;
-		new_args[j++] = ft_strdup(node->args[i++]);
-	}
-	new_args[j] = NULL;
-	free_split(node->args);
-	node->args = new_args;
 }
 
 int	execute_node(t_node *node, t_list *list, t_shell *shell)
@@ -82,13 +66,6 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 void	append_process(pid_t pid, t_shell *shell)
 {
 	shell->pids.array[shell->pids.index++] = pid;
-}
-
-void	free_process_data(t_shell *shell)
-{
-	free(shell->pids.array);
-	shell->pids.index = 0;
-	shell->pids.size = 0;
 }
 
 void	init_processes_data(t_list *list, t_shell *shell)
