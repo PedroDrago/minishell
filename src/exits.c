@@ -46,8 +46,12 @@ void	free_before_safely_exit(t_shell *shell)
 
 void	exit_safely(t_shell *shell, unsigned char status)
 {
-	free(shell->prompt_string);
-	free_env(shell->env);
+	if (shell->prompt_list)
+		free_list(shell->prompt_list);
+	if (shell->prompt_string)
+		free(shell->prompt_string);
+	if (shell->env)
+		free_env(shell->env);
 	free(shell);
 	rl_clear_history();
 	exit(status);

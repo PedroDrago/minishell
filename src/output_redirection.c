@@ -28,7 +28,7 @@ int	is_redirect_output(char *token)
 	return (is_truncate(token) || is_append(token));
 }
 
-void	redirect_output(char *redirection, char *file)
+void	redirect_output(char *redirection, char *file, t_shell *shell)
 {
 	int			tmp_fd;
 	struct stat	file_info;
@@ -46,8 +46,12 @@ void	redirect_output(char *redirection, char *file)
 		if (mode == O_TRUNC)
 			perror("[OUT RED] Minishell");
 		if (stat(file, &file_info) < 0)
-			exit (157);
-		exit(1);
+		{
+			exit_safely(shell, 157);
+			/*exit (157);*/
+		}
+		exit_safely(shell, 1);
+		/*exit(1);*/
 	}
 	dup2(tmp_fd, 1);
 }

@@ -57,7 +57,7 @@ void	free_list(t_list *list)
 {
 	t_node	*tmp;
 
-	while (list->head)
+	while (list && list->head)
 	{
 		if (list->head->basic_command)
 			free(list->head->basic_command);

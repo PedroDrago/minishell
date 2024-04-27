@@ -41,7 +41,7 @@ int	redirect_input_builtin(char *file)
 	return (0);
 }
 
-void	redirect_input(char *file)
+void	redirect_input(char *file, t_shell *shell)
 {
 	int			fd;
 	struct stat	file_info;
@@ -55,7 +55,9 @@ void	redirect_input(char *file)
 			ft_putstr_fd(": No such file or directory\n", 2);
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
-		exit(1);
+		free_process_data(shell);
+		exit_safely(shell, 1);
+		/*exit(1);*/
 	}
 	dup2(fd, 0);
 }

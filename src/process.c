@@ -15,15 +15,18 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int	prep_process(t_node *node)
+int	prep_process(t_node *node, t_shell *shell)
 {
 	if (!node->splited_command)
-		exit(1);
+	{
+		exit_safely(shell, 1);
+		/*exit(1);*/
+	}
 	if (node->has_pipe)
 		dup2(node->node_pipe[1], 1);
 	if (node->prev && node->prev->has_pipe)
 		dup2(node->node_pipe[0], 0);
-	return (perform_redirections(node->splited_command));
+	return (perform_redirections(node->splited_command, shell));
 }
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell)
@@ -51,8 +54,11 @@ int	execute_node(t_node *node, t_list *list, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!prep_process(node))
-			exit(2);
+		if (!prep_process(node, shell))
+		{
+			exit_safely(shell, 2);
+			/*exit(2);*/
+		}
 		execute_command(shell, node->args);
 	}
 	else

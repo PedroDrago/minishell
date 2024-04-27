@@ -65,7 +65,7 @@ int	execute_command(t_shell *shell, char **args)
 	exit(1);
 }
 
-int	perform_redirections(char **splited_command)
+int	perform_redirections(char **splited_command, t_shell *shell)
 {
 	int	i;
 	int	original_fd;
@@ -75,10 +75,10 @@ int	perform_redirections(char **splited_command)
 	while (splited_command[i])
 	{
 		if (is_redirect_input(splited_command[i]))
-			redirect_input(splited_command[++i]);
+			redirect_input(splited_command[++i], shell);
 		else if (is_redirect_output(splited_command[i]))
 		{
-			redirect_output(splited_command[i], splited_command[i + 1]);
+			redirect_output(splited_command[i], splited_command[i + 1], shell);
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
@@ -123,6 +123,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	init_processes_data(prompt_list, shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
+	shell->prompt_list = NULL;
 	free_process_data(shell);
 	return (TRUE);
 }
