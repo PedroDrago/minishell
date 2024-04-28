@@ -69,8 +69,8 @@ void	do_heredoc_builtin(char *old_delimiter, int original_fd, t_shell *shell)
 	char	*prompt;
 	int		len;
 	char	delimiter[500];
-	
-	ft_strlcpy(delimiter, old_delimiter,500);
+
+	ft_strlcpy(delimiter, old_delimiter, 500);
 	signal(SIGINT, sighandler);
 	dup2(original_fd, 0);
 	pipe(pipe_fd);
