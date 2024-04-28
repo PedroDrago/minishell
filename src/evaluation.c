@@ -40,7 +40,7 @@ void	resolve_errors(char *command, t_shell *shell)
 	}
 	ft_putstr_fd(": Can't be executed by this shell\n", 2);
 	free_before_safely_exit(shell);
-	exit(2);
+	exit(0);
 }
 
 int	execute_command(t_shell *shell, char **args)
@@ -82,7 +82,7 @@ int	perform_redirections(char **splited_command, t_shell *shell)
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], original_fd))
+			if (!do_heredoc(splited_command[++i], original_fd, shell))
 				return (FALSE);
 		i++;
 	}

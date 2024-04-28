@@ -97,7 +97,7 @@ int				is_valid(char *key);
 int				export(char *argv[], t_shell *shell);
 // heredoc.c
 int				is_heredoc(char *token);
-int				do_heredoc(char *delimiter, int original_fd);
+int				do_heredoc(char *delimiter, int original_fd, t_shell *shell);
 void			do_heredoc_builtin(char *delimiter, int original_fd,
 					t_shell *shell);
 // input_redirection.c
@@ -161,7 +161,7 @@ char			**prompt_split(char *str);
 int				pwd(void);
 // shell_setting.c
 char			*get_cwd(void);
-t_shell			*init_shell(int argc, char *argv[], char *envp[]);
+t_shell			*init_shell(t_shell *shell, int argc, char *argv[], char *envp[]);
 // split_charset.c
 int				is_charset(char c, char *charset);
 int				charset_split_count(char *str, char *charset);

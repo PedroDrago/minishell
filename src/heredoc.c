@@ -28,15 +28,18 @@ void	sighandler(int sig)
 	exit(2);
 }
 
-int	do_heredoc(char *delimiter, int original_fd)
+int	do_heredoc(char *old_delimiter, int original_fd, t_shell *shell)
 {
 	int		pipe_fd[2];
 	char	*prompt;
 	int		len;
+	char	delimiter[500];
 
+	ft_strlcpy(delimiter, old_delimiter, 500);
 	signal(SIGINT, sighandler);
 	dup2(original_fd, 0);
 	pipe(pipe_fd);
+	free_before_safely_exit(shell);
 	prompt = readline("> ");
 	if (!prompt)
 		return (FALSE);
@@ -60,15 +63,18 @@ void	exit_heredoc(t_shell *shell, int status)
 	exit_safely(shell, status);
 }
 
-void	do_heredoc_builtin(char *delimiter, int original_fd, t_shell *shell)
+void	do_heredoc_builtin(char *old_delimiter, int original_fd, t_shell *shell)
 {
 	int		pipe_fd[2];
 	char	*prompt;
 	int		len;
-
+	char	delimiter[500];
+	
+	ft_strlcpy(delimiter, old_delimiter,500);
 	signal(SIGINT, sighandler);
 	dup2(original_fd, 0);
 	pipe(pipe_fd);
+	free_before_safely_exit(shell);
 	prompt = readline("> ");
 	if (!prompt)
 		exit_heredoc(shell, 1);
