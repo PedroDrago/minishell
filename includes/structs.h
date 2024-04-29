@@ -76,6 +76,7 @@ typedef struct s_shell
 	char			*prompt_string;
 	int				original_stdin;
 	int				original_stdout;
+	int				has_pipes;
 	t_env			*env;
 	t_list			*prompt_list;
 	t_pids			pids;

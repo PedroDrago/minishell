@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:25 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/05 14:58:51 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 14:43:51 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,19 @@ t_list	*create_list(void)
 	return (list);
 }
 
-t_list *parse_prompt(char *prompt)
+t_list	*parse_prompt(char *prompt)
 {
 	t_list	*prompt_list;
 	char	**command_tab;
 	t_node	*node;
-	int	i;
-
+	int		i;
 
 	prompt_list = create_list();
 	if (!prompt_list)
 		return (NULL);
 	i = 0;
 	command_tab = prompt_split(prompt);
-	while(command_tab[i])
+	while (command_tab[i])
 	{
 		node = create_node();
 		node->basic_command = command_tab[i];

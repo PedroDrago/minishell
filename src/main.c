@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 22:07:07 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:53:30 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include <unistd.h>
 
 int		g_sig;
-
 
 void	pre_prompt(t_shell *shell)
 {
@@ -38,26 +37,25 @@ void	post_prompt(t_shell *shell)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*prompt;
-	t_shell	*shell;
+	t_shell	shell;
 
-	shell = init_shell(argc, argv, envp);
-	if (!shell)
-		exit(1);
+	init_shell(&shell, argc, argv, envp);
 	prompt = NULL;
 	signal(SIGUSR1, exit_program);
 	signal(SIGUSR2, exit_program);
 	signal(SIGQUIT, SIG_IGN);
 	while (TRUE)
 	{
-		pre_prompt(shell);
-		prompt = get_prompt(shell);
-		if (!validate_prompt(prompt, shell))
+		pre_prompt(&shell);
+		shell.has_pipes = 0;
+		prompt = get_prompt(&shell);
+		if (!validate_prompt(prompt, &shell))
 		{
 			free(prompt);
 			continue ;
 		}
-		if (!evaluate_prompt(prompt, shell))
-			return (exit_safely(shell, 1), EXIT_FAILURE);
+		if (!evaluate_prompt(prompt, &shell))
+			return (exit_safely(&shell, 1), EXIT_FAILURE);
 	}
-	return (exit_safely(shell, 0), EXIT_SUCCESS);
+	return (exit_safely(&shell, 0), EXIT_SUCCESS);
 }

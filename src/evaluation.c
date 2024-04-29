@@ -40,7 +40,7 @@ void	resolve_errors(char *command, t_shell *shell)
 	}
 	ft_putstr_fd(": Can't be executed by this shell\n", 2);
 	free_before_safely_exit(shell);
-	exit(2);
+	exit(0);
 }
 
 int	execute_command(t_shell *shell, char **args)
@@ -65,7 +65,7 @@ int	execute_command(t_shell *shell, char **args)
 	exit(1);
 }
 
-int	perform_redirections(char **splited_command)
+int	perform_redirections(char **splited_command, t_shell *shell)
 {
 	int	i;
 	int	original_fd;
@@ -75,10 +75,10 @@ int	perform_redirections(char **splited_command)
 	while (splited_command[i])
 	{
 		if (is_redirect_input(splited_command[i]))
-			redirect_input(splited_command[++i]);
+			redirect_input(splited_command[++i], shell);
 		else if (is_redirect_output(splited_command[i]))
 		{
-			redirect_output(splited_command[i], splited_command[i + 1]);
+			redirect_output(splited_command[i], splited_command[i + 1], shell);
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
@@ -89,21 +89,6 @@ int	perform_redirections(char **splited_command)
 	return (TRUE);
 }
 
-void	wait_children(t_shell *shell)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < shell->pids.size)
-	{
-		status = -1;
-		waitpid(shell->pids.array[i], &status, 0);
-		set_exit_status(WEXITSTATUS(status), shell);
-		i++;
-	}
-}
-
 int	exec_list(t_list *list, t_shell *shell)
 {
 	t_node	*tmp;
@@ -111,71 +96,11 @@ int	exec_list(t_list *list, t_shell *shell)
 	tmp = list->head;
 	while (tmp)
 	{
-		execute_node(tmp, list, shell);
+		execute_node(tmp, shell);
 		tmp = tmp->next;
 	}
 	wait_children(shell);
 	return (TRUE);
-}
-
-int	str_token_cmp(char *item) // NEWFEATURE
-{
-	if (!item)
-		return (1);
-	else if (!ft_strncmp(item, "|", 1))
-		return (1);
-	else if (!ft_strncmp(item, "<<", 2))
-		return (2);
-	else if (!ft_strncmp(item, "<", 1))
-		return (1);
-	else if (!ft_strncmp(item, ">>", 2))
-		return (2);
-	else if (!ft_strncmp(item, ">", 1))
-		return (1);
-	return (0);
-}
-
-int	count_new_prompt_size(char *str) // NEWFEATURE
-{
-	int	count;
-
-	count = 0;
-	while (str && *str)
-	{
-		if (ft_strchr("\"><|", *str++))
-			count += 2;
-		count++;
-	}
-	return (count);
-}
-
-char	*prompt_pre_format(char *prompt, char *new_str, int i, int j) //NF
-{
-	int	diff;
-	int	quotes;
-	int	d_quotes;
-
-	quotes = 0;
-	d_quotes = 0;
-	while (prompt[j])
-	{
-		if (prompt[j] == '\"' && !quotes)
-			d_quotes = !d_quotes;
-		if (prompt[j] == '\'' && !d_quotes)
-			quotes = !quotes;
-		diff = str_token_cmp(&prompt[j]);
-		if (!d_quotes && !quotes && diff)
-		{
-			new_str[i++] = ' ';
-			while (diff-- > 0)
-				new_str[i++] = prompt[j++];
-			new_str[i++] = ' ';
-			continue ;
-		}
-		new_str[i++] = prompt[j++];
-	}
-	new_str[i] = '\0';
-	return (new_str);
 }
 
 int	evaluate_prompt(char *prompt, t_shell *shell)
@@ -196,8 +121,10 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	shell->prompt_list = prompt_list;
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
+	check_for_pipes(shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
+	shell->prompt_list = NULL;
 	free_process_data(shell);
 	return (TRUE);
 }

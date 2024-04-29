@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exits.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/26 20:12:59 by rafaelro          #+#    #+#             */
+/*   Updated: 2024/04/26 20:12:59 by rafaelro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	exit_program(int sig)
@@ -11,7 +23,7 @@ void	exit_program(int sig)
 	g_sig = sig;
 	if (g_sig == SIGINT)
 	{
-		if(!process)
+		if (!process)
 		{
 			write(1, "\n", 1);
 			rl_on_new_line();
@@ -25,93 +37,26 @@ void	exit_program(int sig)
 
 void	free_before_safely_exit(t_shell *shell)
 {
-	free_list(shell->prompt_list);
 	free_process_data(shell);
 	free(shell->prompt_string);
+	shell->prompt_string = NULL;
 	free_env(shell->env);
-	free(shell);
+	shell->env = NULL;
+	free_list(shell->prompt_list);
+	shell->prompt_list = NULL;
 	rl_clear_history();
 }
 
 void	exit_safely(t_shell *shell, unsigned char status)
 {
-	free(shell->prompt_string);
-	free_env(shell->env);
-	free(shell);
+	if (shell->prompt_list)
+		free_list(shell->prompt_list);
+	if (shell->prompt_string)
+		free(shell->prompt_string);
+	if (shell->env)
+		free_env(shell->env);
 	rl_clear_history();
 	exit(status);
-}
-
-long long int	ft_atolli_mod(const char *nptr)
-{
-	long long int	total;
-	long long int	signal;
-
-	total = 0;
-	signal = 1;
-	while ((*nptr >= '\t' && *nptr <= '\r') || *nptr == ' ')
-		nptr++;
-	if ((*nptr == '-' || *nptr == '+') && *nptr++ == '-')
-		signal *= -1;
-	while (ft_isdigit(*nptr))
-		total = total * 10 + (*nptr++ - '0');
-	return (total * signal);
-}
-
-int	is_valid_lli(char *status)
-{
-	unsigned long long int	total;
-	unsigned long long int	max_lli;
-	int						signal;
-
-	max_lli = 9223372036854775808ULL;
-	total = 0;
-	signal = 1;
-	if (!status)
-		return (0);
-	while ((*status >= '\t' && *status <= '\r') || *status == ' ')
-		status++;
-	if (*status == '-' || *status == '+')
-		if (*status++ == '-')
-			signal *= -1;
-	if (ft_strlen(status) > 19)
-		return (0);
-	while (ft_isdigit(*status) && total < max_lli)
-		total = total * 10 + (*status++ - '0');
-	if (total > max_lli)
-		return (0);
-	if (total == max_lli && signal == 1)
-		return (0);
-	return (1);
-	
-}
-
-int		is_numeric_argument(char *str)
-{
-	int	space_flag;
-
-	if (!str)
-		return (0);
-	space_flag = 0;
-	while (*str && *str == ' ')
-		str++;
-	if (*str == '+' || *str == '-')
-		str++;
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
-		{
-			if (*str == ' ')
-				space_flag++;
-			else
-				return (0);
-		}
-		else
-			if (space_flag && ft_isdigit(*str))
-				return (0);
-		str++;
-	}
-	return (1);
 }
 
 void	builtin_exit(t_shell *shell, t_node *node)
@@ -141,4 +86,19 @@ void	builtin_exit(t_shell *shell, t_node *node)
 	}
 	ft_putstr_fd(": too many arguments\n", 2);
 	exit_safely(shell, 1);
+}
+
+void	set_builtin_exit_status(t_node *node, t_shell *shell, int status)
+{
+	int	pid;
+
+	post_builtin(node, shell);
+	pid = fork();
+	if (pid == 0)
+	{
+		free_process_data(shell);
+		exit_safely(shell, status);
+	}
+	else
+		append_process(pid, shell);
 }

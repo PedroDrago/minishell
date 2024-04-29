@@ -74,19 +74,18 @@ char	**expand_split(char **splited, t_shell *shell)
 
 void	str_unquote(char **str)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	if (*str[0] == '\"' || *str[0] == '\'')
 	{
 		ft_memmove(str[j], (const void *)(&str[j][1]), ft_strlen(str[j]));
 		while (str[j] && str[j++])
-		 	;
+			;
 		if (j > 1)
 		{
-		 	j--;
-
-		 	str[j][0] = '\0';
+			j--;
+			str[j][0] = '\0';
 		}
 	}
 }
@@ -105,7 +104,8 @@ void	expand_arguments(t_node *node, t_shell *shell)
 		j = 0;
 		while (splited && splited[j])
 		{
-			arg_splited = expand_split(ft_split_charset_mod(splited[j], "$\"\' ;!@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
+			arg_splited = expand_split(ft_split_charset_mod(splited[j], "$\"\' ;!\
+							@#%^&*()[]{}`~|<>:.,/+=-_\t\a\b\n\v\f\r"), shell);
 			if (!arg_splited)
 				return ;
 			str_unquote(arg_splited);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   double_token_validation.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/26 21:14:21 by rafaelro          #+#    #+#             */
+/*   Updated: 2024/04/26 21:15:33 by rafaelro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include <stdio.h>
 
@@ -9,7 +21,8 @@ int	is_token_char(char c)
 int	print_double_token_error(char c)
 {
 	ft_putstr_fd("Minishell: syntax error near unexpected token `", 2),
-		ft_putchar_fd(c, 2), ft_putstr_fd("'\n", 2);
+	ft_putchar_fd(c, 2);
+	ft_putstr_fd("'\n", 2);
 	return (FALSE);
 }
 

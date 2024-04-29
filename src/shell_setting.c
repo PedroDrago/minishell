@@ -32,13 +32,8 @@ char	*get_cwd(void)
 	return (buffer);
 }
 
-t_shell	*init_shell(int argc, char *argv[], char *envp[])
+t_shell	*init_shell(t_shell *shell, int argc, char *argv[], char *envp[])
 {
-	t_shell	*shell;
-
-	shell = (t_shell *)malloc(sizeof(t_shell));
-	if (!shell)
-		exit(EXIT_FAILURE);
 	signal(SIGINT, exit_program);
 	shell->last_status = -99;
 	shell->prompt_string = NULL;
@@ -46,7 +41,7 @@ t_shell	*init_shell(int argc, char *argv[], char *envp[])
 	shell->prompt_list = NULL;
 	shell->envp = envp;
 	if (!shell->env)
-		return (free(shell), NULL);
+		return (NULL);
 	(void)argc, (void)argv;
 	return (shell);
 }
