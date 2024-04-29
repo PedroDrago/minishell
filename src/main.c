@@ -47,6 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (TRUE)
 	{
 		pre_prompt(&shell);
+		shell.has_pipes = 0;
 		prompt = get_prompt(&shell);
 		if (!validate_prompt(prompt, &shell))
 		{

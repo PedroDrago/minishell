@@ -82,7 +82,7 @@ int	perform_redirections(char **splited_command, t_shell *shell)
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], original_fd, shell))
+			if (!do_heredoc(splited_command[++i], original_fd))
 				return (FALSE);
 		i++;
 	}
@@ -103,6 +103,22 @@ int	exec_list(t_list *list, t_shell *shell)
 	return (TRUE);
 }
 
+void	check_for_pipes(t_shell *shell)
+{
+	t_node *temp;
+
+	temp = shell->prompt_list->head;
+	while (temp)
+	{
+		if (temp->has_pipe)
+		{
+			shell->has_pipes = 1;
+			return ;
+		}
+		temp = temp->next;
+	}
+}
+
 int	evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list	*prompt_list;
@@ -121,6 +137,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	shell->prompt_list = prompt_list;
 	setup_list_pipes(prompt_list);
 	init_processes_data(prompt_list, shell);
+	check_for_pipes(shell);
 	exec_list(prompt_list, shell);
 	free_list(prompt_list);
 	shell->prompt_list = NULL;
