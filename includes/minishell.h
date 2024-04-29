@@ -97,7 +97,7 @@ int				is_valid(char *key);
 int				export(char *argv[], t_shell *shell);
 // heredoc.c
 int				is_heredoc(char *token);
-int				do_heredoc(char *delimiter, int original_fd, t_shell *shell);
+int				do_heredoc(char *delimiter, int original_fd);
 void			do_heredoc_builtin(char *delimiter, int original_fd,
 					t_shell *shell);
 // input_redirection.c
