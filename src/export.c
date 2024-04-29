@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:09 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/28 23:09:45 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/04/28 23:33:54 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ int	export(char *argv[], t_shell *shell)
 
 	if (split_len(argv) == 1)
 		return (print_export(shell->env, 1), 1);
-	if (shell->has_pipes)
-		return (0);
 	init_export_vars(&i, &splited, &status);
-	while (argv[i])
+	while (argv[i] && shell->has_pipes == 0)
 	{
 		splited = split_keyvalue(argv[i], '=');
 		if (!splited)

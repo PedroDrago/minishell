@@ -86,3 +86,19 @@ void	wait_children(t_shell *shell)
 		i++;
 	}
 }
+
+void	check_for_pipes(t_shell *shell)
+{
+	t_node	*temp;
+
+	temp = shell->prompt_list->head;
+	while (temp)
+	{
+		if (temp->has_pipe)
+		{
+			shell->has_pipes = 1;
+			return ;
+		}
+		temp = temp->next;
+	}
+}

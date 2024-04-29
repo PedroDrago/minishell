@@ -103,22 +103,6 @@ int	exec_list(t_list *list, t_shell *shell)
 	return (TRUE);
 }
 
-void	check_for_pipes(t_shell *shell)
-{
-	t_node *temp;
-
-	temp = shell->prompt_list->head;
-	while (temp)
-	{
-		if (temp->has_pipe)
-		{
-			shell->has_pipes = 1;
-			return ;
-		}
-		temp = temp->next;
-	}
-}
-
 int	evaluate_prompt(char *prompt, t_shell *shell)
 {
 	t_list	*prompt_list;
