@@ -92,12 +92,17 @@ int	perform_redirections(char **splited_command, t_shell *shell)
 int	exec_list(t_list *list, t_shell *shell)
 {
 	t_node	*tmp;
+	int		prevpipe;
+	int		bkp_stdout;
 
+	prevpipe = dup(STDIN_FILENO);
+	bkp_stdout = dup(STDOUT_FILENO);
 	tmp = list->head;
 	while (tmp)
 	{
-		execute_node(tmp, shell);
+		execute_node(tmp, shell, &prevpipe);
 		tmp = tmp->next;
+		dup2(bkp_stdout, STDOUT_FILENO);
 	}
 	wait_children(shell);
 	return (TRUE);
@@ -119,7 +124,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	setup_list_pipes(prompt_list);
+	/*setup_list_pipes(prompt_list);*/
 	init_processes_data(prompt_list, shell);
 	check_for_pipes(shell);
 	exec_list(prompt_list, shell);

@@ -31,12 +31,12 @@ void			resolve_quotes(char c, int *in_single_quote,
 					int *in_double_quote);
 // builtins.c
 void			builtin_exit(t_shell *shell, t_node *node);
-void			execute_builtin(t_node *node, t_shell *shell);
+void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
 int				is_builtin(char *command);
 void			perform_builtin_redirections(char **splited_com, int *status,
 					int original_fd, t_shell *shell);
-int				prep_builtin(t_node *node, t_shell *shell);
-void			post_builtin(t_node *node, t_shell *shell);
+int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
+void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
 // cd.c
 int				cd(char *argv[], t_shell *shell);
 char			*get_home_path(t_env *env);
@@ -89,8 +89,8 @@ char			*get_right_path(t_shell *shell, char *command);
 void			exit_program(int sig);
 void			exit_safely(t_shell *shell, unsigned char status);
 void			free_before_safely_exit(t_shell *shell);
-void			set_builtin_exit_status(t_node *node, t_shell *shell,
-					int status);
+
+void	set_builtin_exit_status(t_node *node, t_shell *shell, int status, int *prevpipe, int *pipefd);
 // exits_utils.c
 long long int	ft_atolli_mod(const char *nptr);
 int				is_numeric_argument(char *str);
@@ -133,11 +133,11 @@ int				is_pipe(char *token);
 int				setup_list_pipes(t_list *list);
 // process.c
 void			append_process(pid_t pid, t_shell *shell);
-int				execute_node(t_node *node, t_shell *shell);
+int				execute_node(t_node *node, t_shell *shell, int *prevpipe);
 void			free_process_data(t_shell *shell);
 void			init_processes_data(t_list *list, t_shell *shell);
-int				prep_process(t_node *node, t_shell *shell);
-void			post_process(pid_t pid, t_node *node, t_shell *shell);
+int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
+void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
 void			strip_quotes(t_node *node);
 // process_utils.c
 void			free_process_data(t_shell *shell);

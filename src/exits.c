@@ -88,11 +88,11 @@ void	builtin_exit(t_shell *shell, t_node *node)
 	exit_safely(shell, 1);
 }
 
-void	set_builtin_exit_status(t_node *node, t_shell *shell, int status)
+void	set_builtin_exit_status(t_node *node, t_shell *shell, int status, int *prevpipe, int *pipefd)
 {
 	int	pid;
 
-	post_builtin(node, shell);
+	post_builtin(node, shell, prevpipe, pipefd);
 	pid = fork();
 	if (pid == 0)
 	{

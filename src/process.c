@@ -14,43 +14,60 @@
 #include <signal.h>
 #include <unistd.h>
 
-int	prep_process(t_node *node, t_shell *shell)
+int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	if (!node->splited_command)
 		return (FALSE);
-	if (node->has_pipe)
-		dup2(node->node_pipe[1], 1);
-	if (node->prev && node->prev->has_pipe)
-		dup2(node->node_pipe[0], 0);
+	if (!node->next)
+	{
+		dup2(*prevpipe, STDIN_FILENO);
+		close(*prevpipe);
+	}
+	else
+	{
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+		dup2(*prevpipe, STDIN_FILENO);
+		close(*prevpipe);
+	}
 	return (perform_redirections(node->splited_command, shell));
 }
 
-void	post_process(pid_t pid, t_node *node, t_shell *shell)
+void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
-	if (node->has_pipe)
-		close(node->node_pipe[1]);
-	if (node->prev && node->prev->has_pipe)
-		close(node->node_pipe[0]);
+	if (!node->next)
+	{
+		close(*prevpipe);
+	}
+	else
+	{
+		close(pipefd[1]);
+		close(*prevpipe);
+		*prevpipe = pipefd[0];
+	}
 	append_process(pid, shell);
 }
 
-int	execute_node(t_node *node, t_shell *shell)
+int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 {
 	pid_t	pid;
 
+	int	pipefd[2];
+	pipe(pipefd);
 	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
 	remove_empty_args(node);
 	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
-		execute_builtin(node, shell);
+		execute_builtin(node, shell, prevpipe, pipefd);
 		return (TRUE);
 	}
 	kill(getpid(), SIGUSR2);
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!prep_process(node, shell))
+		if (!prep_process(node, shell, prevpipe, pipefd))
 		{
 			free_process_data(shell);
 			exit_safely(shell, 2);
@@ -58,7 +75,7 @@ int	execute_node(t_node *node, t_shell *shell)
 		execute_command(shell, node->args);
 	}
 	else
-		post_process(pid, node, shell);
+		post_process(pid, node, shell, prevpipe, pipefd);
 	return (TRUE);
 }
 
