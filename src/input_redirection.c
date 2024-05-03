@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:04:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:04:11 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:47:49 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	redirect_input_builtin(char *file)
 			ft_putstr_fd(": Permission denied\n", 2);
 		return (1);
 	}
-	dup2(fd, 0);
+	close(fd);
 	return (0);
 }
 
