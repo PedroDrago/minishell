@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 21:25:43 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:47:34 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_env			*make_new_env_node(char *key, char *value);
 int				evaluate_prompt(char *prompt, t_shell *shell);
 int				exec_list(t_list *list, t_shell *shell);
 int				execute_command(t_shell *shell, char **args);
-int				perform_redirections(char **splited_command, t_shell *shell);
+int				perform_redirections(char **splited_command, t_shell *shell, int *prevpipe);
 // evaluation_utils.c
 void			check_for_pipes(t_shell *shell);
 int				count_new_prompt_size(char *str);
@@ -102,7 +102,7 @@ int				export(char *argv[], t_shell *shell);
 int				is_valid(char *key);
 void			print_export(t_env *env, int fd_out);
 // heredoc.c
-int				do_heredoc(char *delimiter, int original_fd);
+int				do_heredoc(char *delimiter, int original_fd, int prevpipe);
 void			do_heredoc_builtin(char *delimiter, int original_fd,
 					t_shell *shell);
 int				is_heredoc(char *token);

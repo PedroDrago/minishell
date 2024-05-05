@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 16:04:30 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:57:53 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	int status;
 
+	(void)shell;
 	if (!node->splited_command)
 		return (FALSE);
 	if (!node->next)
 	{
-	
+		dup2(*prevpipe, 0);
 		close(*prevpipe);
-		printf("to aqui\n");
 		while (wait(&status) != -1)
 			;
 	}
@@ -38,7 +38,7 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		dup2(*prevpipe, STDIN_FILENO);
 		close(*prevpipe);
 	}
-	return (perform_redirections(node->splited_command, shell));
+	return (1);
 }
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
@@ -73,6 +73,7 @@ int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 		return (TRUE);
 	}
 	kill(getpid(), SIGUSR2);
+	perform_redirections(node->splited_command, shell, prevpipe);
 	pid = fork();
 	if (pid == 0)
 	{

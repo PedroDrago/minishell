@@ -65,7 +65,7 @@ int	execute_command(t_shell *shell, char **args)
 	exit(1);
 }
 
-int	perform_redirections(char **splited_command, t_shell *shell)
+int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
 {
 	int	i;
 	int	original_fd;
@@ -82,7 +82,7 @@ int	perform_redirections(char **splited_command, t_shell *shell)
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], original_fd))
+			if (!do_heredoc(splited_command[++i], original_fd, *prevpipe))
 				return (FALSE);
 		i++;
 	}
