@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 16:57:53 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:03:55 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *p
 		close(pipefd[1]);
 		close(*prevpipe);
 	}*/
+	close(pipefd[1]);
+	close(*prevpipe);
 	*prevpipe = pipefd[0];
 	
 	(void)node;

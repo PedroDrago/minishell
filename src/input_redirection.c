@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:04:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/03 16:47:49 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:08:32 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirect_input_builtin(char *file)
 	return (0);
 }
 
-void	redirect_input(char *file, t_shell *shell)
+void	redirect_input(char *file, t_shell *shell, int prevpipe)
 {
 	int			fd;
 	struct stat	file_info;
@@ -58,5 +58,5 @@ void	redirect_input(char *file, t_shell *shell)
 		free_process_data(shell);
 		exit_safely(shell, 1);
 	}
-	dup2(fd, 0);
+	dup2(fd, prevpipe);
 }

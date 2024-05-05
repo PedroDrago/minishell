@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 16:47:34 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 17:09:01 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void			do_heredoc_builtin(char *delimiter, int original_fd,
 int				is_heredoc(char *token);
 // input_redirection.c
 int				is_redirect_input(char *token);
-void			redirect_input(char *file, t_shell *shell);
+void			redirect_input(char *file, t_shell *shell, int prevpipe);
 int				redirect_input_builtin(char *file);
 // list_validations.c
 int				validate_list(t_shell *shell, t_list *list);
