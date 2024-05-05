@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:04:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 17:08:32 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:27:30 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	redirect_input(char *file, t_shell *shell, int prevpipe)
 			ft_putstr_fd(": No such file or directory\n", 2);
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
-		free_process_data(shell);
-		exit_safely(shell, 1);
+		set_exit_status(1, shell);
+		return ;
 	}
 	dup2(fd, prevpipe);
 }

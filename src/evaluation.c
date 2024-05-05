@@ -52,17 +52,22 @@ int	execute_command(t_shell *shell, char **args)
 		free_before_safely_exit(shell);
 		exit(0);
 	}
-	execve(args[0], args, shell->envp);
-	if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
-		resolve_errors(args[0], shell);
-	path = get_right_path(shell, args[0]);
-	execve(path, args, shell->envp);
-	ft_putstr_fd("Minishell: ", 2);
-	ft_putstr_fd(args[0], 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	//printf("%d \n", ft_atoi(get_env_node_value(shell->env, "?")));
+	if (ft_atoi(get_env_node_value(shell->env, "?")) == 0)
+	{
+		execve(args[0], args, shell->envp);
+		if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
+			resolve_errors(args[0], shell);
+		path = get_right_path(shell, args[0]);
+		execve(path, args, shell->envp);
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	set_exit_status(1, shell);
 	free_before_safely_exit(shell);
 	exit(1);
+	
 }
 
 int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)

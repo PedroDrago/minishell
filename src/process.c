@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 17:03:55 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:51:16 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
 	remove_empty_args(node);
+	set_exit_status(0, shell);
 	if (node->splited_command && is_builtin(node->splited_command[0]))
 	{
 		execute_builtin(node, shell, prevpipe, pipefd);
