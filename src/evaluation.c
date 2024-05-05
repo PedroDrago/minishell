@@ -79,6 +79,8 @@ int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
 	original_fd = dup(0);
 	while (splited_command[i])
 	{
+		if (ft_atoi(get_env_node_value(shell->env, "?")) != 0)
+			return (FALSE);
 		if (is_redirect_input(splited_command[i]))
 			redirect_input(splited_command[++i], shell, *prevpipe);
 		else if (is_redirect_output(splited_command[i]))

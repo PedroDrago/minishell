@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/26 18:53:30 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 18:56:39 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	pre_prompt(t_shell *shell)
 {
 	rl_replace_line("", 0);
 	kill(getpid(), SIGUSR1);
-	g_sig = -1;
 	(void) shell;
 }
 
