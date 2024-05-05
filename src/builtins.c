@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/05 15:05:39 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:17:23 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 	/*		file = get_next_line(node->node_pipe[0]);*/
 	/*	}*/
 	/*}*/
-	/*if (!node->next)
+	if (!node->next)
 	{
 		close(*prevpipe);
 	}
@@ -109,7 +109,7 @@ void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		close(pipefd[1]);
 		close(*prevpipe);
 		*prevpipe = pipefd[0];
-	}*/
+	}
 	(void)prevpipe;
 	(void)pipefd;
 	(void) node;

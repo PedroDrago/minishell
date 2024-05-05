@@ -6,13 +6,15 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 15:07:39 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:04:30 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <sys/resource.h>
 
 int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
@@ -22,7 +24,9 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		return (FALSE);
 	if (!node->next)
 	{
+	
 		close(*prevpipe);
+		printf("to aqui\n");
 		while (wait(&status) != -1)
 			;
 	}
@@ -47,10 +51,9 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *p
 	{
 		close(pipefd[1]);
 		close(*prevpipe);
-		*prevpipe = pipefd[0];
 	}*/
-	(void)prevpipe;
-	(void)pipefd;
+	*prevpipe = pipefd[0];
+	
 	(void)node;
 	append_process(pid, shell);
 }
