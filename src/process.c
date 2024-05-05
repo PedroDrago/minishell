@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:07:45 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:07:39 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 
 int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
+	int status;
+
 	if (!node->splited_command)
 		return (FALSE);
 	if (!node->next)
 	{
-		dup2(*prevpipe, STDIN_FILENO);
 		close(*prevpipe);
+		while (wait(&status) != -1)
+			;
 	}
 	else
 	{
@@ -36,7 +39,7 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 
 void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
-	if (!node->next)
+	/*if (!node->next)
 	{
 		close(*prevpipe);
 	}
@@ -45,7 +48,10 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *p
 		close(pipefd[1]);
 		close(*prevpipe);
 		*prevpipe = pipefd[0];
-	}
+	}*/
+	(void)prevpipe;
+	(void)pipefd;
+	(void)node;
 	append_process(pid, shell);
 }
 
