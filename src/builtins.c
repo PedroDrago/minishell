@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/05 16:17:23 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 20:14:30 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	int	status;
 	int	original_fd;
-
+	(void)pipefd;
+	(void)prevpipe;
 	original_fd = dup(0);
 	status = 0;
 	if (!node->next)
@@ -78,7 +79,7 @@ int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		//close(pipefd[0]);
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
-		dup2(*prevpipe, STDIN_FILENO);
+	//	dup2(*prevpipe, STDIN_FILENO);
 		close(*prevpipe);
 	}
 	perform_builtin_redirections(node->splited_command, &status,
