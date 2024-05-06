@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/05 20:14:30 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 23:21:05 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,18 @@ void	perform_builtin_redirections(char **splited_com, int *status,
 		if (is_redirect_input(*splited_com))
 		{
 			*status = redirect_input_builtin(*(++splited_com));
-			if (*status)
-				return ;
+			if (*status == 1)
+				set_exit_status(1, shell);
+			/*if (*status)
+				return ;*/
 		}
 		else if (is_redirect_output(*splited_com))
 		{
 			*status = redirect_output_builtin(*splited_com, *(splited_com + 1));
-			if (++splited_com && status)
-				return ;
+			if (*status == 1)
+				set_exit_status(1, shell);
+		/*	if (++splited_com && status)
+				return ;*/
 		}
 		else if (is_heredoc(*splited_com))
 		{
