@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:12:31 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 16:55:14 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 23:39:38 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,30 @@ void	sighandler(int sig)
 	(void) sig;
 }
 
-int	do_heredoc(char *delimiter, int original_fd, int prevpipe)
+int	do_heredoc(char *delimiter, int prevpipe, t_shell *shell)
 {
 	int		pipe_fd[2];
 	char	*prompt;
-	int		len;
 	int		pid;
 	int		status;
 
-	(void)original_fd;
-	//dup2(original_fd, 0);
 	pipe(pipe_fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
 		signal(SIGINT, sighandler);
-		prompt = readline("> ");
-		if (!prompt)
-			exit(0);
-		len = ft_strlen(delimiter);
-		while (ft_strncmp(prompt, delimiter, len + 1))
+		while (TRUE)
 		{
-			ft_putstr_fd(prompt, pipe_fd[1]);
-			ft_putstr_fd("\n", pipe_fd[1]);
 			prompt = readline("> ");
+			ft_putendl_fd(prompt, pipe_fd[1]);
 			if (!prompt)
-				exit(0);
+				break;
+			if (!ft_strncmp(prompt, delimiter, ft_strlen(delimiter) + 1))
+				break;
 		}
-		exit(0);
+		free_before_safely_exit(shell);
+		exit_safely(shell, 0);
 	}
 	close(pipe_fd[1]);
 	wait(&status);

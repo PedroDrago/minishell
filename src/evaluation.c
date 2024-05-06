@@ -73,10 +73,8 @@ int	execute_command(t_shell *shell, char **args)
 int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
 {
 	int	i;
-	int	original_fd;
 
 	i = 0;
-	original_fd = dup(0);
 	while (splited_command[i])
 	{
 		if (ft_atoi(get_env_node_value(shell->env, "?")) != 0)
@@ -89,7 +87,7 @@ int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], original_fd, *prevpipe))
+			if (!do_heredoc(splited_command[++i], *prevpipe, shell))
 				return (FALSE);
 		i++;
 	}

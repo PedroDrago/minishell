@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 17:09:01 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 23:40:09 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int				export(char *argv[], t_shell *shell);
 int				is_valid(char *key);
 void			print_export(t_env *env, int fd_out);
 // heredoc.c
-int				do_heredoc(char *delimiter, int original_fd, int prevpipe);
+int				do_heredoc(char *delimiter, int prevpipe, t_shell *shell);
 void			do_heredoc_builtin(char *delimiter, int original_fd,
 					t_shell *shell);
 int				is_heredoc(char *token);
