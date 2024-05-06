@@ -6,15 +6,13 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/06 00:06:26 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:30:46 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <signal.h>
 #include <unistd.h>
-#include <fcntl.h>
-#include <sys/resource.h>
 
 int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
