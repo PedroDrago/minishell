@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/06 00:06:50 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:34:56 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <readline/readline.h>
 #include <signal.h>
 #include <stdio.h>
-#include <term.h>
 #include <unistd.h>
 
 int		g_sig;
