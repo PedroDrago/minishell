@@ -52,7 +52,6 @@ int	execute_command(t_shell *shell, char **args)
 		free_before_safely_exit(shell);
 		exit(0);
 	}
-	//printf("%d \n", ft_atoi(get_env_node_value(shell->env, "?")));
 	if (ft_atoi(get_env_node_value(shell->env, "?")) == 0)
 	{
 		execve(args[0], args, shell->envp);
@@ -67,7 +66,6 @@ int	execute_command(t_shell *shell, char **args)
 	set_exit_status(1, shell);
 	free_before_safely_exit(shell);
 	exit(1);
-	
 }
 
 int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:12:59 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 23:21:11 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:02:18 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	builtin_exit(t_shell *shell, t_node *node)
 	exit_safely(shell, 1);
 }
 
-void	set_builtin_exit_status(t_node *node, t_shell *shell, int status, int *prevpipe, int *pipefd)
+void	set_builtin_exit_status(t_shell *shell, int status)
 {
 	int	pid;
 
-	post_builtin(node, shell, prevpipe, pipefd);
+	// post_builtin(node, prevpipe, pipefd);
 	pid = fork();
 	if (pid == 0)
 	{

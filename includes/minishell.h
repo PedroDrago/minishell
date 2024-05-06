@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:48:43 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 23:40:09 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:02:24 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,14 @@ void			resolve_quotes(char c, int *in_single_quote,
 					int *in_double_quote);
 // builtins.c
 void			builtin_exit(t_shell *shell, t_node *node);
-void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
+void			execute_builtin(t_node *node, t_shell *shell, int *prevpipe,
+					int *pipefd);
 int				is_builtin(char *command);
 void			perform_builtin_redirections(char **splited_com, int *status,
 					int original_fd, t_shell *shell);
-int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
-void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
+int				prep_builtin(t_node *node, t_shell *shell, int *prevpipe,
+					int *pipefd);
+void			post_builtin(t_node *node, int *prevpipe, int *pipefd);
 // cd.c
 int				cd(char *argv[], t_shell *shell);
 char			*get_home_path(t_env *env);
@@ -72,7 +74,8 @@ t_env			*make_new_env_node(char *key, char *value);
 int				evaluate_prompt(char *prompt, t_shell *shell);
 int				exec_list(t_list *list, t_shell *shell);
 int				execute_command(t_shell *shell, char **args);
-int				perform_redirections(char **splited_command, t_shell *shell, int *prevpipe);
+int				perform_redirections(char **splited_command, t_shell *shell,
+					int *prevpipe);
 // evaluation_utils.c
 void			check_for_pipes(t_shell *shell);
 int				count_new_prompt_size(char *str);
@@ -90,7 +93,7 @@ void			exit_program(int sig);
 void			exit_safely(t_shell *shell, unsigned char status);
 void			free_before_safely_exit(t_shell *shell);
 
-void	set_builtin_exit_status(t_node *node, t_shell *shell, int status, int *prevpipe, int *pipefd);
+void			set_builtin_exit_status(t_shell *shell, int status);
 // exits_utils.c
 long long int	ft_atolli_mod(const char *nptr);
 int				is_numeric_argument(char *str);
@@ -136,8 +139,10 @@ void			append_process(pid_t pid, t_shell *shell);
 int				execute_node(t_node *node, t_shell *shell, int *prevpipe);
 void			free_process_data(t_shell *shell);
 void			init_processes_data(t_list *list, t_shell *shell);
-int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
-void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd);
+int				prep_process(t_node *node, t_shell *shell, int *prevpipe,
+					int *pipefd);
+void			post_process(pid_t pid, t_shell *shell, int *prevpipe,
+					int *pipefd);
 void			strip_quotes(t_node *node);
 // process_utils.c
 void			free_process_data(t_shell *shell);

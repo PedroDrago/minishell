@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 18:51:16 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:06:26 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
 
 int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
-	int status;
+	int	status;
 
 	(void)shell;
 	if (!node->splited_command)
-		return (FALSE);
+	{
+		free_process_data(shell);
+		exit_safely(shell, 2);
+	}
 	if (!node->next)
 	{
 		dup2(*prevpipe, 0);
@@ -41,7 +44,7 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 	return (1);
 }
 
-void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
+void	post_process(pid_t pid, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	/*if (!node->next)
 	{
@@ -55,16 +58,14 @@ void	post_process(pid_t pid, t_node *node, t_shell *shell, int *prevpipe, int *p
 	close(pipefd[1]);
 	close(*prevpipe);
 	*prevpipe = pipefd[0];
-	
-	(void)node;
 	append_process(pid, shell);
 }
 
 int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 {
 	pid_t	pid;
+	int		pipefd[2];
 
-	int	pipefd[2];
 	pipe(pipefd);
 	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
@@ -80,15 +81,11 @@ int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!prep_process(node, shell, prevpipe, pipefd))
-		{
-			free_process_data(shell);
-			exit_safely(shell, 2);
-		}
+		prep_process(node, shell, prevpipe, pipefd);
 		execute_command(shell, node->args);
 	}
 	else
-		post_process(pid, node, shell, prevpipe, pipefd);
+		post_process(pid, shell, prevpipe, pipefd);
 	return (TRUE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:12:31 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 23:39:38 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:12:39 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ void	sighandler(int sig)
 	(void) sig;
 }
 
-int	do_heredoc(char *delimiter, int prevpipe, t_shell *shell)
+int	do_heredoc(char *del, int prevpipe, t_shell *shell)
 {
 	int		pipe_fd[2];
 	char	*prompt;
 	int		pid;
-	int		status;
 
 	pipe(pipe_fd);
 	pid = fork();
@@ -45,16 +44,14 @@ int	do_heredoc(char *delimiter, int prevpipe, t_shell *shell)
 		{
 			prompt = readline("> ");
 			ft_putendl_fd(prompt, pipe_fd[1]);
-			if (!prompt)
-				break;
-			if (!ft_strncmp(prompt, delimiter, ft_strlen(delimiter) + 1))
-				break;
+			if (!prompt || !ft_strncmp(prompt, del, ft_strlen(del) + 1))
+				break ;
 		}
 		free_before_safely_exit(shell);
 		exit_safely(shell, 0);
 	}
 	close(pipe_fd[1]);
-	wait(&status);
+	wait(&pid);
 	dup2(pipe_fd[0], prevpipe);
 	close(pipe_fd[0]);
 	return (TRUE);

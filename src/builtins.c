@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/05 23:21:05 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:12:18 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	int	status;
 	int	original_fd;
-	(void)pipefd;
-	(void)prevpipe;
+
 	original_fd = dup(0);
 	status = 0;
 	if (!node->next)
@@ -91,7 +90,7 @@ int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 	return (status);
 }
 
-void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
+void	post_builtin(t_node *node, int *prevpipe, int *pipefd)
 {
 	/*char	*file;*/
 	/**/
@@ -115,13 +114,10 @@ void	post_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		close(*prevpipe);
 		*prevpipe = pipefd[0];
 	}
-	(void)prevpipe;
-	(void)pipefd;
-	(void) node;
-	(void) shell;
 }
 
-void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
+void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe,
+		int *pipefd)
 {
 	int	status;
 
@@ -146,5 +142,6 @@ void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 		free_process_data(shell);
 		builtin_exit(shell, node);
 	}
-	set_builtin_exit_status(node, shell, status, prevpipe, pipefd);
+	post_builtin(node, prevpipe, pipefd);
+	set_builtin_exit_status(shell, status);
 }

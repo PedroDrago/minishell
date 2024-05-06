@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/05 18:56:39 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 00:06:50 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	pre_prompt(t_shell *shell)
 	kill(getpid(), SIGUSR1);
 	(void) shell;
 }
-
 
 int	main(int argc, char *argv[], char *envp[])
 {
