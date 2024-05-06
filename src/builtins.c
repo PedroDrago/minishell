@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/06 00:12:18 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:36:12 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 	int	status;
 	int	original_fd;
 
-	original_fd = dup(0);
+	original_fd = dup(1);
 	status = 0;
 	if (!node->next)
 	{
