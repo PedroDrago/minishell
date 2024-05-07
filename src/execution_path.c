@@ -77,6 +77,7 @@ char	*get_right_path(t_shell *shell, char *command) //FIX: Leak?Childprocess
 	free(paths_split);
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": command not found\n", 2);
+	set_exit_status(127, shell);
 	free_before_safely_exit(shell);
 	exit(127);
 }

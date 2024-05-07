@@ -52,37 +52,40 @@ int	execute_command(t_shell *shell, char **args)
 		free_before_safely_exit(shell);
 		exit(0);
 	}
-	execve(args[0], args, shell->envp);
-	if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
-		resolve_errors(args[0], shell);
-	path = get_right_path(shell, args[0]);
-	execve(path, args, shell->envp);
-	ft_putstr_fd("Minishell: ", 2);
-	ft_putstr_fd(args[0], 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	if (ft_atoi(get_env_node_value(shell->env, "?")) == 0)
+	{
+		execve(args[0], args, shell->envp);
+		if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
+			resolve_errors(args[0], shell);
+		path = get_right_path(shell, args[0]);
+		execve(path, args, shell->envp);
+		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 	set_exit_status(1, shell);
 	free_before_safely_exit(shell);
 	exit(1);
 }
 
-int	perform_redirections(char **splited_command, t_shell *shell)
+int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
 {
 	int	i;
-	int	original_fd;
 
 	i = 0;
-	original_fd = dup(0);
 	while (splited_command[i])
 	{
+		if (ft_atoi(get_env_node_value(shell->env, "?")) != 0)
+			return (FALSE);
 		if (is_redirect_input(splited_command[i]))
-			redirect_input(splited_command[++i], shell);
+			redirect_input(splited_command[++i], shell, *prevpipe);
 		else if (is_redirect_output(splited_command[i]))
 		{
 			redirect_output(splited_command[i], splited_command[i + 1], shell);
 			i++;
 		}
 		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], original_fd))
+			if (!do_heredoc(splited_command[++i], *prevpipe, shell))
 				return (FALSE);
 		i++;
 	}
@@ -92,12 +95,17 @@ int	perform_redirections(char **splited_command, t_shell *shell)
 int	exec_list(t_list *list, t_shell *shell)
 {
 	t_node	*tmp;
+	int		prevpipe;
+	int		bkp_stdout;
 
+	prevpipe = dup(STDIN_FILENO);
+	bkp_stdout = dup(STDOUT_FILENO);
 	tmp = list->head;
 	while (tmp)
 	{
-		execute_node(tmp, shell);
+		execute_node(tmp, shell, &prevpipe);
 		tmp = tmp->next;
+		dup2(bkp_stdout, STDOUT_FILENO);
 	}
 	wait_children(shell);
 	return (TRUE);
@@ -119,7 +127,7 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	setup_list_pipes(prompt_list);
+	/*setup_list_pipes(prompt_list);*/
 	init_processes_data(prompt_list, shell);
 	check_for_pipes(shell);
 	exec_list(prompt_list, shell);

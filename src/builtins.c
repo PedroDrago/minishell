@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:33 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/12 10:41:18 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/06 19:36:12 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,18 @@ void	perform_builtin_redirections(char **splited_com, int *status,
 		if (is_redirect_input(*splited_com))
 		{
 			*status = redirect_input_builtin(*(++splited_com));
-			if (*status)
-				return ;
+			if (*status == 1)
+				set_exit_status(1, shell);
+			/*if (*status)
+				return ;*/
 		}
 		else if (is_redirect_output(*splited_com))
 		{
 			*status = redirect_output_builtin(*splited_com, *(splited_com + 1));
-			if (++splited_com && status)
-				return ;
+			if (*status == 1)
+				set_exit_status(1, shell);
+		/*	if (++splited_com && status)
+				return ;*/
 		}
 		else if (is_heredoc(*splited_com))
 		{
@@ -61,48 +65,63 @@ int	is_builtin(char *command)
 	return (FALSE);
 }
 
-int	prep_builtin(t_node *node, t_shell *shell)
+int	prep_builtin(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	int	status;
 	int	original_fd;
 
+	original_fd = dup(1);
 	status = 0;
-	original_fd = dup(0);
-	if (node->has_pipe)
-		dup2(node->node_pipe[1], 1);
-	if (node->prev && node->prev->has_pipe)
-		dup2(node->node_pipe[0], 0);
+	if (!node->next)
+	{
+	//	dup2(*prevpipe, STDIN_FILENO);
+	//	close(*prevpipe);
+	}
+	else
+	{
+		//close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
+	//	dup2(*prevpipe, STDIN_FILENO);
+		close(*prevpipe);
+	}
 	perform_builtin_redirections(node->splited_command, &status,
 		original_fd, shell);
 	return (status);
 }
 
-void	post_builtin(t_node *node, t_shell *shell)
+void	post_builtin(t_node *node, int *prevpipe, int *pipefd)
 {
-	char	*file;
-
-	file = NULL;
-	if (node->has_pipe)
-		close(node->node_pipe[1]);
-	if (node->prev && node->prev->has_pipe)
+	/*char	*file;*/
+	/**/
+	/*file = NULL;*/
+	/*if (node->prev && node->prev->has_pipe)*/
+	/*{*/
+	/*	file = get_next_line(node->node_pipe[0]);*/
+	/*	while (file)*/
+	/*	{*/
+	/*		free(file);*/
+	/*		file = get_next_line(node->node_pipe[0]);*/
+	/*	}*/
+	/*}*/
+	if (!node->next)
 	{
-		file = get_next_line(node->node_pipe[0]);
-		while (file)
-		{
-			free(file);
-			file = get_next_line(node->node_pipe[0]);
-		}
-		close(node->node_pipe[0]);
+		close(*prevpipe);
 	}
-	dup2(shell->original_stdin, 0);
-	dup2(shell->original_stdout, 1);
+	else
+	{
+		close(pipefd[1]);
+		close(*prevpipe);
+		*prevpipe = pipefd[0];
+	}
 }
 
-void	execute_builtin(t_node *node, t_shell *shell)
+void	execute_builtin(t_node *node, t_shell *shell, int *prevpipe,
+		int *pipefd)
 {
 	int	status;
 
-	status = prep_builtin(node, shell);
+	status = prep_builtin(node, shell, prevpipe, pipefd);
 	if (status)
 		;
 	else if (!ft_strncmp(node->splited_command[0], "echo", 5))
@@ -123,5 +142,6 @@ void	execute_builtin(t_node *node, t_shell *shell)
 		free_process_data(shell);
 		builtin_exit(shell, node);
 	}
-	set_builtin_exit_status(node, shell, status);
+	post_builtin(node, prevpipe, pipefd);
+	set_builtin_exit_status(shell, status);
 }

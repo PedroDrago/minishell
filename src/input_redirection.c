@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:04:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:04:11 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/05 23:00:17 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	redirect_input_builtin(char *file)
 			ft_putstr_fd(": Permission denied\n", 2);
 		return (1);
 	}
-	dup2(fd, 0);
+	close(fd);
 	return (0);
 }
 
-void	redirect_input(char *file, t_shell *shell)
+void	redirect_input(char *file, t_shell *shell, int prevpipe)
 {
 	int			fd;
 	struct stat	file_info;
@@ -55,8 +55,8 @@ void	redirect_input(char *file, t_shell *shell)
 			ft_putstr_fd(": No such file or directory\n", 2);
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
-		free_process_data(shell);
-		exit_safely(shell, 1);
+		set_exit_status(1, shell);
+		return ;
 	}
-	dup2(fd, 0);
+	dup2(fd, prevpipe);
 }
