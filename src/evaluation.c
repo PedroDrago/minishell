@@ -1,18 +1,16 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   evaluation.c									   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: rafaelro <rafaelro@student.42.rio>		 +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2024/03/20 17:18:05 by pdrago			#+#	#+#			 */
-/*   Updated: 2024/04/10 22:10:13 by rafaelro		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   evaluation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/07 16:37:31 by pdrago            #+#    #+#             */
+/*   Updated: 2024/05/08 16:29:40 by rafaelro         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdlib.h>
-#include <sys/stat.h>
 
 void	resolve_errors(char *command, t_shell *shell)
 {
@@ -47,18 +45,22 @@ int	execute_command(t_shell *shell, char **args)
 {
 	char	*path;
 
+	while (args[0] && ft_strlen(args[0]) <= 0)
+		args++;
 	if (!args[0])
 	{
 		free_before_safely_exit(shell);
 		exit(0);
 	}
+	uncontrol_args(args);
 	if (ft_atoi(get_env_node_value(shell->env, "?")) == 0)
 	{
-		execve(args[0], args, shell->envp);
+		execve(args[0], args, shell->env_array);
 		if (args[0] && (args[0][0] == '.' || args[0][0] == '/'))
 			resolve_errors(args[0], shell);
 		path = get_right_path(shell, args[0]);
-		execve(path, args, shell->envp);
+		if (path)
+			execve(path, args, shell->env_array);
 		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(args[0], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
@@ -68,25 +70,30 @@ int	execute_command(t_shell *shell, char **args)
 	exit(1);
 }
 
-int	perform_redirections(char **splited_command, t_shell *shell, int *prevpipe)
+int	perform_redirections(int i, char **splited, t_shell *shell, int *prevpipe)
 {
-	int	i;
+	int	pipe_fd[2];
 
-	i = 0;
-	while (splited_command[i])
+	while (splited[i])
 	{
 		if (ft_atoi(get_env_node_value(shell->env, "?")) != 0)
 			return (FALSE);
-		if (is_redirect_input(splited_command[i]))
-			redirect_input(splited_command[++i], shell, *prevpipe);
-		else if (is_redirect_output(splited_command[i]))
+		if (is_redirect_input(splited[i]))
+			redirect_input(splited[++i], shell, *prevpipe);
+		else if (is_redirect_output(splited[i]))
 		{
-			redirect_output(splited_command[i], splited_command[i + 1], shell);
+			redirect_output(splited[i], splited[i + 1], shell);
 			i++;
 		}
-		else if (is_heredoc(splited_command[i]))
-			if (!do_heredoc(splited_command[++i], *prevpipe, shell))
-				return (FALSE);
+		else if (is_heredoc(splited[i]))
+		{
+			pipe(pipe_fd);
+			while (splited[i] && is_heredoc(splited[i]))
+				if (!do_heredoc(splited[++i], pipe_fd[1], shell) || !(++i))
+					return (FALSE);
+			post_heredoc(pipe_fd, prevpipe);
+			continue ;
+		}
 		i++;
 	}
 	return (TRUE);
@@ -107,6 +114,7 @@ int	exec_list(t_list *list, t_shell *shell)
 		tmp = tmp->next;
 		dup2(bkp_stdout, STDOUT_FILENO);
 	}
+	close(bkp_stdout);
 	wait_children(shell);
 	return (TRUE);
 }
@@ -127,7 +135,6 @@ int	evaluate_prompt(char *prompt, t_shell *shell)
 	if (!prompt_list)
 		return (FALSE);
 	shell->prompt_list = prompt_list;
-	/*setup_list_pipes(prompt_list);*/
 	init_processes_data(prompt_list, shell);
 	check_for_pipes(shell);
 	exec_list(prompt_list, shell);

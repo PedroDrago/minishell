@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:04:10 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 23:00:17 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:19:37 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	redirect_input_builtin(char *file)
 	int			fd;
 	struct stat	file_info;
 
+	file = uncontrol_arg(file);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
@@ -35,9 +36,11 @@ int	redirect_input_builtin(char *file)
 		}
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
+		free(file);
 		return (1);
 	}
 	close(fd);
+	free(file);
 	return (0);
 }
 
@@ -46,6 +49,7 @@ void	redirect_input(char *file, t_shell *shell, int prevpipe)
 	int			fd;
 	struct stat	file_info;
 
+	file = uncontrol_arg(file);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
@@ -56,7 +60,10 @@ void	redirect_input(char *file, t_shell *shell, int prevpipe)
 		else
 			ft_putstr_fd(": Permission denied\n", 2);
 		set_exit_status(1, shell);
+		free(file);
 		return ;
 	}
 	dup2(fd, prevpipe);
+	close(fd);
+	free(file);
 }

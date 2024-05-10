@@ -6,12 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:19:02 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 13:02:10 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:16 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 int	validate_quotes(char *prompt)
 {

@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:13:45 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:13:45 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:55:22 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,16 @@ int	is_numeric_argument(char *str)
 		str++;
 	}
 	return (1);
+}
+
+void	exit_ultra_safe(t_shell *shell)
+{
+	free_before_safely_exit(shell);
+	exit_safely(shell, 1);
+}
+
+void	free_and_exit_builtin(t_shell *shell, t_node *node)
+{
+	free_process_data(shell);
+	builtin_exit(shell, node);
 }

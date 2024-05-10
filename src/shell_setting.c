@@ -35,6 +35,7 @@ char	*get_cwd(void)
 t_shell	*init_shell(t_shell *shell, int argc, char *argv[], char *envp[])
 {
 	signal(SIGINT, exit_program);
+	shell->env_array = NULL;
 	shell->last_status = -99;
 	shell->prompt_string = NULL;
 	shell->env = load_envs(envp);

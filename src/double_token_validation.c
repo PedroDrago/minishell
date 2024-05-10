@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 int	is_token_char(char c)
 {

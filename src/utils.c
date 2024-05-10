@@ -6,12 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:59 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 22:06:36 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:14 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 void	set_exit_status(int status, t_shell *shell)
 {

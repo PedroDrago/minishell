@@ -6,12 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:25 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/26 14:43:51 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:37:55 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 t_node	*create_node(void)
 {

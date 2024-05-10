@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:12:59 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/06 00:02:18 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 20:04:47 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	free_before_safely_exit(t_shell *shell)
 	shell->env = NULL;
 	free_list(shell->prompt_list);
 	shell->prompt_list = NULL;
+	free_split(shell->env_array);
+	shell->env_array = NULL;
 	rl_clear_history();
 }
 
@@ -55,6 +57,8 @@ void	exit_safely(t_shell *shell, unsigned char status)
 		free(shell->prompt_string);
 	if (shell->env)
 		free_env(shell->env);
+	if (shell->env_array)
+		free_split(shell->env_array);
 	rl_clear_history();
 	exit(status);
 }
@@ -92,7 +96,6 @@ void	set_builtin_exit_status(t_shell *shell, int status)
 {
 	int	pid;
 
-	// post_builtin(node, prevpipe, pipefd);
 	pid = fork();
 	if (pid == 0)
 	{

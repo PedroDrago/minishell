@@ -6,23 +6,48 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:15 by pdrago            #+#    #+#             */
-/*   Updated: 2024/05/06 00:34:56 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:37:49 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
+
+void	get_current_envp(t_shell *shell)
+{
+	t_env	*env;
+	int		count;
+	char	**env_array;
+	char	*node;
+
+	env = shell->env;
+	count = 0;
+	while (env && ++count)
+		env = env->next;
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (!env_array)
+		return ;
+	free_split(shell->env_array);
+	env = shell->env;
+	count = 0;
+	while (env)
+	{
+		node = ft_strjoin(env->key, "=", O_NONE);
+		node = ft_strjoin(node, env->value, O_ONE);
+		env_array[count++] = node;
+		env = env->next;
+	}
+	env_array[count] = NULL;
+	shell->env_array = env_array;
+}
 
 int		g_sig;
 
 void	pre_prompt(t_shell *shell)
 {
+	get_current_envp(shell);
 	rl_replace_line("", 0);
 	kill(getpid(), SIGUSR1);
-	(void) shell;
+	(void)shell;
 }
 
 int	main(int argc, char *argv[], char *envp[])

@@ -6,13 +6,13 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:18:31 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/05 18:33:13 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:17:39 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	str_token_cmp(char *item) // NEWFEATURE
+int	str_token_cmp(char *item)
 {
 	if (!item)
 		return (1);
@@ -29,7 +29,7 @@ int	str_token_cmp(char *item) // NEWFEATURE
 	return (0);
 }
 
-int	count_new_prompt_size(char *str) // NEWFEATURE
+int	count_new_prompt_size(char *str)
 {
 	int	count;
 
@@ -43,7 +43,7 @@ int	count_new_prompt_size(char *str) // NEWFEATURE
 	return (count);
 }
 
-char	*prompt_pre_format(char *prompt, char *new_str, int i, int j) //NF
+char	*prompt_pre_format(char *prompt, char *new_str, int i, int j)
 {
 	int	diff;
 	int	quotes;

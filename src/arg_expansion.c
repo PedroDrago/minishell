@@ -6,12 +6,11 @@
 /*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:29 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:37:42 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/05/08 11:15:23 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 void	resolve_quotes(char c, int *in_single_quote, int *in_double_quote)
 {
@@ -70,24 +69,6 @@ char	**expand_split(char **splited, t_shell *shell)
 		}
 	}
 	return (splited);
-}
-
-void	str_unquote(char **str)
-{
-	int	j;
-
-	j = 0;
-	if (*str[0] == '\"' || *str[0] == '\'')
-	{
-		ft_memmove(str[j], (const void *)(&str[j][1]), ft_strlen(str[j]));
-		while (str[j] && str[j++])
-			;
-		if (j > 1)
-		{
-			j--;
-			str[j][0] = '\0';
-		}
-	}
 }
 
 void	expand_arguments(t_node *node, t_shell *shell)
