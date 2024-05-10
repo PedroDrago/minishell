@@ -26,12 +26,12 @@ char	*get_prompt_user(char *str, t_shell *shell)
 {
 	char	*user;
 
-	str = ft_strjoin(str, "\e[1;32m", O_ONE);
+	str = ft_strjoin(str, "\001\e[1;32m", O_ONE);
 	user = get_env_node_value(shell->env, "USER");
 	if (!user)
 		user = "username";
 	str = ft_strjoin(str, user, O_ONE);
-	str = ft_strjoin(str, "\e[0m:\e[1;34m", O_ONE);
+	str = ft_strjoin(str, "\e[0m:\e[1;34m\002", O_ONE);
 	return (str);
 }
 
