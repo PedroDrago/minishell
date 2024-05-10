@@ -6,12 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:32 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/11 23:44:26 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:01 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 char	*get_env_node_value(t_env *env, char *key)
 {

@@ -81,6 +81,7 @@ typedef struct s_shell
 	t_list			*prompt_list;
 	t_pids			pids;
 	char			**envp;
+	char			**env_array;
 }					t_shell;
 
 #endif

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 20:41:38 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:41:39 by rafaelro         ###   ########.fr       */
+/*   Created: 2024/05/07 16:26:53 by pdrago            #+#    #+#             */
+/*   Updated: 2024/05/07 16:37:38 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdio.h>
 
 char	**get_paths_split(t_shell *shell)
 {
@@ -40,8 +39,8 @@ char	*get_current_path_str(char *path, char *command)
 	return (joined);
 }
 
-int	can_open_file(int stat_return, struct stat *file_info,
-	char *command, t_shell *shell)
+int	can_open_file(int stat_return, struct stat *file_info, char *command,
+		t_shell *shell)
 {
 	if (stat_return < 0)
 		return (0);
@@ -56,7 +55,7 @@ int	can_open_file(int stat_return, struct stat *file_info,
 	return (1);
 }
 
-char	*get_right_path(t_shell *shell, char *command) //FIX: Leak?Childprocess
+char	*get_right_path(t_shell *shell, char *command)
 {
 	char		*path;
 	char		**paths_split;

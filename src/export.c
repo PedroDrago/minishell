@@ -6,7 +6,7 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:18:09 by pdrago            #+#    #+#             */
-/*   Updated: 2024/04/28 23:33:54 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:31:43 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ int	export(char *argv[], t_shell *shell)
 			set_invalid_identifier(&status);
 			continue ;
 		}
-		if (!set_env_value(shell->env, splited[0], splited[1]))
+		if (!set_env_value2(shell->env, splited[0], splited[1]))
 			return (free_split(splited), 1);
 		status = 0;
 		i++;
-	}
-	if (splited)
 		free(splited);
+	}
 	return (status);
 }

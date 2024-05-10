@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
+/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:17:52 by pdrago            #+#    #+#             */
-/*   Updated: 2024/03/20 17:17:52 by pdrago           ###   ########.fr       */
+/*   Updated: 2024/05/09 19:20:06 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,27 @@ int	fill_node(char *str, int fd, t_env *temp_env, t_env *env_head)
 	return (TRUE);
 }
 
-t_env	*fill_env_struct(int fd)
+int	set_env_value2(t_env *env, char *key, char *value)
 {
-	char	*str;
-	t_env	*temp_env;
-	t_env	*env_head;
+	t_env	*target_node;
+	char	*new_value;
 
-	str = get_next_line(fd);
-	env_head = NULL;
-	while (str)
+	if (!key)
+		return (0);
+	target_node = get_env_node(env, key);
+	if (!target_node)
+		return (insert_new_node(env, key, value));
+	free(key);
+	free(target_node->value);
+	if (value)
 	{
-		if (!fill_node(str, fd, temp_env, env_head))
-			return (NULL);
-		if (temp_env->next)
-			temp_env = temp_env->next;
+		new_value = ft_strdup(value);
+		free(value);
+		if (!new_value)
+			return (0);
 	}
-	close(fd);
-	return (env_head);
+	else
+		new_value = NULL;
+	target_node->value = new_value;
+	return (1);
 }

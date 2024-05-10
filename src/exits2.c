@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_utils.c                                    :+:      :+:    :+:   */
+/*   exits2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
+/*   By: pdrago <pdrago@student.42.rio>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 20:05:05 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/08 15:33:57 by rafaelro         ###   ########.fr       */
+/*   Created: 2024/05/09 18:36:07 by pdrago            #+#    #+#             */
+/*   Updated: 2024/05/09 18:36:08 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_process_data(t_shell *shell)
+void	exit_redirect_output(t_shell *shell, char *file, int status)
 {
-	free(shell->pids.array);
-	shell->pids.array = NULL;
-	shell->pids.index = 0;
-	shell->pids.size = 0;
+	free(file);
+	exit_safely(shell, status);
 }

@@ -6,19 +6,16 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:51 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/05/06 00:30:46 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:33:47 by rafaelro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <signal.h>
-#include <unistd.h>
 
 int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 {
 	int	status;
 
-	(void)shell;
 	if (!node->splited_command)
 	{
 		free_process_data(shell);
@@ -26,6 +23,8 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 	}
 	if (!node->next)
 	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		dup2(*prevpipe, 0);
 		close(*prevpipe);
 		while (wait(&status) != -1)
@@ -44,15 +43,6 @@ int	prep_process(t_node *node, t_shell *shell, int *prevpipe, int *pipefd)
 
 void	post_process(pid_t pid, t_shell *shell, int *prevpipe, int *pipefd)
 {
-	/*if (!node->next)
-	{
-		close(*prevpipe);
-	}
-	else
-	{
-		close(pipefd[1]);
-		close(*prevpipe);
-	}*/
 	close(pipefd[1]);
 	close(*prevpipe);
 	*prevpipe = pipefd[0];
@@ -67,23 +57,20 @@ int	execute_node(t_node *node, t_shell *shell, int *prevpipe)
 	pipe(pipefd);
 	expand_arguments(node, shell);
 	node->args = get_args(node->splited_command);
-	remove_empty_args(node);
 	set_exit_status(0, shell);
-	if (node->splited_command && is_builtin(node->splited_command[0]))
-	{
-		execute_builtin(node, shell, prevpipe, pipefd);
-		return (TRUE);
-	}
 	kill(getpid(), SIGUSR2);
-	perform_redirections(node->splited_command, shell, prevpipe);
+	if (node->splited_command && is_builtin(node->splited_command[0]))
+		return (execute_builtin(node, shell, prevpipe, pipefd));
+	perform_redirections(0, node->splited_command, shell, prevpipe);
 	pid = fork();
 	if (pid == 0)
 	{
 		prep_process(node, shell, prevpipe, pipefd);
 		execute_command(shell, node->args);
 	}
-	else
-		post_process(pid, shell, prevpipe, pipefd);
+	post_process(pid, shell, prevpipe, pipefd);
+	if (!node->next)
+		close(pipefd[0]);
 	return (TRUE);
 }
 

@@ -6,13 +6,11 @@
 /*   By: rafaelro <rafaelro@student.42.rio>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 20:03:34 by rafaelro          #+#    #+#             */
-/*   Updated: 2024/04/26 20:03:35 by rafaelro         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:38:06 by pdrago           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <readline/readline.h>
-#include <stdio.h>
 
 int	get_next_quote(char *str, int start, char quote)
 {
