@@ -12,7 +12,7 @@
 </p>
 
 <h3 align="center">About our Journey</h3>
-This project was undoubtedly the most challenging and largest endeavor we've undertaken within the 42 Common Core thus far. We approached this task uniquely, without any form of guides. Therefore, the resolution you observe in our code reflects the battles our minds waged against the innumerous problems encountered along our journey. In the end, the product is a quite good shell, although with not that good code.
+This project was undoubtedly the most challenging and largest endeavor we've undertaken within the 42 Common Core this far. We approached this task our own way: without any form of guides. Therefore, the resolution you observe in our code reflects the battles our minds waged against the innumerous problems encountered along our journey. In the end, the product is a quite good shell, although with not that good of code.
 
 ---
 ### Terminal VS Shell VS Prompt
