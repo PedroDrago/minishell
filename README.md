@@ -73,6 +73,7 @@ int main()
     pipe(pipe_fd);
     write(pipe_fd[1], "Writing a Message\n", 19);
     read(pipe_fd[0], buff, 19);
+    printf("%s\n", buff);
 }
 ```
 The above example is not useful code, but it can demonstrate what the `pipe()` function is really doing. We pipe our array, then we write a string to index `1`, and then we read from index `0`. The real use of this function can be achieved when we combine it with `dup2()`, which allows us to substitute a standard file descriptor of a process with a file descriptor from the pipe we created. This is not the only use, but it is the one you'll see most often in a project like a shell.
@@ -81,7 +82,7 @@ The above example is not useful code, but it can demonstrate what the `pipe()` f
 int main()
 {
     int pipe_fd[2];
-    char buff[42];
+    char buff[49];
     int pid;
 
     pipe(pipe_fd);
@@ -95,7 +96,8 @@ int main()
     else
     {
         waitpid(pid, NULL, 0);
-        read(pipe_fd[0], buff, 42);
+        read(pipe_fd[0], buff, 49);
+        printf("%s\n", buff);
     }
 
 }
