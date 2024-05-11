@@ -1,14 +1,14 @@
 # Minishell
 
 <p align="center">
-    <img src="./printscreen.png"/>
+    <img src="./assets/printscreen.png"/>
 </p>
 
 <p align="center"> This project was about creating our own shell in C, inspired by Bash. </p>
 
 ---
 <p align="center">
-    <img src="./printscreen2.png"/>
+    <img src="./assets/printscreen2.png"/>
 </p>
 
 <h3 align="center">About our Journey</h3>
