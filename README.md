@@ -22,7 +22,7 @@ Understanding the difference between these three different softwares is crucial:
 
 - Shell: Shell is a command interpreter that allows the user to instruct the kernel to perform tasks such as listing files in the current working directory, creating a file, changing file permissions, and every other action that the kernel allows users to perform. A few examples of shells are Bash, Zsh, Fish, PowerShell, etc.
 
-- Prompt: The prompt is the command that you provide to the shell for interpretation. $ ls | grep a is an example of a prompt in Bash.
+- Prompt: The prompt is the command that you provide to the shell for interpretation. `$ ls | grep` a is an example of a prompt in Bash.
 
 ### Processes
 When a program is executed in Linux, it can be called a process, and processes come with several attributes, such as permissions, a PID (Process Identifier), a file descriptors table, and other data. So when you execute `$ ls` in your shell, what is really happening is that the kernel is executing a binary executable located in the `PATH` of your system as a process.
@@ -49,6 +49,7 @@ int main()
 ```
 
 The above example demonstrates the branching that `fork()` causes, as there are two different blocks of code in the same program, but each process only executes one of them.
+
 ### ENV
 Env can be described as either the collection of the environment variables that the system has or the shell command `man env`. Let's focus on the first concept:
 
